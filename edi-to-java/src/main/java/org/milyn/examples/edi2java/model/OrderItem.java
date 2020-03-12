@@ -13,7 +13,7 @@
 	See the GNU Lesser General Public License for more details:
 	http://www.gnu.org/licenses/lgpl.txt
 */
-package example.model;
+package org.milyn.examples.edi2java.model;
 
 import java.math.BigDecimal;
 

@@ -18,6 +18,7 @@
     <modules>
         <module>edi-to-xml</module>
         <module>edi-to-java</module>
+        <module>edi-with-import-to-java</module>
     </modules>
 
     <dependencyManagement>

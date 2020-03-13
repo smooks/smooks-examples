@@ -13,20 +13,14 @@
 	See the GNU Lesser General Public License for more details:
 	http://www.gnu.org/licenses/lgpl.txt
 */
-package example;
-
-import com.thoughtworks.xstream.XStream;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.milyn.io.StreamUtils.compareCharStreams;
-import static org.milyn.io.StreamUtils.readStreamAsString;
+package org.milyn.examples.edi2java;
 
 import org.junit.jupiter.api.Test;
-import org.milyn.payload.JavaResult;
-import org.xml.sax.SAXException;
+import org.xml.sax.*;
 
-import java.io.IOException;
-import java.io.StringReader;
+import java.io.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author <a href="mailto:tom.fennelly@gmail.com">tom.fennelly@gmail.com</a>
@@ -35,19 +29,19 @@ public class EDItoJavaTest {
 
     @Test
     public void test() throws IOException, SAXException {
-        String expected = readStreamAsString(getClass().getResourceAsStream("expected.xml"));
+        String expected = org.milyn.io.StreamUtils.readStreamAsString(getClass().getResourceAsStream("/expected.xml"));
         Main smooksMain = new Main();
 
-        JavaResult result = smooksMain.runSmooksTransform();
+        org.milyn.payload.JavaResult result = smooksMain.runSmooksTransform();
 
-        XStream xstream = new XStream();
+        com.thoughtworks.xstream.XStream xstream = new com.thoughtworks.xstream.XStream();
         String actual = xstream.toXML(result.getBean("order"));
 
         actual = actual.replaceFirst("<date>.*</date>", "<date/>");
 
-        boolean matchesExpected = compareCharStreams(new StringReader(expected), new StringReader(actual));
+        boolean matchesExpected = org.milyn.io.StreamUtils.compareCharStreams(new java.io.StringReader(expected), new java.io.StringReader(actual));
         if (!matchesExpected) {
-            assertEquals("Actual does not match expected.", expected, actual);
+            assertEquals(expected, actual, "Actual does not match expected.");
         }
     }
 }

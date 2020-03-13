@@ -10,12 +10,6 @@
             <dfdl:format ref="ibmEdiFmt:EDIFormat"/>
         </xsd:appinfo>
     </xsd:annotation>
-    <xsd:annotation>
-        <xsd:appinfo source="http://www.ibm.com/dfdl/edi/un/edifact">D03B</xsd:appinfo>
-        <xsd:documentation>
-            EDIFACT D03B messages
-        </xsd:documentation>
-    </xsd:annotation>
 
     <xsd:element name="Order">
         <xsd:complexType>

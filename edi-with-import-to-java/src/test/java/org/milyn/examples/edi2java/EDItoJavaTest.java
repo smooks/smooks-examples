@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  */
 public class EDItoJavaTest {
 
-	@Test
+    @Test
     public void test() throws IOException, SAXException {
         String expected = org.milyn.io.StreamUtils.readStreamAsString(getClass().getResourceAsStream("/expected.xml"));
         Main smooksMain = new Main();
@@ -40,7 +40,7 @@ public class EDItoJavaTest {
         actual = actual.replaceFirst("<date>.*</date>", "<date/>");
 
         boolean matchesExpected = org.milyn.io.StreamUtils.compareCharStreams(new java.io.StringReader(expected), new java.io.StringReader(actual));
-        if(!matchesExpected) {
+        if (!matchesExpected) {
             assertEquals(expected, actual, "Actual does not match expected.");
         }
     }

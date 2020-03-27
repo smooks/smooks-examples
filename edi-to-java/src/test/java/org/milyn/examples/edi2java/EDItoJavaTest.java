@@ -18,11 +18,11 @@ package org.milyn.examples.edi2java;
 import com.thoughtworks.xstream.XStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.milyn.io.StreamUtils.compareCharStreams;
-import static org.milyn.io.StreamUtils.readStreamAsString;
+import static org.smooks.io.StreamUtils.compareCharStreams;
+import static org.smooks.io.StreamUtils.readStreamAsString;
 
 import org.junit.jupiter.api.Test;
-import org.milyn.payload.JavaResult;
+import org.smooks.payload.JavaResult;
 import org.xml.sax.SAXException;
 
 import java.io.IOException;

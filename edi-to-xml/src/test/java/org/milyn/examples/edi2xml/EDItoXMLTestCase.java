@@ -16,7 +16,7 @@
 package org.milyn.examples.edi2xml;
 
 import org.junit.jupiter.api.Test;
-import org.milyn.io.StreamUtils;
+import org.smooks.io.StreamUtils;
 import org.xml.sax.SAXException;
 import org.xmlunit.builder.DiffBuilder;
 

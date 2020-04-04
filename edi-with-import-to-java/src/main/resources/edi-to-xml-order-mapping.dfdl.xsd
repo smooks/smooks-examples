@@ -15,7 +15,7 @@
         <xsd:complexType>
             <xsd:sequence>
                 <xsd:sequence dfdl:initiatedContent="yes">
-                    <xsd:element dfdl:initiator="HDR" dfdl:ref="ibmEdiFmt:EDISegmentFormat" name="header" minOccurs="0">
+                    <xsd:element dfdl:initiator="HDR" dfdl:ref="ibmEdiFmt:EDISegmentFormat" name="header" maxOccurs="unbounded">
                         <xsd:complexType>
                             <xsd:sequence dfdl:ref="ibmEdiFmt:EDISegmentSequenceFormat">
                                 <xsd:element name="order-id" type="xsd:string"/>
@@ -27,7 +27,7 @@
                             </xsd:sequence>
                         </xsd:complexType>
                     </xsd:element>
-                    <xsd:element dfdl:initiator="CUS" dfdl:ref="ibmEdiFmt:EDISegmentFormat" name="customer-details" minOccurs="0">
+                    <xsd:element dfdl:initiator="CUS" dfdl:ref="ibmEdiFmt:EDISegmentFormat" name="customer-details" minOccurs="1">
                         <xsd:complexType>
                             <xsd:sequence dfdl:ref="ibmEdiFmt:EDISegmentSequenceFormat">
                                 <xsd:element name="username" type="xsd:string"/>

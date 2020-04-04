@@ -13,36 +13,111 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <smooks.edi.cartridge.version>1.0.0-SNAPSHOT</smooks.edi.cartridge.version>
         <smooks.version>2.0.0-SNAPSHOT</smooks.version>
+        <spring.version>5.2.4.RELEASE</spring.version>
     </properties>
 
     <modules>
+        <module>camel</module>
+        <module>csv-to-java</module>
+        <module>csv-to-java-programmatic</module>
+        <module>csv-to-xml</module>
+        <module>csv-to-xml-2</module>
+        <module>csv-variable-record</module>
+        <module>dao-router</module>
+        <module>db-extract-transform-load</module>
+        <module>drools-fusion</module>
+        <module>dynamic-model-builder</module>
         <module>edi-to-xml</module>
         <module>edi-to-java</module>
         <module>edi-with-import-to-java</module>
+        <module>file-router</module>
+        <module>fixed-length-to-java</module>
+        <module>flatfile-to-xml-regex</module>
+        <module>freemarker-huge-transform</module>
+        <module>groovy</module>
+        <module>java-basic</module>
+        <module>java-to-java</module>
+        <module>java-to-xml</module>
+        <module>jms-router</module>
+        <module>json-to-java</module>
+        <module>model-driven-basic</module>
+        <module>model-driven-basic-virtual</module>
+        <module>osgi</module>
+        <module>profiling</module>
+        <module>sj-testimonial</module>
+        <module>validation-basic</module>
+        <module>xml-read-write</module>
+        <module>xml-read-write-transform</module>
+        <module>xml-to-java</module>
+        <module>xml-to-java-virtual</module>
+        <module>xslt-basic</module>
+        <module>xslt-groovy</module>
+        <module>xslt-namespaces</module>
+        <module>yaml-to-java</module>
     </modules>
 
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>org.milyn.cartridges.edi</groupId>
-                <artifactId>smooks-edi-cartridge</artifactId>
-                <version>${smooks.edi.cartridge.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>org.milyn</groupId>
-                <artifactId>milyn-smooks-javabean</artifactId>
+                <artifactId>smooks-bom</artifactId>
                 <version>${smooks.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
             <dependency>
                 <groupId>org.xmlunit</groupId>
                 <artifactId>xmlunit-core</artifactId>
                 <version>2.6.3</version>
             </dependency>
+            <dependency>
+                <groupId>hsqldb</groupId>
+                <artifactId>hsqldb</artifactId>
+                <version>1.8.0.10</version>
+            </dependency>
+            <dependency>
+                <groupId>xalan</groupId>
+                <artifactId>xalan</artifactId>
+                <version>2.7.2</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-engine</artifactId>
+                <version>5.6.1</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>1.10.19</version>
+                <scope>test</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
     <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.ops4j</groupId>
+                    <artifactId>maven-pax-plugin</artifactId>
+                    <version>1.6.0</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
         <plugins>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <version>4.2.1</version>
+                <extensions>true</extensions>
+                <inherited>true</inherited>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -68,12 +143,6 @@
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-slf4j-impl</artifactId>
             <version>2.13.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.6.1</version>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 

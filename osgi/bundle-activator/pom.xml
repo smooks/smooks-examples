@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.milyn.examples</groupId>
+        <artifactId>smooks-examples-osgi</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <name>Smooks Example :: Bundle-activator</name>
+    <artifactId>smooks-example-bundle-activator</artifactId>
+    <packaging>bundle</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.milyn.cartridges</groupId>
+            <artifactId>smooks-javabean-cartridge</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>osgi_R4_core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>osgi_R4_compendium</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.milyn</groupId>
+            <artifactId>milyn-smooks-all</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.ops4j</groupId>
+                <artifactId>maven-pax-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+                        <Bundle-Activator>org.smooks.examples.osgi.bundleactivator.activator.MainActivator</Bundle-Activator>
+                        <Import-Package>org.smooks.*;version="${project.version}",
+                            javax.xml.transform.stream,
+                            org.smooks.examples.osgi.bundleactivator.model;version="${project.version}",
+                            org.smooks.examples.osgi.bundleactivator.activator;version="${project.version}",
+                            *;-nouses:=true
+                        </Import-Package>
+                        <Export-Package>org.smooks.examples.osgi.bundleactivator.model.*;version="${project.version}",
+                            org.smooks.examples.osgi.bundleactivator.activator;version="${project.version}"
+                        </Export-Package>
+                        <Private-Package>org.smooks.examples.osgi.bundleactivator</Private-Package>
+                        <Smooks-Config>${basedir}/smooks-config.xml</Smooks-Config>
+                        <Smooks-Input-File>${basedir}/input-message.xml</Smooks-Input-File>
+                    </instructions>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

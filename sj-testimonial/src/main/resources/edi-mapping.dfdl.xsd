@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/" xmlns:ibmEdiFmt="http://www.ibm.com/dfdl/EDI/Format">
+
+    <xsd:import namespace="http://www.ibm.com/dfdl/EDI/Format"
+                schemaLocation="/EDIFACT-Common/IBM_EDI_Format.dfdl.xsd"/>
+
+    <xsd:annotation>
+        <xsd:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:format ref="ibmEdiFmt:EDIFormat"/>
+        </xsd:appinfo>
+    </xsd:annotation>
+
+    <xsd:element name="rollingstocks">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:sequence dfdl:initiatedContent="yes">
+                    <xsd:element dfdl:initiator="Ta" name="rollingstock" minOccurs="0" maxOccurs="unbounded">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:sequence dfdl:ref="ibmEdiFmt:EDISegmentFormat">
+                                    <xsd:sequence dfdl:ref="ibmEdiFmt:EDISegmentSequenceFormat">
+                                        <xsd:element name="departureDate" type="xsd:string"/>
+                                        <xsd:element name="departureTime" type="xsd:string"/>
+                                        <xsd:element name="rollingstockId" type="xsd:string"/>
+                                        <xsd:element name="departureSignature" type="xsd:string"/>
+                                        <xsd:element name="destinationSignature" type="xsd:string"/>
+                                        <xsd:element name="dayLimit" type="xsd:string"/>
+                                    </xsd:sequence>
+                                </xsd:sequence>
+                                <xsd:element dfdl:initiator="Tr" dfdl:ref="ibmEdiFmt:EDISegmentFormat" name="route"
+                                             minOccurs="0">
+                                    <xsd:complexType>
+                                        <xsd:sequence dfdl:ref="ibmEdiFmt:EDISegmentSequenceFormat">
+                                            <xsd:element name="route" type="xsd:string"/>
+                                        </xsd:sequence>
+                                    </xsd:complexType>
+                                </xsd:element>
+                                <xsd:element dfdl:initiator="Fo" name="vehicle" minOccurs="0" maxOccurs="unbounded">
+                                    <xsd:complexType>
+                                        <xsd:sequence>
+                                            <xsd:sequence dfdl:ref="ibmEdiFmt:EDISegmentFormat">
+                                                <xsd:sequence dfdl:ref="ibmEdiFmt:EDISegmentSequenceFormat">
+                                                    <xsd:element name="litt" type="xsd:string"/>
+                                                    <xsd:element name="vehicleId" type="xsd:string"/>
+                                                    <xsd:element name="originalLitt" type="xsd:string"/>
+                                                    <xsd:element name="ticketId" type="xsd:string"/>
+                                                    <xsd:element name="vehicleType" type="xsd:string"/>
+                                                    <xsd:element name="weight" type="xsd:string"/>
+                                                    <xsd:element name="dynamicWeight" type="xsd:string"/>
+                                                    <xsd:element name="brakeWeight" type="xsd:string"/>
+                                                    <xsd:element name="length" type="xsd:string"/>
+                                                    <xsd:element name="nrOfAxles" type="xsd:string"/>
+                                                    <xsd:element name="speed" type="xsd:string"/>
+                                                    <xsd:element name="serviceType" type="xsd:string"/>
+                                                    <xsd:element name="canDoorsBeLocked" type="xsd:string"/>
+                                                    <xsd:element name="class1" type="xsd:string"/>
+                                                    <xsd:element name="class2" type="xsd:string"/>
+                                                    <xsd:element name="couchette" type="xsd:string"/>
+                                                    <xsd:element name="nrOfCompartments" type="xsd:string"/>
+                                                    <xsd:element name="nrOfPlacesPerCompartment" type="xsd:string"/>
+                                                    <xsd:element name="departureStation" type="xsd:string"/>
+                                                    <xsd:element name="departureDate" type="xsd:string"/>
+                                                    <xsd:element name="departureTime" type="xsd:string"/>
+                                                    <xsd:element name="destination" type="xsd:string"/>
+                                                </xsd:sequence>
+                                            </xsd:sequence>
+                                            <xsd:element dfdl:initiator="Fx" dfdl:ref="ibmEdiFmt:EDISegmentFormat"
+                                                         name="comments"
+                                                         minOccurs="0">
+                                                <xsd:complexType>
+                                                    <xsd:sequence dfdl:ref="ibmEdiFmt:EDISegmentSequenceFormat">
+                                                        <xsd:element name="comment" type="xsd:string"/>
+                                                    </xsd:sequence>
+                                                </xsd:complexType>
+                                            </xsd:element>
+                                            <xsd:element dfdl:initiator="Ft" dfdl:ref="ibmEdiFmt:EDISegmentFormat"
+                                                         name="phoneNumber"
+                                                         minOccurs="0" maxOccurs="unbounded">
+                                                <xsd:complexType>
+                                                    <xsd:sequence dfdl:ref="ibmEdiFmt:EDISegmentSequenceFormat">
+                                                        <xsd:element name="litt" type="xsd:string"/>
+                                                        <xsd:element name="vehicleId" type="xsd:string"/>
+                                                        <xsd:element name="phoneNumber" type="xsd:string"/>
+                                                        <xsd:element name="function" type="xsd:string"/>
+                                                        <xsd:element name="location" type="xsd:string"/>
+                                                    </xsd:sequence>
+                                                </xsd:complexType>
+                                            </xsd:element>
+                                        </xsd:sequence>
+                                    </xsd:complexType>
+                                </xsd:element>
+                            </xsd:sequence>
+                        </xsd:complexType>
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>

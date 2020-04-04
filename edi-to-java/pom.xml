@@ -12,6 +12,7 @@
 
     <name>Smooks Example :: EDI-to-Java</name>
     <artifactId>smooks-example-edi-to-java</artifactId>
+    <packaging>bundle</packaging>
 
     <dependencies>
         <dependency>
@@ -19,8 +20,12 @@
             <artifactId>smooks-edi-cartridge</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.milyn</groupId>
-            <artifactId>milyn-smooks-javabean</artifactId>
+            <groupId>org.milyn.cartridges</groupId>
+            <artifactId>smooks-javabean-cartridge</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
         </dependency>
     </dependencies>
 </project>

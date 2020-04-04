@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.milyn.examples</groupId>
+        <artifactId>smooks-examples-osgi</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <name>Smooks Example :: Peaberry</name>
+    <artifactId>smooks-example-peaberry</artifactId>
+    <packaging>bundle</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.milyn.cartridges</groupId>
+            <artifactId>smooks-javabean-cartridge</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>osgi_R4_core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>osgi_R4_compendium</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.milyn</groupId>
+            <artifactId>milyn-smooks-all</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.servicemix.bundles</groupId>
+            <artifactId>org.apache.servicemix.bundles.aopalliance-1.0</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.ops4j</groupId>
+            <artifactId>peaberry</artifactId>
+            <version>1.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.inject</groupId>
+            <artifactId>guice</artifactId>
+            <version>4.2.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.ops4j</groupId>
+                <artifactId>maven-pax-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+                        <Bundle-Activator>org.smooks.examples.osgi.peaberry.activator.PeaberryActivator</Bundle-Activator>
+                        <!--Bundle-Module>org.smooks.examples.osgi.peaberry.activator.SmooksModule</Bundle-Module-->
+                        <Import-Package>org.smooks.*;version="${project.version}",
+                            javax.xml.transform.stream,
+                            org.smooks.examples.osgi.peaberry.model;version="${project.version}",
+                            org.smooks.examples.osgi.peaberry.activator;version="${project.version}",
+                            *;-nouses:=true
+                        </Import-Package>
+                        <Export-Package>org.smooks.examples.osgi.peaberry.model.*;version="${project.version}",
+                            org.smooks.examples.osgi.peaberry.activator;version="${project.version}"
+                        </Export-Package>
+                        <Private-Package>example</Private-Package>
+                        <Smooks-Config>${basedir}/smooks-config.xml</Smooks-Config>
+                        <Smooks-Input-File>${basedir}/input-message.xml</Smooks-Input-File>
+                    </instructions>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

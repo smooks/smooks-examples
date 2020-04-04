@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.milyn.examples</groupId>
+        <artifactId>smooks-example-file-router</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <name>Smooks Example :: File Router (Splitter)</name>
+    <artifactId>smooks-example-file-splitter-router</artifactId>
+    <packaging>bundle</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.milyn.cartridges</groupId>
+            <artifactId>smooks-javabean-cartridge</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.milyn.cartridges</groupId>
+            <artifactId>smooks-templating-cartridge</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.milyn.cartridges</groupId>
+            <artifactId>smooks-routing-cartridge</artifactId>
+        </dependency>
+    </dependencies>
+</project>

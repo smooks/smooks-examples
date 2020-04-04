@@ -15,7 +15,7 @@
     Assign the new bean instance to the beanId of "order".
     The "header" and "orderItemList" beans are wired in.
     -->
-    <jb:bean beanId="order" class="org.milyn.examples.edi2java.model.Order" createOnElement="Order">
+    <jb:bean beanId="order" class="org.smooks.examples.edi2java.model.Order" createOnElement="Order">
         <jb:wiring property="header" beanIdRef="header" />
         <jb:wiring property="orderItems" beanIdRef="orderItemList" />
     </jb:bean>
@@ -25,7 +25,7 @@
     Note, we're creating this bean instance before we encounter the actual <header> element.
     This bean is wired into the "order" bean.
     -->
-    <jb:bean beanId="header" class="org.milyn.examples.edi2java.model.Header" createOnElement="Order">
+    <jb:bean beanId="header" class="org.smooks.examples.edi2java.model.Header" createOnElement="Order">
         <jb:wiring property="customer" beanIdRef="customer" />
         <jb:value property="orderId" data="header/order-id" />
         <jb:value property="orderStatus" decoder="Long" data="header/status-code" />
@@ -42,7 +42,7 @@
     <customer-details> element.
 	This bean is wired into the "header" bean.
     -->
-    <jb:bean beanId="customer" class="org.milyn.examples.edi2java.model.Customer" createOnElement="customer-details">
+    <jb:bean beanId="customer" class="org.smooks.examples.edi2java.model.Customer" createOnElement="customer-details">
         <!-- Customer bindings... -->
         <jb:value property="userName" data="customer-details/username" />
         <jb:value property="firstName" data="customer-details/name/firstname" />
@@ -62,7 +62,7 @@
     Create an "example.beans.OrderItem" bean instance when we visit the start of the <order-item> element.
     This bean is wired into the "orderItemList" ArrayList.
     -->
-    <jb:bean beanId="orderItem" class="org.milyn.examples.edi2java.model.OrderItem" createOnElement="order-item">
+    <jb:bean beanId="orderItem" class="org.smooks.examples.edi2java.model.OrderItem" createOnElement="order-item">
         <!-- OrderItem bindings... -->
         <jb:value property="quantity" decoder="Integer" data="order-item/quantity" />
         <jb:value property="productId" decoder="String" data="order-item/product-id" />

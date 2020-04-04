@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.milyn.examples</groupId>
+        <artifactId>smooks-examples</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <name>Smooks Example :: XSLT-Groovy</name>
+    <artifactId>smooks-example-xslt-groovy</artifactId>
+    <packaging>bundle</packaging>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+            <resource>
+                <directory>src/main/java</directory>
+                <excludes>
+                    <exclude>**/*.java</exclude>
+                </excludes>
+            </resource>
+        </resources>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.milyn.cartridges</groupId>
+            <artifactId>smooks-scripting-cartridge</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.milyn.cartridges</groupId>
+            <artifactId>smooks-templating-cartridge</artifactId>
+        </dependency>
+
+        <!--
+        To switch XSLT processors, simple include/exclude the following
+        dependencies.  When both Xalan and Saxon are excluded, the
+        installed JDK's processor will be used (Sun XSLTC Processor).
+        -->
+
+        <dependency>
+            <groupId>xalan</groupId>
+            <artifactId>xalan</artifactId>
+        </dependency>
+
+        <!-- dependency>
+            <groupId>net.sf.saxon</groupId>
+            <artifactId>saxon-HE</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.saxon</groupId>
+            <artifactId>saxon-dom</artifactId>
+        </dependency -->
+
+        <dependency>
+            <groupId>org.xmlunit</groupId>
+            <artifactId>xmlunit-core</artifactId>
+        </dependency>
+    </dependencies>
+</project>

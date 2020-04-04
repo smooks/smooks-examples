@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.milyn.examples</groupId>
+        <artifactId>smooks-examples</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <name>Smooks Example :: Smooks Camel Root</name>
+    <artifactId>smooks-camel-examples</artifactId>
+    <packaging>pom</packaging>
+
+    <properties>
+        <camel.version>3.1.0</camel.version>
+    </properties>
+
+    <modules>
+        <module>camel-integration</module>
+        <module>camel-dataformat</module>
+        <module>camel-csv-to-xml</module>
+        <module>camel-unedifact-to-xml</module>
+    </modules>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.milyn.cartridges</groupId>
+            <artifactId>smooks-camel-cartridge</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-core</artifactId>
+            <version>${camel.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.felix</groupId>
+            <artifactId>org.osgi.core</artifactId>
+            <version>1.4.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-test</artifactId>
+            <version>${camel.version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+</project>

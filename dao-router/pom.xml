@@ -5,7 +5,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>org.milyn.examples</groupId>
+        <groupId>org.smooks.examples</groupId>
         <artifactId>smooks-examples</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
@@ -16,19 +16,19 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.milyn</groupId>
-            <artifactId>milyn-scribe-jpa</artifactId>
+            <groupId>org.smooks</groupId>
+            <artifactId>smooks-scribe-jpa</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.milyn</groupId>
-            <artifactId>milyn-scribe-ibatis</artifactId>
+            <groupId>org.smooks</groupId>
+            <artifactId>smooks-scribe-ibatis</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.milyn.cartridges</groupId>
+            <groupId>org.smooks.cartridges</groupId>
             <artifactId>smooks-persistence-cartridge</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.milyn.cartridges</groupId>
+            <groupId>org.smooks.cartridges</groupId>
             <artifactId>smooks-routing-cartridge</artifactId>
         </dependency>
         <dependency>

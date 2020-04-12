@@ -5,7 +5,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>org.milyn.examples</groupId>
+        <groupId>org.smooks.examples</groupId>
         <artifactId>smooks-example-jms-router</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
@@ -16,15 +16,15 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.milyn.cartridges</groupId>
+            <groupId>org.smooks.cartridges</groupId>
             <artifactId>smooks-javabean-cartridge</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.milyn.cartridges</groupId>
+            <groupId>org.smooks.cartridges</groupId>
             <artifactId>smooks-templating-cartridge</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.milyn.cartridges</groupId>
+            <groupId>org.smooks.cartridges</groupId>
             <artifactId>smooks-routing-cartridge</artifactId>
         </dependency>
     </dependencies>

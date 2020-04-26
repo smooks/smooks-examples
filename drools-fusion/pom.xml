@@ -20,7 +20,7 @@
 
     <properties>
         <project.mainClass>org.drools.benchmark.waltz.WaltzBenchmark</project.mainClass>
-        <drools.version>7.36.0.20200331</drools.version>
+        <drools.version>7.36.1.Final</drools.version>
     </properties>
 
     <dependencies>

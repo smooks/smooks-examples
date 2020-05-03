@@ -42,12 +42,11 @@ public class Main {
         //Smooks smooks = new Smooks("smooks-config.xml");
         
         // Or, configure Smooks programmatically...
-        Smooks smooks = new Smooks();
-        smooks.setReaderConfig(new EdifactReaderConfigurator("/d03b/EDIFACT-Messages.dfdl.xsd", Arrays.asList("PAXLST")));
+        final Smooks smooks = new Smooks();
+        smooks.setReaderConfig(new EdifactReaderConfigurator("/d03b/EDIFACT-Messages.dfdl.xsd").setMessageTypes(Arrays.asList("PAXLST")));
 
         try {
-            StringWriter writer = new StringWriter();
-
+            final StringWriter writer = new StringWriter();
             smooks.filterSource(new StreamSource(new FileInputStream("PAXLST.edi")), new StreamResult(writer));
 
             return writer.toString();

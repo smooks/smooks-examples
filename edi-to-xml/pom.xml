@@ -15,6 +15,21 @@
     <artifactId>smooks-example-edi-to-xml</artifactId>
     <packaging>bundle</packaging>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>license-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>test/resources/actual.xml</exclude>
+                        <exclude>test/resources/expected.xml</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    
     <dependencies>
         <dependency>
             <groupId>org.smooks.cartridges.edi</groupId>

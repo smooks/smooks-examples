@@ -95,6 +95,6 @@ public class Main {
     }
 
     private static String readInputMessage() throws IOException {
-        return StreamUtils.readStreamAsString(new FileInputStream("PAXLST.edi"));
+        return StreamUtils.readStreamAsString(new FileInputStream("PAXLST.edi"), "UTF-8");
     }
 }

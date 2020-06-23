@@ -120,7 +120,7 @@ public class Main {
 
     private static String readInputMessage(String fileName) {
         try {
-            return StreamUtils.readStreamAsString(new FileInputStream(fileName));
+            return StreamUtils.readStreamAsString(new FileInputStream(fileName), "UTF-8");
         } catch (IOException e) {
             e.printStackTrace();
             return "<no-message/>";

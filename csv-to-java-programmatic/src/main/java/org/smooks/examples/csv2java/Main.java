@@ -105,7 +105,7 @@ public class Main {
 
     private static String readInputMessage() {
         try {
-            return StreamUtils.readStreamAsString(new FileInputStream("input-message.csv"));
+            return StreamUtils.readStreamAsString(new FileInputStream("input-message.csv"), "UTF-8");
         } catch (IOException e) {
             e.printStackTrace();
             return "<no-message/>";

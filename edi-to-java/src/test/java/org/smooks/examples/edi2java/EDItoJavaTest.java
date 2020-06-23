@@ -62,7 +62,7 @@ public class EDItoJavaTest {
 
     @Test
     public void test() throws IOException, SAXException {
-        String expected = readStreamAsString(getClass().getResourceAsStream("/expected.xml"));
+        String expected = readStreamAsString(getClass().getResourceAsStream("/expected.xml"), "UTF-8");
         Main smooksMain = new Main();
 
         JavaResult result = smooksMain.runSmooksTransform();

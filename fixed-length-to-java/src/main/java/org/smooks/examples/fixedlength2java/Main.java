@@ -97,7 +97,7 @@ public class Main {
 
     private static String readInputMessage() {
         try {
-            return StreamUtils.readStreamAsString(new FileInputStream("input-message.txt"));
+            return StreamUtils.readStreamAsString(new FileInputStream("input-message.txt"), "UTF-8");
         } catch (IOException e) {
             e.printStackTrace();
             return "<no-message/>";

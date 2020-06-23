@@ -106,7 +106,7 @@ public class CSVReader_1_3_Test {
     @Test
     public void test_programmatic_build() throws IOException, SAXException {
         SmooksModel smooksModel = new SmooksModel();
-        Model<SmooksModel> model = new Model<SmooksModel>(smooksModel, modelBuilder);
+        Model<SmooksModel> model = new Model<>(smooksModel, modelBuilder);
         CSVReader csvReader = new CSVReader();
 
         // Populate it...

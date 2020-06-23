@@ -84,7 +84,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException, SAXException, SmooksException {
         System.out.println("\n\n==============Message In==============");
-        System.out.println(new String(messageIn));
+        System.out.println(messageIn);
         System.out.println("======================================\n");
 
         List messageOut = Main.runSmooksTransform();
@@ -96,7 +96,7 @@ public class Main {
 
     private static String readInputMessage() {
         try {
-            return StreamUtils.readStreamAsString(new FileInputStream("input-message.csv"));
+            return StreamUtils.readStreamAsString(new FileInputStream("input-message.csv"), "UTF-8");
         } catch (IOException e) {
             e.printStackTrace();
             return "<no-message/>";

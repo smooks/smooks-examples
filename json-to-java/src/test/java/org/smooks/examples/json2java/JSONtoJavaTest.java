@@ -59,7 +59,7 @@ public class JSONtoJavaTest {
 
 	@Test
     public void test() throws IOException, SAXException {
-        String expected = StreamUtils.readStreamAsString(getClass().getResourceAsStream("expected.xml"));
+        String expected = StreamUtils.readStreamAsString(getClass().getResourceAsStream("expected.xml"), "UTF-8");
         Main smooksMain = new Main();
         String result = smooksMain.runSmooksTransform();
 

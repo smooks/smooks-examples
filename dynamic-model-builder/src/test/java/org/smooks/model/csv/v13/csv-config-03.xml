@@ -5,5 +5,4 @@
     <csv:reader fields="name,address,age" rootElementName="people" recordElementName="person" indent="true">
         <csv:listBinding beanId="beanX" class="com.acme.XClass" />
     </csv:reader>
-
 </smooks-resource-list>

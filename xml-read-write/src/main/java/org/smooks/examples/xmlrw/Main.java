@@ -118,7 +118,7 @@ public class Main {
 
     private static String readInputMessage() {
         try {
-            return StreamUtils.readStreamAsString(new FileInputStream("input-message.xml"));
+            return StreamUtils.readStreamAsString(new FileInputStream("input-message.xml"), "UTF-8");
         } catch (IOException e) {
             e.printStackTrace();
             return "<no-message/>";

@@ -58,7 +58,7 @@ public class EDItoXMLTestCase {
 
     @Test
     public void test() throws IOException, SAXException {
-        String expected = StreamUtils.readStreamAsString(getClass().getResourceAsStream("/expected.xml"));
+        String expected = StreamUtils.readStreamAsString(getClass().getResourceAsStream("/expected.xml"), "UTF-8");
         String result = Main.runSmooksTransform();
 
         assertFalse(DiffBuilder.compare(expected).ignoreWhitespace().withTest(result).build().hasDifferences());

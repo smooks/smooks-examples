@@ -56,7 +56,7 @@ public class EDItoJavaTest {
 
     @Test
     public void test() throws IOException, SAXException {
-        String expected = org.smooks.io.StreamUtils.readStreamAsString(getClass().getResourceAsStream("/expected.xml"));
+        String expected = org.smooks.io.StreamUtils.readStreamAsString(getClass().getResourceAsStream("/expected.xml"), "UTF-8");
         Main smooksMain = new Main();
 
         org.smooks.payload.JavaResult result = smooksMain.runSmooksTransform();

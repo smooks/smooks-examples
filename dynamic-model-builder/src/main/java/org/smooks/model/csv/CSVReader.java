@@ -50,7 +50,7 @@ import org.smooks.model.core.Reader;
  * 
  * @author <a href="mailto:tom.fennelly@gmail.com">tom.fennelly@gmail.com</a>
  */
-@DefaultNamespace(uri = "http://www.milyn.org/xsd/smooks/csv-1.3.xsd", prefix = "csv13")
+@DefaultNamespace(uri = "https://www.smooks.org/xsd/smooks/csv-1.7.xsd", prefix = "csv17")
 public class CSVReader implements Reader {
 
     private String fields;
@@ -61,7 +61,6 @@ public class CSVReader implements Reader {
     private String recordElementName;
     private Boolean indent;
     private Boolean strict;
-    private Boolean validateHeader;
 
     // Only one of the following binding configs will be wired into this bean...
     private SingleBinding singleBinding;
@@ -130,14 +129,6 @@ public class CSVReader implements Reader {
 
     public void setStrict(Boolean strict) {
         this.strict = strict;
-    }
-
-    public Boolean isValidateHeader() {
-        return validateHeader;
-    }
-
-    public void setValidateHeader(Boolean validateHeader) {
-        this.validateHeader = validateHeader;
     }
 
     public SingleBinding getSingleBinding() {

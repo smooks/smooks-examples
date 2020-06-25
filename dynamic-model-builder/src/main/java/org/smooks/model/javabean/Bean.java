@@ -54,7 +54,7 @@ import java.util.List;
  *
  * @author <a href="mailto:tom.fennelly@gmail.com">tom.fennelly@gmail.com</a>
  */
-@DefaultNamespace(uri = "http://www.milyn.org/xsd/smooks/javabean-1.3.xsd", prefix = "jb13")
+@DefaultNamespace(uri = "https://www.smooks.org/xsd/smooks/javabean-1.6.xsd", prefix = "jb16")
 public class Bean {
 
     private String beanId;

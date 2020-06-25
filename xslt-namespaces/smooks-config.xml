@@ -45,7 +45,7 @@
 <smooks-resource-list xmlns="https://www.smooks.org/xsd/smooks-1.2.xsd"
                       xmlns:xsl="https://www.smooks.org/xsd/smooks/xsl-1.2.xsd">
 
-    <xsl:xsl applyOnElement="$document">
+    <xsl:xsl applyOnElement="#document">
         <xsl:template>
             <![CDATA[
             <xsl:stylesheet

@@ -47,8 +47,6 @@ import org.junit.jupiter.api.Test;
 import org.smooks.cartridges.javabean.dynamic.Model;
 import org.smooks.cartridges.javabean.dynamic.ModelBuilder;
 import org.smooks.model.core.SmooksModel;
-import org.smooks.model.csv.CSVReader;
-import org.smooks.model.csv.ListBinding;
 import org.xml.sax.SAXException;
 import org.xmlunit.builder.DiffBuilder;
 
@@ -60,7 +58,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 /**
  * @author <a href="mailto:tom.fennelly@gmail.com">tom.fennelly@gmail.com</a>
  */
-public class CSVReader_1_3_Test {
+public class CSVReader_1_7_Test {
 
     private ModelBuilder modelBuilder;
 
@@ -71,27 +69,22 @@ public class CSVReader_1_3_Test {
 
     @Test
     public void test_01() throws IOException, SAXException {
-        test("v13/csv-config-01.xml");
+        test("v17/csv-config-01.xml");
     }
 
     @Test
     public void test_02() throws IOException, SAXException {
-        test("v13/csv-config-02.xml");
+        test("v17/csv-config-02.xml");
     }
 
     @Test
     public void test_03() throws IOException, SAXException {
-        test("v13/csv-config-03.xml");
+        test("v17/csv-config-03.xml");
     }
 
     @Test
     public void test_04() throws IOException, SAXException {
-        test("v13/csv-config-04.xml");
-    }
-
-    @Test
-    public void test_05() throws IOException, SAXException {
-        test("v13/csv-config-05.xml");
+        test("v17/csv-config-04.xml");
     }
 
     public void test(String messageFile) throws IOException, SAXException {
@@ -99,7 +92,7 @@ public class CSVReader_1_3_Test {
 
         StringWriter modelWriter = new StringWriter();
         model.writeModel(modelWriter);
-//        System.out.println(modelWriter);
+
         assertFalse(DiffBuilder.compare(getClass().getResourceAsStream(messageFile)).ignoreWhitespace().withTest(modelWriter.toString()).build().hasDifferences());
     }
 
@@ -131,8 +124,8 @@ public class CSVReader_1_3_Test {
 
         StringWriter modelWriter = new StringWriter();
         model.writeModel(modelWriter);
-//        System.out.println(modelWriter);
-        assertFalse(DiffBuilder.compare(getClass().getResourceAsStream("v13/csv-config-03.xml")).
+
+        assertFalse(DiffBuilder.compare(getClass().getResourceAsStream("v17/csv-config-03.xml")).
                 checkForSimilar().
                 withTest(modelWriter.toString()).build().hasDifferences());
     }

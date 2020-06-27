@@ -2,7 +2,7 @@
 <smooks-resource-list
 	xmlns="https://www.smooks.org/xsd/smooks-1.2.xsd"
 	xmlns:jb="https://www.smooks.org/xsd/smooks/javabean-1.6.xsd"
-	xmlns:dao="https://www.smooks.org/xsd/smooks/persistence-1.5.xsd">
+	xmlns:dao="https://www.smooks.org/xsd/smooks/persistence-2.0.xsd">
 
 	<!--
 		This is the normal Javabean binding. Notice that we have a wiring on customer. The

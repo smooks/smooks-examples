@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.smooks.examples</groupId>
         <artifactId>smooks-example-jms-router</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>1.0.0</version>
     </parent>
 
     <name>Smooks Example :: JMS Consumer</name>

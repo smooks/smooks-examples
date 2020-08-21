@@ -46,8 +46,8 @@ public class Customer {
 	
 	private String FirstName;
     private String LastName;
-    private Gender Gender;
-    private int Age;
+    private org.smooks.examples.csv2java.Gender Gender;
+    private Integer Age;
 	private String Country;
 	
     public String getCountry() {
@@ -74,10 +74,10 @@ public class Customer {
 	public void setGender(Gender gender) {
 		Gender = gender;
 	}
-	public int getAge() {
+	public Integer getAge() {
 		return Age;
 	}
-	public void setAge(int age) {
+	public void setAge(Integer age) {
 		Age = age;
 	}
 

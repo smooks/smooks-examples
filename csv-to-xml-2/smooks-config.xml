@@ -28,7 +28,7 @@
         </#if>-->
         </ftl:template>
         <ftl:use>
-            <ftl:inline directive="replace"/>
+            <ftl:inline directive="REPLACE"/>
         </ftl:use>
     </ftl:freemarker>
 

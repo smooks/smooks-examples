@@ -58,7 +58,7 @@
         <!-- Note the date decoder is not configured with a format.  Will therefore use the default (SOAP).  See DateDecoder class. -->
         <jb:value property="creationDate" decoder="Date" data="header/date" />
         <!-- Note the "special" decoder for the trackingNumbers. -->
-        <jb:value property="trackingNumbers" decoder="org.smooks.examples.modeldrivenbasic.model.TrackingNumberDecoder" data="history/trackingNumbers" />
+        <jb:value property="trackingNumbers" decoder="org.smooks.examples.modeldrivenbasic.model.TrackingNumberTypeConverterFactory" data="history/trackingNumbers" />
     </jb:bean>
 
     <!--

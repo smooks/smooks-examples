@@ -42,9 +42,9 @@
  */
 package org.smooks.examples.xmlrwtransform;
 
-import org.smooks.examples.xmlrwtransform.model.Order;
 import org.junit.jupiter.api.Test;
 import org.smooks.cartridges.javabean.binding.xml.XMLBinding;
+import org.smooks.examples.xmlrwtransform.model.Order;
 import org.smooks.payload.StringSource;
 import org.xml.sax.SAXException;
 import org.xmlunit.builder.DiffBuilder;
@@ -67,8 +67,8 @@ public class XMLReadWriteTest {
         XMLBinding xmlV1Binding = new XMLBinding().add("v1-binding-config.xml");
         XMLBinding xmlV2Binding = new XMLBinding().add("v2-binding-config.xml");
 
-        xmlV1Binding.intiailize();
-        xmlV2Binding.intiailize();
+        xmlV1Binding.intialise();
+        xmlV2Binding.intialise();
 
         Order order = xmlV1Binding.fromXML(new StringSource(Main.orderV1XMLMessage), Order.class);
 

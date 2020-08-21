@@ -42,11 +42,13 @@
  */
 package org.smooks.examples.profiling;
 
-import org.smooks.delivery.dom.DOMElementVisitor;
 import org.smooks.container.ExecutionContext;
-import org.smooks.cdr.annotation.ConfigParam;
+import org.smooks.delivery.dom.DOMElementVisitor;
 import org.smooks.xml.DomUtils;
 import org.w3c.dom.Element;
+
+import javax.inject.Inject;
+import javax.inject.Named;
 
 /**
  * Basic transformer that simply renames an element.
@@ -55,8 +57,9 @@ import org.w3c.dom.Element;
  */
 public class BasicJavaTransformer implements DOMElementVisitor {
 
-    @ConfigParam(name = "newName", defaultVal = "xxx")
-    private String newElementName;
+    @Inject
+    @Named("newName")
+    private String newElementName = "xxx";
     
     public void visitBefore(Element element, ExecutionContext executionContext) {
         // Not doing anything on this visit - wait untill after visiting the elements child content...

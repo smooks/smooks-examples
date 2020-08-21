@@ -1,6 +1,6 @@
 /*-
  * ========================LICENSE_START=================================
- * Smooks Example :: Basic Model Driven (Virtual)
+ * Smooks Example :: CSV-to-Java
  * %%
  * Copyright (C) 2020 Smooks
  * %%
@@ -40,44 +40,21 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * =========================LICENSE_END==================================
  */
-package org.smooks.examples.modeldrivenbasicvirtual.decoders;
+package org.smooks.examples.fixedlength2java;
 
-import org.smooks.javabean.DataDecodeException;
-import org.smooks.javabean.DataDecoder;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Vector;
-import java.util.regex.Pattern;
+import org.smooks.converter.TypeConverter;
+import org.smooks.converter.TypeConverterDescriptor;
+import org.smooks.converter.factory.TypeConverterFactory;
 
-/**
- * Decoder for the Tracking numbers.
- *
- * @author <a href="mailto:tom.fennelly@gmail.com">tom.fennelly@gmail.com</a>
- */
-public class TrackingNumberDecoder implements DataDecoder {
+public class GenderTypeConverterFactory implements TypeConverterFactory<String, Gender> {
+    @Override
+    public TypeConverter<String, Gender> createTypeConverter() {
+        return value -> Enum.valueOf(Gender.class, value);
+    }
 
-    private static Pattern lineSplitter = Pattern.compile("$", Pattern.MULTILINE);
-
-    public Object decode(String historyText) throws DataDecodeException {
-        // break the history up line by line - 1 tracking-number per line
-        String[] unparsedTrackingNumber = lineSplitter.split(historyText);
-        List<Map<String, String>> trackingNumbers = new Vector<Map<String, String>>(unparsedTrackingNumber.length);
-
-        // iterate over and parse the tracking-number lines
-        for (int i = 0; i < unparsedTrackingNumber.length; i++) {
-            String[] tokens = unparsedTrackingNumber[i].trim().split(":");
-
-            if(tokens.length == 2) {
-                Map<String, String> trackingNumber = new HashMap<String, String>();
-
-                trackingNumber.put("shipperID", tokens[0]);
-                trackingNumber.put("shipmentNumber", tokens[1]);
-                trackingNumbers.add(trackingNumber);
-            }
-        }
-
-        return trackingNumbers;
+    @Override
+    public TypeConverterDescriptor<Class<String>, Class<Gender>> getTypeConverterDescriptor() {
+        return new TypeConverterDescriptor<>(String.class, Gender.class);
     }
 }

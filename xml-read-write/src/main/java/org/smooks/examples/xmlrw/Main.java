@@ -68,7 +68,7 @@ public class Main {
 
         // Create and initilise the XMLBinding instance...
         XMLBinding xmlBinding = new XMLBinding().add("smooks-config.xml");
-        xmlBinding.intiailize();
+        xmlBinding.intialise();
 
         // Read the order XML into the Order Object model...
         Order order = xmlBinding.fromXML(new StringSource(orderXMLMessage), Order.class);
@@ -88,7 +88,7 @@ public class Main {
         userMessage("\n\n** Press enter to see the Order input sample message (input-message.xml):");
         System.out.println("\n\n");
         System.out.println("==============Source Order XML Message==============");
-        System.out.println(new String(orderXMLMessage));
+        System.out.println(orderXMLMessage);
         System.out.println("====================================================");
     }
 

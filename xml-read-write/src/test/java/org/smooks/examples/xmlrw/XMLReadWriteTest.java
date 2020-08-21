@@ -42,17 +42,16 @@
  */
 package org.smooks.examples.xmlrw;
 
-import org.smooks.examples.xmlrw.model.Order;
-import org.smooks.examples.xmlrw.model.OrderItem;
-
-import java.io.IOException;
-import java.io.StringWriter;
-
 import org.junit.jupiter.api.Test;
 import org.smooks.cartridges.javabean.binding.xml.XMLBinding;
+import org.smooks.examples.xmlrw.model.Order;
+import org.smooks.examples.xmlrw.model.OrderItem;
 import org.smooks.payload.StringSource;
 import org.xml.sax.SAXException;
 import org.xmlunit.builder.DiffBuilder;
+
+import java.io.IOException;
+import java.io.StringWriter;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -64,7 +63,7 @@ public class XMLReadWriteTest {
 	@Test
     public void test() throws IOException, SAXException {
         XMLBinding xmlBinding = new XMLBinding().add("smooks-config.xml");
-        xmlBinding.intiailize();
+        xmlBinding.intialise();
 
         Order order = xmlBinding.fromXML(new StringSource(Main.orderXMLMessage), Order.class);
 

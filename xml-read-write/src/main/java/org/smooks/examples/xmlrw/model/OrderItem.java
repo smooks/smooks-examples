@@ -46,15 +46,15 @@ package org.smooks.examples.xmlrw.model;
  * @author <a href="mailto:tom.fennelly@gmail.com">tom.fennelly@gmail.com</a>
  */
 public class OrderItem {
-    private long productId;
+    private Long productId;
     private Integer quantity;
-    private double price;
+    private Double price;
 
-    public long getProductId() {
+    public Long getProductId() {
         return productId;
     }
 
-    public void setProductId(long productId) {
+    public void setProductId(Long productId) {
         this.productId = productId;
     }
 
@@ -66,11 +66,11 @@ public class OrderItem {
         this.quantity = quantity;
     }
 
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 }

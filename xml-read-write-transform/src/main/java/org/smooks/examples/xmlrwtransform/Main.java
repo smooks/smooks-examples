@@ -44,12 +44,11 @@ package org.smooks.examples.xmlrwtransform;
 
 import org.smooks.SmooksException;
 import org.smooks.cartridges.javabean.binding.xml.XMLBinding;
+import org.smooks.examples.xmlrwtransform.model.Order;
+import org.smooks.examples.xmlrwtransform.model.OrderItem;
 import org.smooks.io.StreamUtils;
 import org.smooks.payload.StringSource;
 import org.xml.sax.SAXException;
-
-import org.smooks.examples.xmlrwtransform.model.Order;
-import org.smooks.examples.xmlrwtransform.model.OrderItem;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -71,8 +70,8 @@ public class Main {
         // Create and initilise the XMLBinding instances for v1 and v2 of the XMLs...
         XMLBinding xmlBindingV1 = new XMLBinding().add("v1-binding-config.xml");
         XMLBinding xmlBindingV2 = new XMLBinding().add("v2-binding-config.xml");
-        xmlBindingV1.intiailize();
-        xmlBindingV2.intiailize();
+        xmlBindingV1.intialise();
+        xmlBindingV2.intialise();
 
         // Read the v1 order XML into the Order Object model...
         Order order = xmlBindingV1.fromXML(new StringSource(orderV1XMLMessage), Order.class);

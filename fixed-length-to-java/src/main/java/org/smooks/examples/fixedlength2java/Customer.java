@@ -47,7 +47,7 @@ public class Customer {
 	private String firstName;
     private String lastName;
     private Gender gender;
-    private int age;
+    private Integer age;
 	private String country;
 
     public String getCountry() {
@@ -74,10 +74,10 @@ public class Customer {
 	public void setGender(Gender gender) {
 		this.gender = gender;
 	}
-	public int getAge() {
+	public Integer getAge() {
 		return age;
 	}
-	public void setAge(int age) {
+	public void setAge(Integer age) {
 		this.age = age;
 	}
 

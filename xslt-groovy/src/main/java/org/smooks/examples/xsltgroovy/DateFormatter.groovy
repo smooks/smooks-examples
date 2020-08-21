@@ -40,19 +40,17 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * =========================LICENSE_END==================================
  */
-package org.smooks.examples.xsltgroovy;
+package org.smooks.examples.xsltgroovy
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import org.smooks.cdr.SmooksResourceConfiguration
+import org.smooks.container.ExecutionContext
+import org.smooks.delivery.dom.DOMVisitAfter
+import org.smooks.xml.DomUtils
+import org.w3c.dom.Document
+import org.w3c.dom.Element
 
-import org.smooks.delivery.dom.DOMElementVisitor;
-import org.smooks.container.ExecutionContext;
-import org.smooks.cdr.SmooksResourceConfiguration;
-import org.smooks.xml.DomUtils;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node
-import org.smooks.delivery.dom.DOMVisitAfter;
+import java.text.ParseException
+import java.text.SimpleDateFormat
 
 /**
  * Date Formatting class.
@@ -68,8 +66,8 @@ public class DateFormatter implements DOMVisitAfter {
     private Properties outputFields;
 
     public void setConfiguration(SmooksResourceConfiguration configuration) {
-        String inputFormat = configuration.getStringParameter("input-format");
-        String outputFormats = configuration.getStringParameter("output-format", "time=HH:mm\nday=dd\nmonth=MM\nyear=yy");
+        String inputFormat = configuration.getParameterValue("input-format", String.class);
+        String outputFormats = configuration.getParameterValue("output-format", String.class, "time=HH:mm\nday=dd\nmonth=MM\nyear=yy");
 
         assert inputFormat != null;
         assert inputFormat != '';

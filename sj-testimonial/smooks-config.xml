@@ -120,12 +120,12 @@
     </jb:bean>
 
     <resource-config selector="decoder:Time">
-        <resource>org.smooks.javabean.decoders.SqlTimeDecoder</resource>
+        <resource>org.smooks.converter.factory.system.SqlTimeConverterFactory$SqlTimeTypeConverter</resource>
         <param name="format">HH:mm:ss</param>
     </resource-config>
 
     <resource-config selector="decoder:Date">
-        <resource>org.smooks.javabean.decoders.SqlDateDecoder</resource>
+        <resource>org.smooks.converter.factory.system.SqlDateConverterFactory$SqlDateTypeConverter</resource>
         <param name="format">yyyy-MM-dd</param>
     </resource-config>
 

@@ -25,6 +25,7 @@
         <jb:value property="date" decoder="Date" data="#/ord:date">
             <jb:decodeParam name="format">EEE MMM dd HH:mm:ss z yyyy</jb:decodeParam>
             <jb:decodeParam name="locale">en_IE</jb:decodeParam>
+            <jb:decodeParam name="zoneId">America/New_York</jb:decodeParam>
         </jb:value>
         <jb:value property="customerNumber" data="#/ord:customer/@number"/>
         <jb:value property="customerName" data="#/ord:customer"/>

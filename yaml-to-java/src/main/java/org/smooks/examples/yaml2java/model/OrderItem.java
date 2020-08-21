@@ -48,16 +48,16 @@ import java.math.BigDecimal;
  * @author <a href="mailto:tom.fennelly@gmail.com">tom.fennelly@gmail.com</a>
  */
 public class OrderItem {
-    private int quantity;
+    private Integer quantity;
     private String productId;
     private BigDecimal price;
     private String title;
 
-    public int getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 

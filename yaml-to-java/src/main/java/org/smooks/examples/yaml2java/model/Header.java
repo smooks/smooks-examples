@@ -42,15 +42,15 @@
  */
 package org.smooks.examples.yaml2java.model;
 
-import java.util.Date;
 import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * @author <a href="mailto:tom.fennelly@gmail.com">tom.fennelly@gmail.com</a>
  */
 public class Header {
     private String orderId;
-    private long orderStatus;
+    private Long orderStatus;
     private BigDecimal netAmount;
     private BigDecimal totalAmount;
     private BigDecimal tax;
@@ -67,11 +67,11 @@ public class Header {
         this.orderId = orderId;
     }
 
-    public long getOrderStatus() {
+    public Long getOrderStatus() {
         return orderStatus;
     }
 
-    public void setOrderStatus(long orderStatus) {
+    public void setOrderStatus(Long orderStatus) {
         this.orderStatus = orderStatus;
     }
 

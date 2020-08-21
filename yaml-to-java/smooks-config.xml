@@ -141,7 +141,7 @@
     <jb:bean class="org.smooks.examples.yaml2java.model.Address" beanId="billingAddress" createOnElement="billing-address">
     	<jb:value property="street" data="billing-address street" />
     	<jb:value property="city" data="billing-address city" />
-    	<jb:value property="zip-code" data="billing-address zip-code"/>
+    	<jb:value property="zipcode" data="billing-address zip-code"/>
     </jb:bean>
 
     <!--

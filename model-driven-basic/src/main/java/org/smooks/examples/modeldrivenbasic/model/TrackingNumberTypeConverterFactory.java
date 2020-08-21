@@ -42,44 +42,53 @@
  */
 package org.smooks.examples.modeldrivenbasic.model;
 
-import org.smooks.javabean.DataDecoder;
-import org.smooks.javabean.DataDecodeException;
+import org.smooks.converter.TypeConverter;
+import org.smooks.converter.TypeConverterDescriptor;
+import org.smooks.converter.factory.TypeConverterFactory;
 
-import java.util.regex.Pattern;
-import java.util.Vector;
 import java.util.List;
+import java.util.Vector;
+import java.util.regex.Pattern;
 
 /**
  * Decoder for the Tracking numbers.
  * 
  * @author <a href="mailto:tom.fennelly@gmail.com">tom.fennelly@gmail.com</a>
  */
-public class TrackingNumberDecoder implements DataDecoder {
+public class TrackingNumberTypeConverterFactory implements TypeConverterFactory<String, TrackingNumber[]> {
     
     private static Pattern lineSplitter = Pattern.compile("$", Pattern.MULTILINE);
+    
+    @Override
+    public TypeConverter<String, TrackingNumber[]> createTypeConverter() {
+        return value -> {
+            // break the history up line by line - 1 tracking-number per line
+            String[] unparsedTrackingNumber = lineSplitter.split(value);
+            List<TrackingNumber> tnList = new Vector<TrackingNumber>(unparsedTrackingNumber.length);
+            TrackingNumber[] trackingNumbers;
 
-    public Object decode(String historyText) throws DataDecodeException {
-        // break the history up line by line - 1 tracking-number per line
-        String[] unparsedTrackingNumber = lineSplitter.split(historyText);
-        List<TrackingNumber> tnList = new Vector<TrackingNumber>(unparsedTrackingNumber.length);
-        TrackingNumber[] trackingNumbers;
+            // iterate over and parse the tracking-number lines
+            for (int i = 0; i < unparsedTrackingNumber.length; i++) {
+                String[] tokens = unparsedTrackingNumber[i].trim().split(":");
 
-        // iterate over and parse the tracking-number lines
-        for (int i = 0; i < unparsedTrackingNumber.length; i++) {
-            String[] tokens = unparsedTrackingNumber[i].trim().split(":");
+                if(tokens.length == 2) {
+                    TrackingNumber trackingNumber = new TrackingNumber();
 
-            if(tokens.length == 2) {
-                TrackingNumber trackingNumber = new TrackingNumber();
-
-                trackingNumber.setShipperID(tokens[0]);
-                trackingNumber.setShipmentNumber(tokens[1]);
-                tnList.add(trackingNumber);
+                    trackingNumber.setShipperID(tokens[0]);
+                    trackingNumber.setShipmentNumber(tokens[1]);
+                    tnList.add(trackingNumber);
+                }
             }
-        }
 
-        trackingNumbers = new TrackingNumber[tnList.size()];
-        tnList.toArray(trackingNumbers);
+            trackingNumbers = new TrackingNumber[tnList.size()];
+            tnList.toArray(trackingNumbers);
 
-        return trackingNumbers;
+            return trackingNumbers;
+        };
+    }
+
+    @Override
+    public TypeConverterDescriptor<Class<String>, Class<TrackingNumber[]>> getTypeConverterDescriptor() {
+        return new TypeConverterDescriptor<>(String.class, TrackingNumber[].class);
     }
 }

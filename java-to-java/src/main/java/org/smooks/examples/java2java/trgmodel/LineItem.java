@@ -43,14 +43,13 @@
 package org.smooks.examples.java2java.trgmodel;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
 
 /**
  * @author <a href="mailto:tom.fennelly@gmail.com">tom.fennelly@gmail.com</a>
  */
 public class LineItem {
     private String productCode;
-    private int unitQuantity;
+    private Integer unitQuantity;
     private BigDecimal unitPrice;
 
     public String getProductCode() {
@@ -61,11 +60,11 @@ public class LineItem {
         this.productCode = productCode;
     }
 
-    public int getUnitQuantity() {
+    public Integer getUnitQuantity() {
         return unitQuantity;
     }
 
-    public void setUnitQuantity(int unitQuantity) {
+    public void setUnitQuantity(Integer unitQuantity) {
         this.unitQuantity = unitQuantity;
     }
 

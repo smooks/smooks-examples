@@ -53,7 +53,7 @@ import java.util.List;
  *
  * @author <a href="mailto:tom.fennelly@gmail.com">tom.fennelly@gmail.com</a>
  */
-@DefaultNamespace(uri = "https://www.smooks.org/xsd/smooks-1.2.xsd")
+@DefaultNamespace(uri = "https://www.smooks.org/xsd/smooks-2.0.xsd")
 public class SmooksModel {
 
     public static final String MODEL_DESCRIPTOR = "META-INF/org/smooks/model/descriptor.properties";

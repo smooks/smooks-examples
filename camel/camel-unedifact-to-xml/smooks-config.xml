@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <smooks-resource-list 
-    xmlns="https://www.smooks.org/xsd/smooks-1.2.xsd"
+    xmlns="https://www.smooks.org/xsd/smooks-2.0.xsd"
     xmlns:unedifact="https://www.smooks.org/xsd/smooks/unedifact-1.6.xsd"
-    xmlns:core="https://www.smooks.org/xsd/smooks/smooks-core-1.5.xsd">
+    xmlns:core="https://www.smooks.org/xsd/smooks/smooks-core-1.6.xsd">
 
     <unedifact:reader mappingModel="urn:org.smooks.edi.unedifact:d96a-mapping:1.4" ignoreNewLines="true" />
 

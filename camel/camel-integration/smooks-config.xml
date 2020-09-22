@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <smooks-resource-list 
-	xmlns="https://www.smooks.org/xsd/smooks-1.2.xsd"
+	xmlns="https://www.smooks.org/xsd/smooks-2.0.xsd"
 	xmlns:jb="https://www.smooks.org/xsd/smooks/javabean-1.6.xsd"
 	xmlns:camel="https://www.smooks.org/xsd/smooks/camel-1.5.xsd"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="https://www.smooks.org/xsd/smooks-1.2.xsd https://www.smooks.org/xsd/smooks-1.2.xsd
+	xsi:schemaLocation="https://www.smooks.org/xsd/smooks-2.0.xsd https://www.smooks.org/xsd/smooks-2.0.xsd
 		https://www.smooks.org/xsd/smooks/javabean-1.6.xsd https://www.smooks.org/xsd/smooks/javabean-1.6.xsd
 		https://www.smooks.org/xsd/smooks/camel-1.5.xsd https://www.smooks.org/xsd/smooks/camel-1.5.xsd">
  

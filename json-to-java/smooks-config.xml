@@ -43,7 +43,7 @@
   -->
 
 <smooks-resource-list
-	 xmlns="https://www.smooks.org/xsd/smooks-1.2.xsd"
+	 xmlns="https://www.smooks.org/xsd/smooks-2.0.xsd"
 	 xmlns:json="https://www.smooks.org/xsd/smooks/json-1.3.xsd"
 	 xmlns:jb="https://www.smooks.org/xsd/smooks/javabean-1.6.xsd">
 

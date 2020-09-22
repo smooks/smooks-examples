@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
-<smooks-resource-list xmlns="https://www.smooks.org/xsd/smooks-1.2.xsd"
-                      xmlns:core="https://www.smooks.org/xsd/smooks/smooks-core-1.5.xsd"
+<smooks-resource-list xmlns="https://www.smooks.org/xsd/smooks-2.0.xsd"
+                      xmlns:core="https://www.smooks.org/xsd/smooks/smooks-core-1.6.xsd"
                       xmlns:jb="https://www.smooks.org/xsd/smooks/javabean-1.6.xsd"
-                      xmlns:file="https://www.smooks.org/xsd/smooks/file-routing-1.3.xsd"
-                      xmlns:ftl="https://www.smooks.org/xsd/smooks/freemarker-1.2.xsd">
+                      xmlns:file="https://www.smooks.org/xsd/smooks/file-routing-2.0.xsd"
+                      xmlns:ftl="https://www.smooks.org/xsd/smooks/freemarker-2.0.xsd">
 
     <!--
     Filter the message using the SAX Filter (i.e. not DOM, so no

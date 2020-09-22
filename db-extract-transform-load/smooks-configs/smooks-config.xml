@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
-<smooks-resource-list xmlns="https://www.smooks.org/xsd/smooks-1.2.xsd"
-                      xmlns:core="https://www.smooks.org/xsd/smooks/smooks-core-1.5.xsd"
-	                  xmlns:db="https://www.smooks.org/xsd/smooks/db-routing-1.2.xsd">
+<smooks-resource-list xmlns="https://www.smooks.org/xsd/smooks-2.0.xsd"
+                      xmlns:core="https://www.smooks.org/xsd/smooks/smooks-core-1.6.xsd"
+	                  xmlns:db="https://www.smooks.org/xsd/smooks/db-routing-2.0.xsd">
 
     <!--
     Filter the message using the SAX Filter (i.e. not DOM, so no

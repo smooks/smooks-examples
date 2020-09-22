@@ -43,7 +43,7 @@
   -->
 
 <smooks-resource-list
-        xmlns="https://www.smooks.org/xsd/smooks-1.2.xsd"
+        xmlns="https://www.smooks.org/xsd/smooks-2.0.xsd"
         xmlns:regex="https://www.smooks.org/xsd/smooks/regex-1.6.xsd">
 
     <!--

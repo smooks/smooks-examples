@@ -42,7 +42,7 @@
   =========================LICENSE_END==================================
   -->
 
-<smooks-resource-list xmlns="https://www.smooks.org/xsd/smooks-1.2.xsd"
+<smooks-resource-list xmlns="https://www.smooks.org/xsd/smooks-2.0.xsd"
                       xmlns:jb16="https://www.smooks.org/xsd/smooks/javabean-1.6.xsd"
                       xmlns:csv17="https://www.smooks.org/xsd/smooks/csv-1.7.xsd">
 

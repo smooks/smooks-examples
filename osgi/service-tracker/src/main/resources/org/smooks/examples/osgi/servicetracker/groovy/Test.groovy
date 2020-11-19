@@ -43,10 +43,10 @@
 package org.smooks.examples.osgi.servicetracker.groovy;
 
 import org.smooks.container.ExecutionContext;
-import org.smooks.delivery.sax.SAXVisitAfter;
-import org.smooks.delivery.sax.SAXElement;
+import org.smooks.delivery.sax.ng.AfterVisitor
+import org.w3c.dom.Element;
 
-public class Test implements SAXVisitAfter {
+public class Test implements AfterVisitor {
 
     public void visitAfter(Element element, ExecutionContext executionContext) 
     {

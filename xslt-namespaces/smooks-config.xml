@@ -45,6 +45,10 @@
 <smooks-resource-list xmlns="https://www.smooks.org/xsd/smooks-2.0.xsd"
                       xmlns:xsl="https://www.smooks.org/xsd/smooks/xsl-2.0.xsd">
 
+    <params>
+        <param name="max.node.depth">0</param>
+    </params>
+    
     <xsl:xsl applyOnElement="#document">
         <xsl:template>
             <![CDATA[

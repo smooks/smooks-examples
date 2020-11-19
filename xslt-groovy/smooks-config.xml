@@ -45,12 +45,16 @@
 <smooks-resource-list xmlns="https://www.smooks.org/xsd/smooks-2.0.xsd"
                       xmlns:xsl="https://www.smooks.org/xsd/smooks/xsl-2.0.xsd">
 
+    <params>
+        <param name="max.node.depth">0</param>
+    </params>
+
     <!--
     Break out the <date> field into separate "time", "day", "month" and "year" fields using Groovy.
     This makes the complex date field value consumable by something like XSLT.
     -->
-    <resource-config selector="header date">
-	    <resource>/org/smooks/examples/xsltgroovy/DateFormatter.groovy</resource>
+    <resource-config selector="header/date">
+        <resource>/org/smooks/examples/xsltgroovy/DateFormatter.groovy</resource>
         <param name="input-format">EEE MMM dd HH:mm:ss z yyyy</param>
         <param name="output-format">
             time=HH:mm

@@ -4,12 +4,6 @@
 	                  xmlns:db="https://www.smooks.org/xsd/smooks/db-routing-2.0.xsd">
 
     <!--
-    Filter the message using the SAX Filter (i.e. not DOM, so no
-    intermediate DOM, so we can process huge messages...
-    -->
-    <core:filterSettings type="SAX" />
-
-    <!--
     Define the EDI stream parser for the orders message...
     -->
     <import file="edi-orders-parser.xml" />

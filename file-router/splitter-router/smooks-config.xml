@@ -5,12 +5,6 @@
                       xmlns:file="https://www.smooks.org/xsd/smooks/file-routing-2.0.xsd"
                       xmlns:ftl="https://www.smooks.org/xsd/smooks/freemarker-2.0.xsd">
 
-    <!--
-    Filter the message using the SAX Filter (i.e. not DOM, so no
-    intermediate DOM, so we can process huge messages...
-    -->
-    <core:filterSettings type="SAX" />
-
     <!-- Extract and decode data from the message.  Used in the freemarker template (below).
          Note that we could also use a NodeModel here... -->
     <jb:bean beanId="order" class="java.util.Hashtable" createOnElement="order">

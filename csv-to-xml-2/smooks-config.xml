@@ -15,9 +15,6 @@
         <csv:singleBinding beanId="person" class="java.util.HashMap"/>
     </csv:reader>
 
-    <!-- Use the SAX filter - more memory efficient and handle huge streams. -->
-    <core:filterSettings type="SAX" />
-
     <!-- Apply a FreeMarker template to each CSV record, generating a different XML structure based on the gender value... -->
     <ftl:freemarker applyOnElement="person">
         <ftl:template><!--

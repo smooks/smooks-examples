@@ -44,14 +44,13 @@ package org.smooks.examples.xsltgroovy
 
 import org.smooks.cdr.SmooksResourceConfiguration
 import org.smooks.container.ExecutionContext
-import org.smooks.delivery.dom.DOMVisitAfter
+import org.smooks.delivery.sax.ng.AfterVisitor
 import org.smooks.xml.DomUtils
 import org.w3c.dom.Document
 import org.w3c.dom.Element
 
 import java.text.ParseException
-import java.text.SimpleDateFormat
-
+import java.text.SimpleDateFormat 
 /**
  * Date Formatting class.
  * <p/>
@@ -60,12 +59,12 @@ import java.text.SimpleDateFormat
  *
  * @author <a href="mailto:tom.fennelly@jboss.com">tom.fennelly@jboss.com</a>
  */
-public class DateFormatter implements DOMVisitAfter {
+class DateFormatter implements AfterVisitor {
 
     private SimpleDateFormat dateDecodeFormat;
     private Properties outputFields;
 
-    public void setConfiguration(SmooksResourceConfiguration configuration) {
+    void setConfiguration(SmooksResourceConfiguration configuration) {
         String inputFormat = configuration.getParameterValue("input-format", String.class);
         String outputFormats = configuration.getParameterValue("output-format", String.class, "time=HH:mm\nday=dd\nmonth=MM\nyear=yy");
 
@@ -76,12 +75,11 @@ public class DateFormatter implements DOMVisitAfter {
         outputFields = parseOutputFields(outputFormats);
     }
 
-    public void visitAfter(Element element, ExecutionContext executionContext) {
-        String dateString = null;
-        Date date = null;
-
+    @Override
+    void visitAfter(Element element, ExecutionContext executionContext) {
         // Decode the date string...
-        dateString = element.getTextContent();
+        String dateString = element.getTextContent();
+        Date date = null;
         try {
             date = dateDecodeFormat.parse(dateString);
         } catch (ParseException e) {

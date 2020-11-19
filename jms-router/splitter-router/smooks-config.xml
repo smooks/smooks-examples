@@ -4,12 +4,6 @@
                       xmlns:jms="https://www.smooks.org/xsd/smooks/jms-routing-2.0.xsd"
                       xmlns:ftl="https://www.smooks.org/xsd/smooks/freemarker-2.0.xsd">
 
-    <!--
-    Filter the message using the SAX Filter (i.e. not DOM, so no
-    intermediate DOM, so we can process huge messages...
-    -->
-    <core:filterSettings type="SAX" />
-
     <!-- Capture the message data 2 seperate DOM model, for "order" and "order-item" fragments... -->
     <resource-config selector="order,order-item">
         <resource>org.smooks.delivery.DomModelCreator</resource>

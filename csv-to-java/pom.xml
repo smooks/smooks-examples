@@ -10,7 +10,7 @@
         <version>1.0.1-SNAPSHOT</version>
     </parent>
 
-    <name>Smooks Example :: CSV-to-Java</name>
+    <name>CSV-to-Java</name>
     <artifactId>smooks-example-csv-to-java</artifactId>
     <packaging>bundle</packaging>
 

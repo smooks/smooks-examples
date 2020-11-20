@@ -10,7 +10,7 @@
         <version>1.0.1-SNAPSHOT</version>
     </parent>
 
-    <name>Smooks Example :: Peaberry</name>
+    <name>Peaberry</name>
     <artifactId>smooks-example-peaberry</artifactId>
     <packaging>bundle</packaging>
 

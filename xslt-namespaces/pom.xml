@@ -10,7 +10,7 @@
         <version>1.0.1-SNAPSHOT</version>
     </parent>
 
-    <name>Smooks Example :: XSLT-namespaces</name>
+    <name>XSLT-namespaces</name>
     <artifactId>smooks-example-xslt-namespaces</artifactId>
     <packaging>bundle</packaging>
 

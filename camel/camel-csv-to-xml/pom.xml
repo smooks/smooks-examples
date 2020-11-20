@@ -10,7 +10,7 @@
         <version>1.0.1-SNAPSHOT</version>
     </parent>
 
-    <name>Smooks Example :: Smooks Camel CVS to XML</name>
+    <name>Smooks Camel CVS to XML</name>
     <artifactId>smooks-example-camel-csv-to-xml</artifactId>
     <packaging>bundle</packaging>
 

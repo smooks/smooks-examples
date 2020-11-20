@@ -10,7 +10,7 @@
         <version>1.0.1-SNAPSHOT</version>
     </parent>
 
-    <name>Smooks Example :: Flat File to XML (Using Regex)</name>
+    <name>Flat File to XML (Using Regex)</name>
     <artifactId>smooks-example-flatfile-to-xml-regex</artifactId>
     <packaging>bundle</packaging>
 

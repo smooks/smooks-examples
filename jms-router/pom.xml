@@ -10,7 +10,7 @@
         <version>1.0.1-SNAPSHOT</version>
     </parent>
 
-    <name>Smooks Example :: JMS Router</name>
+    <name>JMS Router</name>
     <artifactId>smooks-example-jms-router</artifactId>
     <packaging>pom</packaging>
 

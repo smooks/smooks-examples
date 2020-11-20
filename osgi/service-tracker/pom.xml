@@ -10,7 +10,7 @@
         <version>1.0.1-SNAPSHOT</version>
     </parent>
 
-    <name>Smooks Example :: Service-tracker</name>
+    <name>Service-tracker</name>
     <artifactId>smooks-example-service-tracker</artifactId>
     <packaging>bundle</packaging>
 

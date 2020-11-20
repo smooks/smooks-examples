@@ -10,7 +10,7 @@
         <version>1.0.1-SNAPSHOT</version>
     </parent>
 
-    <name>Smooks Example :: CSV-to-XML (Variable Record)</name>
+    <name>CSV-to-XML (Variable Record)</name>
     <artifactId>smooks-example-csv-variable-record</artifactId>
     <packaging>bundle</packaging>
 

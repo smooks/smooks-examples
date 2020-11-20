@@ -10,7 +10,7 @@
         <version>1.0.1-SNAPSHOT</version>
     </parent>
 
-    <name>Smooks Example :: Smooks OSGi Root</name>
+    <name>Smooks OSGi Root</name>
     <artifactId>smooks-examples-osgi</artifactId>
     <packaging>pom</packaging>
 

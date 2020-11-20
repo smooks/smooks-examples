@@ -10,7 +10,7 @@
         <version>1.0.1-SNAPSHOT</version>
     </parent>
 
-    <name>Smooks Example :: Groovy</name>
+    <name>Groovy</name>
     <artifactId>smooks-example-groovy</artifactId>
     <packaging>bundle</packaging>
 

@@ -10,7 +10,7 @@
         <version>1.0.1-SNAPSHOT</version>
     </parent>
 
-    <name>Smooks Example :: XML Read/Write Transform</name>
+    <name>XML Read/Write Transform</name>
     <artifactId>smooks-example-xml-rw-transform</artifactId>
     <packaging>bundle</packaging>
 

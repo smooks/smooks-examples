@@ -10,7 +10,7 @@
         <version>1.0.1-SNAPSHOT</version>
     </parent>
 
-    <name>Smooks Example :: File Router (Splitter)</name>
+    <name>File Router (Splitter)</name>
     <artifactId>smooks-example-file-splitter-router</artifactId>
     <packaging>bundle</packaging>
 

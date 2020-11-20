@@ -10,7 +10,7 @@
         <version>1.0.1-SNAPSHOT</version>
     </parent>
 
-    <name>Smooks Example :: FreeMarker (Huge)</name>
+    <name>FreeMarker (Huge)</name>
     <artifactId>smooks-example-ftl-huge</artifactId>
     <packaging>bundle</packaging>
 

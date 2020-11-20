@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<smooks-resource-list xmlns="https://www.smooks.org/xsd/smooks-2.0.xsd"
+                      xmlns:csv="https://www.smooks.org/xsd/smooks/csv-1.7.xsd">
+
+    <csv:reader fields="name,address,age" rootElementName="people" recordElementName="person" indent="true"/>
+
+</smooks-resource-list>

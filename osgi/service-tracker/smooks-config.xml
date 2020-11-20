@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <smooks-resource-list 
-	xmlns="https://www.smooks.org/xsd/smooks-1.2.xsd"
-	xmlns:g="https://www.smooks.org/xsd/smooks/groovy-1.2.xsd"
+	xmlns="https://www.smooks.org/xsd/smooks-2.0.xsd"
+	xmlns:g="https://www.smooks.org/xsd/smooks/groovy-2.0.xsd"
 	xmlns:jb="https://www.smooks.org/xsd/smooks/javabean-1.6.xsd">
 
 	<g:groovy executeOnElement="order">

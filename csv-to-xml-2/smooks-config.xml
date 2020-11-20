@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
-<smooks-resource-list xmlns="https://www.smooks.org/xsd/smooks-1.2.xsd"
+<smooks-resource-list xmlns="https://www.smooks.org/xsd/smooks-2.0.xsd"
                       xmlns:csv="https://www.smooks.org/xsd/smooks/csv-1.7.xsd"
-                      xmlns:core="https://www.smooks.org/xsd/smooks/smooks-core-1.5.xsd"
-                      xmlns:ftl="https://www.smooks.org/xsd/smooks/freemarker-1.2.xsd">
+                      xmlns:core="https://www.smooks.org/xsd/smooks/smooks-core-1.6.xsd"
+                      xmlns:ftl="https://www.smooks.org/xsd/smooks/freemarker-2.0.xsd">
 
     <!--
     Configure the CSV Reader to read the message and change it into a stream of SAX events.
@@ -15,9 +15,6 @@
         <csv:singleBinding beanId="person" class="java.util.HashMap"/>
     </csv:reader>
 
-    <!-- Use the SAX filter - more memory efficient and handle huge streams. -->
-    <core:filterSettings type="SAX" />
-
     <!-- Apply a FreeMarker template to each CSV record, generating a different XML structure based on the gender value... -->
     <ftl:freemarker applyOnElement="person">
         <ftl:template><!--
@@ -28,7 +25,7 @@
         </#if>-->
         </ftl:template>
         <ftl:use>
-            <ftl:inline directive="replace"/>
+            <ftl:inline directive="REPLACE"/>
         </ftl:use>
     </ftl:freemarker>
 

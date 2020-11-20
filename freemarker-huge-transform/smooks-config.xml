@@ -1,14 +1,9 @@
 <?xml version="1.0"?>
-<smooks-resource-list xmlns="https://www.smooks.org/xsd/smooks-1.2.xsd"
-                      xmlns:core="https://www.smooks.org/xsd/smooks/smooks-core-1.5.xsd"
-                      xmlns:ftl="https://www.smooks.org/xsd/smooks/freemarker-1.2.xsd">
-
-    <!--
-    Filter the message using the SAX Filter (i.e. not DOM, so no
-    intermediate DOM for the "complete" message - there are "mini" DOMs
-    for the NodeModels below)....
-    -->
-    <core:filterSettings type="SAX" defaultSerialization="false" />
+<smooks-resource-list xmlns="https://www.smooks.org/xsd/smooks-2.0.xsd"
+                      xmlns:core="https://www.smooks.org/xsd/smooks/smooks-core-1.6.xsd"
+                      xmlns:ftl="https://www.smooks.org/xsd/smooks/freemarker-2.0.xsd">
+    
+    <core:filterSettings defaultSerialization="false" />
 
     <!--
     Create 2 NodeModels.  One high level model for the "order"

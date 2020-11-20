@@ -11,7 +11,7 @@
         <version>1.0.1-SNAPSHOT</version>
     </parent>
 
-    <name>Smooks Example :: EDI-to-XML</name>
+    <name>EDI-to-XML</name>
     <artifactId>smooks-example-edi-to-xml</artifactId>
     <packaging>bundle</packaging>
 

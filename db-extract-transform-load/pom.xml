@@ -10,7 +10,7 @@
         <version>1.0.1-SNAPSHOT</version>
     </parent>
 
-    <name>Smooks Example :: EDI-to-DB ETL</name>
+    <name>EDI-to-DB ETL</name>
     <artifactId>smooks-example-db-extract-transform-load</artifactId>
     <packaging>bundle</packaging>
 

@@ -10,7 +10,7 @@
         <version>1.0.1-SNAPSHOT</version>
     </parent>
 
-    <name>Smooks Example :: Smooks Camel Root</name>
+    <name>Smooks Camel Root</name>
     <artifactId>smooks-camel-examples</artifactId>
     <packaging>pom</packaging>
 

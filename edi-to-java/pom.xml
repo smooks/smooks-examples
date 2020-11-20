@@ -10,7 +10,7 @@
         <version>1.0.1-SNAPSHOT</version>
     </parent>
 
-    <name>Smooks Example :: EDI-to-Java</name>
+    <name>EDI-to-Java</name>
     <artifactId>smooks-example-edi-to-java</artifactId>
     <packaging>bundle</packaging>
 

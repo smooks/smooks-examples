@@ -10,7 +10,7 @@
         <version>1.0.1-SNAPSHOT</version>
     </parent>
 
-    <name>Smooks Example :: Smooks Camel Integration</name>
+    <name>Smooks Camel Integration</name>
     <artifactId>smooks-example-camel-integration</artifactId>
     <packaging>bundle</packaging>
 

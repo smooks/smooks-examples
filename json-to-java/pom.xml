@@ -10,7 +10,7 @@
         <version>1.0.1-SNAPSHOT</version>
     </parent>
 
-    <name>Smooks Example :: JSON-to-Java</name>
+    <name>JSON-to-Java</name>
     <artifactId>smooks-example-json-to-java</artifactId>
     <packaging>bundle</packaging>
 

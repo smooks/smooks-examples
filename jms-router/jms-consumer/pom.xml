@@ -10,7 +10,7 @@
         <version>1.0.1-SNAPSHOT</version>
     </parent>
 
-    <name>Smooks Example :: JMS Consumer</name>
+    <name>JMS Consumer</name>
     <artifactId>smooks-example-jms-consumer</artifactId>
     <packaging>bundle</packaging>
 </project>

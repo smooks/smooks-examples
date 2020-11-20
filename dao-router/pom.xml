@@ -10,7 +10,7 @@
         <version>1.0.1-SNAPSHOT</version>
     </parent>
 
-    <name>Smooks Example :: DAO Router</name>
+    <name>DAO Router</name>
     <artifactId>smooks-example-dao-router</artifactId>
     <packaging>bundle</packaging>
 

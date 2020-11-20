@@ -10,7 +10,7 @@
         <version>1.0.1-SNAPSHOT</version>
     </parent>
 
-    <name>Smooks Example :: Profiling</name>
+    <name>Profiling</name>
     <artifactId>smooks-example-profiling</artifactId>
     <packaging>bundle</packaging>
 

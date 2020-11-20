@@ -10,7 +10,7 @@
         <version>1.0.1-SNAPSHOT</version>
     </parent>
 
-    <name>Smooks Example :: Java-Basic</name>
+    <name>Java-Basic</name>
     <artifactId>smooks-example-java-basic</artifactId>
     <packaging>bundle</packaging>
 

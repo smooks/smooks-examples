@@ -10,7 +10,7 @@
         <version>1.0.1-SNAPSHOT</version>
     </parent>
 
-    <name>Smooks Example :: XSLT-Groovy</name>
+    <name>XSLT-Groovy</name>
     <artifactId>smooks-example-xslt-groovy</artifactId>
     <packaging>bundle</packaging>
 

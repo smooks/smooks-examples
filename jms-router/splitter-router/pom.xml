@@ -10,7 +10,7 @@
         <version>1.0.1-SNAPSHOT</version>
     </parent>
 
-    <name>Smooks Example :: JMS Splitter-Router</name>
+    <name>JMS Splitter-Router</name>
     <artifactId>smooks-example-jms-splitter-router</artifactId>
     <packaging>bundle</packaging>
 

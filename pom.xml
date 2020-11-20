@@ -12,6 +12,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <smooks.version>2.0.0-M2-SNAPSHOT</smooks.version>
+        <smooks.edifact.cartridge.version>2.0.0-M2-SNAPSHOT</smooks.edifact.cartridge.version>
         <spring.version>5.2.5.RELEASE</spring.version>
     </properties>
 
@@ -36,6 +37,7 @@
         <module>freemarker-huge-transform</module>
         <module>groovy</module>
         <module>java-basic</module>
+        <module>java-to-edifact</module>
         <module>java-to-java</module>
         <module>java-to-xml</module>
         <module>jms-router</module>

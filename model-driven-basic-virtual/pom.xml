@@ -10,7 +10,7 @@
         <version>1.0.1-SNAPSHOT</version>
     </parent>
 
-    <name>Smooks Example :: Basic Model Driven (Virtual)</name>
+    <name>Basic Model Driven (Virtual)</name>
     <artifactId>smooks-example-model-driven-basic-virtual</artifactId>
     <packaging>bundle</packaging>
 

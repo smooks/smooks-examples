@@ -10,7 +10,7 @@
         <version>1.0.1-SNAPSHOT</version>
     </parent>
 
-    <name>Smooks Example :: Java-to-XML</name>
+    <name>Java-to-XML</name>
     <artifactId>smooks-example-java-to-xml</artifactId>
     <packaging>bundle</packaging>
 

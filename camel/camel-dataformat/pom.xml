@@ -10,7 +10,7 @@
         <version>1.0.1-SNAPSHOT</version>
     </parent>
 
-    <name>Smooks Example :: Smooks Camel Dataformat</name>
+    <name>Smooks Camel Dataformat</name>
     <artifactId>smooks-example-camel-dataformat</artifactId>
     <packaging>bundle</packaging>
 

@@ -10,7 +10,7 @@
         <version>1.0.1-SNAPSHOT</version>
     </parent>
 
-    <name>Smooks Example :: Blueprint</name>
+    <name>Blueprint</name>
     <artifactId>smooks-example-blueprint</artifactId>
     <packaging>bundle</packaging>
 

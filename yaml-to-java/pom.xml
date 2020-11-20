@@ -9,7 +9,7 @@
         <version>1.0.1-SNAPSHOT</version>
     </parent>
 
-    <name>Smooks Example :: YAML-to-Java</name>
+    <name>YAML-to-Java</name>
     <artifactId>smooks-example-yaml-to-java</artifactId>
     <packaging>bundle</packaging>
 

@@ -10,7 +10,7 @@
         <version>1.0.1-SNAPSHOT</version>
     </parent>
 
-    <name>Smooks Example :: Bundle-activator</name>
+    <name>Bundle-activator</name>
     <artifactId>smooks-example-bundle-activator</artifactId>
     <packaging>bundle</packaging>
 

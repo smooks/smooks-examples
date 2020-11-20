@@ -7,7 +7,7 @@
         <artifactId>smooks-examples</artifactId>
         <version>1.0.1-SNAPSHOT</version>
     </parent>
-    <name>Smooks Example - UN/EDIFACT - To XML</name>
+    <name>UN/EDIFACT - To XML</name>
     <artifactId>smooks-example-unedifact-to-xml</artifactId>
 
     <build>
@@ -32,7 +32,7 @@
         <dependency>
             <groupId>org.smooks.cartridges.edi</groupId>
             <artifactId>edifact-schemas</artifactId>
-            <version>2.0.0-M2-SNAPSHOT</version>
+            <version>${smooks.edifact.cartridge.version}</version>
             <classifier>d03b</classifier>
         </dependency>
         <dependency>

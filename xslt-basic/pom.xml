@@ -10,7 +10,7 @@
         <version>1.0.1-SNAPSHOT</version>
     </parent>
 
-    <name>Smooks Example :: XSLT-Basic</name>
+    <name>XSLT-Basic</name>
     <artifactId>smooks-example-xslt-basic</artifactId>
     <packaging>bundle</packaging>
 

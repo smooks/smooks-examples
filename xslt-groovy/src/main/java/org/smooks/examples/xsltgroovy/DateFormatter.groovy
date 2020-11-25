@@ -42,7 +42,7 @@
  */
 package org.smooks.examples.xsltgroovy
 
-import org.smooks.cdr.SmooksResourceConfiguration
+import org.smooks.cdr.ResourceConfig
 import org.smooks.container.ExecutionContext
 import org.smooks.delivery.sax.ng.AfterVisitor
 import org.smooks.xml.DomUtils
@@ -64,9 +64,9 @@ class DateFormatter implements AfterVisitor {
     private SimpleDateFormat dateDecodeFormat;
     private Properties outputFields;
 
-    void setConfiguration(SmooksResourceConfiguration configuration) {
-        String inputFormat = configuration.getParameterValue("input-format", String.class);
-        String outputFormats = configuration.getParameterValue("output-format", String.class, "time=HH:mm\nday=dd\nmonth=MM\nyear=yy");
+    void setConfiguration(ResourceConfig resourceConfig) {
+        String inputFormat = resourceConfig.getParameterValue("input-format", String.class);
+        String outputFormats = resourceConfig.getParameterValue("output-format", String.class, "time=HH:mm\nday=dd\nmonth=MM\nyear=yy");
 
         assert inputFormat != null;
         assert inputFormat != '';

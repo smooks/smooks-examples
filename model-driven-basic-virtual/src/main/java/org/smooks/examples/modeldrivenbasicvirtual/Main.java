@@ -72,6 +72,8 @@ public class Main {
      * @return The transformed request/response.
      */
     protected String runSmooksTransform(byte[] message) throws IOException {
+        HtmlReportGenerator htmlReportGenerator = new HtmlReportGenerator("target/report/report.html");
+        htmlReportGenerator.getReportConfiguration().setAutoCloseWriter(false);
         try {
             // Create an exec context for the target profile....
             ExecutionContext executionContext = smooks.createExecutionContext();
@@ -79,13 +81,14 @@ public class Main {
             StringResult stringResult = new StringResult();
 
             // Configure the execution context to generate a report...
-            executionContext.setEventListener(new HtmlReportGenerator("target/report/report.html"));
+            executionContext.getContentDeliveryRuntime().addExecutionEventListener(htmlReportGenerator);
 
             // Filter the message to the outputWriter, using the execution context...
             smooks.filterSource(executionContext, stringSource, stringResult);
 
             return stringResult.toString();
         } finally {
+            htmlReportGenerator.getReportConfiguration().getOutputWriter().close();
             smooks.close();
         }
     }

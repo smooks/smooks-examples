@@ -75,7 +75,7 @@ public class Main {
             StringWriter writer = new StringWriter();
 
             // Configure the execution context to generate a report...
-            executionContext.setEventListener(new HtmlReportGenerator("target/report/report.html"));
+            executionContext.getContentDeliveryRuntime().addExecutionEventListener(new HtmlReportGenerator("target/report/report.html"));
 
             // Filter the message to the result writer, using the execution context...
             smooks.filterSource(executionContext, new JavaSource(inputJavaObject), new StreamResult(writer));

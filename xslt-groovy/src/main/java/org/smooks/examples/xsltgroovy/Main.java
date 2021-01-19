@@ -73,7 +73,8 @@ public class Main {
     	
         // Instantiate Smooks with the config...
         Smooks smooks = new Smooks("smooks-config.xml");
-
+        HtmlReportGenerator htmlReportGenerator = new HtmlReportGenerator("target/report/report.html");
+        htmlReportGenerator.getReportConfiguration().setAutoCloseWriter(false);
         try {
              // Create an exec context - no profiles....
             ExecutionContext executionContext = smooks.createExecutionContext();
@@ -81,7 +82,7 @@ public class Main {
             StringResult result = new StringResult();
 
             // Configure the execution context to generate a report...
-            executionContext.setEventListener(new HtmlReportGenerator("target/report/report.html"));
+            executionContext.getContentDeliveryRuntime().addExecutionEventListener(htmlReportGenerator);
 
             // Filter the input message to the outputWriter, using the execution context...
             smooks.filterSource(executionContext, new StreamSource(new ByteArrayInputStream(messageIn)), result);
@@ -90,6 +91,7 @@ public class Main {
 
             return result.toString();
         } finally {
+            htmlReportGenerator.getReportConfiguration().getOutputWriter().close();
             smooks.close();
         }
     }

@@ -6,13 +6,13 @@
 
     <groupId>org.smooks.examples</groupId>
     <artifactId>smooks-examples</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <smooks.version>2.0.0-M2</smooks.version>
-        <smooks.edifact.cartridge.version>2.0.0-M2</smooks.edifact.cartridge.version>
+        <smooks.version>2.0.0-M3-SNAPSHOT</smooks.version>
+        <smooks.edifact.cartridge.version>2.0.0-M3-SNAPSHOT</smooks.edifact.cartridge.version>
         <spring.version>5.2.5.RELEASE</spring.version>
     </properties>
 
@@ -139,34 +139,34 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>license-maven-plugin</artifactId>
-                <version>2.0.0</version>
-                <configuration>
-                    <verbose>false</verbose>
-                    <addJavaLicenseAfterPackage>false</addJavaLicenseAfterPackage>
-                    <canUpdateDescription>false</canUpdateDescription>
-                    <licenseName>lgpl_v3_apache_v2</licenseName>
-                    <licenseResolver>file://${maven.multiModuleProjectDirectory}/license</licenseResolver>
-                    <inceptionYear>2020</inceptionYear>
-                    <organizationName>Smooks</organizationName>
-                    <processStartTag>========================LICENSE_START=================================</processStartTag>
-                    <processEndTag>=========================LICENSE_END==================================</processEndTag>
-                    <excludes>
-                        <exclude>drools-fusion</exclude>
-                    </excludes>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>update-file-header</id>
-                        <goals>
-                            <goal>update-file-header</goal>
-                        </goals>
-                        <phase>process-sources</phase>
-                    </execution>
-                </executions>
-            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>org.codehaus.mojo</groupId>-->
+<!--                <artifactId>license-maven-plugin</artifactId>-->
+<!--                <version>2.0.0</version>-->
+<!--                <configuration>-->
+<!--                    <verbose>false</verbose>-->
+<!--                    <addJavaLicenseAfterPackage>false</addJavaLicenseAfterPackage>-->
+<!--                    <canUpdateDescription>false</canUpdateDescription>-->
+<!--                    <licenseName>lgpl_v3_apache_v2</licenseName>-->
+<!--                    <licenseResolver>file://${maven.multiModuleProjectDirectory}/license</licenseResolver>-->
+<!--                    <inceptionYear>2020</inceptionYear>-->
+<!--                    <organizationName>Smooks</organizationName>-->
+<!--                    <processStartTag>========================LICENSE_START=================================</processStartTag>-->
+<!--                    <processEndTag>=========================LICENSE_END==================================</processEndTag>-->
+<!--                    <excludes>-->
+<!--                        <exclude>drools-fusion</exclude>-->
+<!--                    </excludes>-->
+<!--                </configuration>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>update-file-header</id>-->
+<!--                        <goals>-->
+<!--                            <goal>update-file-header</goal>-->
+<!--                        </goals>-->
+<!--                        <phase>process-sources</phase>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
             <plugin>
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>

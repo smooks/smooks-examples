@@ -44,7 +44,8 @@
 
 <smooks-resource-list xmlns="https://www.smooks.org/xsd/smooks-2.0.xsd"
                       xmlns:jb="https://www.smooks.org/xsd/smooks/javabean-1.6.xsd"
-                      xmlns:ftl="https://www.smooks.org/xsd/smooks/freemarker-2.0.xsd">
+                      xmlns:ftl="https://www.smooks.org/xsd/smooks/freemarker-2.0.xsd"
+                      xmlns:core="https://www.smooks.org/xsd/smooks/smooks-core-1.6.xsd">
     <!--
     This configuration binds data from the message into the Shipping object model,
     and then uses that binding data in a FreeMarker template to generate the result...
@@ -78,8 +79,17 @@
     <!--
     Use a FreeMarker template to perform the model driven transformation.  You can also inline the template here.
     -->
-    <ftl:freemarker applyOnElement="#document">
-        <ftl:template>/HistoryTrans.ftl</ftl:template>
-    </ftl:freemarker>
-
+    <core:smooks filterSourceOn="#document" maxNodeDepth="0">
+        <core:action>
+            <core:inline directive="REPLACE"/>
+        </core:action>
+        <core:config>
+            <smooks-resource-list>
+                <ftl:freemarker applyOnElement="#document">
+                    <ftl:template>/HistoryTrans.ftl</ftl:template>
+                </ftl:freemarker>
+            </smooks-resource-list>
+        </core:config>
+    </core:smooks>
+    
 </smooks-resource-list>

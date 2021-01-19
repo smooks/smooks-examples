@@ -16,17 +16,23 @@
     </csv:reader>
 
     <!-- Apply a FreeMarker template to each CSV record, generating a different XML structure based on the gender value... -->
-    <ftl:freemarker applyOnElement="person">
-        <ftl:template><!--
+    <core:smooks filterSourceOn="person">
+        <core:action>
+            <core:inline directive="REPLACE"/>
+        </core:action>
+        <core:config>
+            <smooks-resource-list>
+                <ftl:freemarker applyOnElement="person">
+                    <ftl:template><!--
         <#if person.gender == "male">
             <male age="${person.age}"><name><fn>${person.firstname}</fn><ln>${person.lastname}</ln></name><nationality>${person.country}</nationality></male>
         <#else>
             <female age="${person.age}"><name><fn>${person.firstname}</fn><ln>${person.lastname}</ln></name><nationality>${person.country}</nationality></female>
         </#if>-->
-        </ftl:template>
-        <ftl:use>
-            <ftl:inline directive="REPLACE"/>
-        </ftl:use>
-    </ftl:freemarker>
+                    </ftl:template>
+                </ftl:freemarker>
+            </smooks-resource-list>
+        </core:config>
+    </core:smooks>
 
 </smooks-resource-list>

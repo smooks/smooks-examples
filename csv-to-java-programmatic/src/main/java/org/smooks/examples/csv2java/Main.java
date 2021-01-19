@@ -80,7 +80,7 @@ public class Main {
 
             // Configure the execution context to generate a report...
             ExecutionContext executionContext = smooks.createExecutionContext();
-            executionContext.setEventListener(new HtmlReportGenerator("target/report/report.html"));
+            executionContext.getContentDeliveryRuntime().addExecutionEventListener(new HtmlReportGenerator("target/report/report.html"));
 
             JavaResult javaResult = new JavaResult();
             smooks.filterSource(executionContext, new StringSource(messageIn), javaResult);

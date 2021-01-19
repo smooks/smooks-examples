@@ -186,7 +186,7 @@ public class Main {
             ExecutionContext executionContext = smooks.createExecutionContext();
 
             // Configure the execution context to generate a report...
-            executionContext.setEventListener(new HtmlReportGenerator("target/report/report-dao.html"));
+            executionContext.getContentDeliveryRuntime().addExecutionEventListener(new HtmlReportGenerator("target/report/report-dao.html"));
 
             DaoRegister<Object> register =
                 MapDaoRegister.builder()
@@ -216,7 +216,7 @@ public class Main {
             ExecutionContext executionContext = smooks.createExecutionContext();
 
             // Configure the execution context to generate a report...
-            executionContext.setEventListener(new HtmlReportGenerator("target/report/report-jpa.html"));
+            executionContext.getContentDeliveryRuntime().addExecutionEventListener(new HtmlReportGenerator("target/report/report-jpa.html"));
 
             PersistenceUtil.setDAORegister(executionContext, new EntityManagerRegister(em));
 
@@ -240,7 +240,7 @@ public class Main {
             ExecutionContext executionContext = smooks.createExecutionContext();
 
             // Configure the execution context to generate a report...
-            executionContext.setEventListener(new HtmlReportGenerator("target/report/report-ibatis.html"));
+            executionContext.getContentDeliveryRuntime().addExecutionEventListener(new HtmlReportGenerator("target/report/report-ibatis.html"));
 
             PersistenceUtil.setDAORegister(executionContext, new SqlMapClientRegister(sqlMapClient));
 

@@ -43,10 +43,23 @@
   -->
 
 <smooks-resource-list xmlns="https://www.smooks.org/xsd/smooks-2.0.xsd"
-                      xmlns:xsl="https://www.smooks.org/xsd/smooks/xsl-2.0.xsd">
+                      xmlns:xsl="https://www.smooks.org/xsd/smooks/xsl-2.0.xsd"
+                      xmlns:core="https://www.smooks.org/xsd/smooks/smooks-core-1.6.xsd">
 
-    <xsl:xsl applyOnElement="c/b">
-        <xsl:template>/BasicXslTransform.xsl</xsl:template>
-    </xsl:xsl>
+    <core:smooks filterSourceOn="c/b">
+        <core:action>
+            <core:inline directive="REPLACE"/>
+        </core:action>
+        <core:config>
+            <smooks-resource-list>
+                <resource-config selector="global-parameters">
+                    <param name="close.empty.elements">true</param>
+                </resource-config>
+                <xsl:xsl applyOnElement="b">
+                    <xsl:template>/BasicXslTransform.xsl</xsl:template>
+                </xsl:xsl>
+            </smooks-resource-list>
+        </core:config>
+    </core:smooks>
 
 </smooks-resource-list>

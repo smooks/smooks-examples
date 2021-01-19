@@ -44,15 +44,25 @@
 
 <smooks-resource-list xmlns="https://www.smooks.org/xsd/smooks-2.0.xsd"
                       xmlns:jb="https://www.smooks.org/xsd/smooks/javabean-1.6.xsd"
-                      xmlns:ftl="https://www.smooks.org/xsd/smooks/freemarker-2.0.xsd">
+                      xmlns:ftl="https://www.smooks.org/xsd/smooks/freemarker-2.0.xsd"
+                      xmlns:core="https://www.smooks.org/xsd/smooks/smooks-core-1.6.xsd">
 
     <!--
     Use a FreeMarker template to perform the model driven transformation.  You can also inline the template here.
     -->
-    <ftl:freemarker applyOnElement="#document">
-        <ftl:template>/HistoryTrans.ftl</ftl:template>
-    </ftl:freemarker>
-
+    <core:smooks filterSourceOn="#document" maxNodeDepth="0">
+        <core:action>
+            <core:inline directive="REPLACE"/>
+        </core:action>
+        <core:config>
+            <smooks-resource-list>
+                <ftl:freemarker applyOnElement="#document">
+                    <ftl:template>/HistoryTrans.ftl</ftl:template>
+                </ftl:freemarker>
+            </smooks-resource-list>
+        </core:config>
+    </core:smooks>
+    
     <!--
     Configure the virtual "history" bean creation and population. Wires in the "warehouse" bean.
     -->

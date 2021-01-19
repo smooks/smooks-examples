@@ -43,11 +43,8 @@
   -->
 
 <smooks-resource-list xmlns="https://www.smooks.org/xsd/smooks-2.0.xsd"
-                      xmlns:xsl="https://www.smooks.org/xsd/smooks/xsl-2.0.xsd">
-
-    <params>
-        <param name="max.node.depth">0</param>
-    </params>
+                      xmlns:xsl="https://www.smooks.org/xsd/smooks/xsl-2.0.xsd"
+                      xmlns:core="https://www.smooks.org/xsd/smooks/smooks-core-1.6.xsd">
 
     <!--
     Break out the <date> field into separate "time", "day", "month" and "year" fields using Groovy.
@@ -68,8 +65,17 @@
     Transform the document (as a whole) using XSLT.  The complex date field has already been preprocessed into
     separate fields using Groovy (see above config) - XSLT can handle it easily now :-)
     -->
-    <xsl:xsl applyOnElement="#document">
-        <xsl:template>/order.xsl</xsl:template>
-    </xsl:xsl>
-
+    <core:smooks filterSourceOn="#document" maxNodeDepth="0">
+        <core:action>
+            <core:inline directive="REPLACE"/>
+        </core:action>
+        <core:config>
+            <smooks-resource-list>
+                <xsl:xsl applyOnElement="#document">
+                    <xsl:template>/order.xsl</xsl:template>
+                </xsl:xsl>
+            </smooks-resource-list>
+        </core:config>
+    </core:smooks>
+    
 </smooks-resource-list>

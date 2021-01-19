@@ -65,17 +65,19 @@ public class Main {
 
         Smooks smooks = new Smooks("smooks-config.xml");
 
+        HtmlReportGenerator htmlReportGenerator = new HtmlReportGenerator("target/report/report.html");
+        htmlReportGenerator.getReportConfiguration().setAutoCloseWriter(false);
         try {
             ExecutionContext executionContext = smooks.createExecutionContext();
             StringWriter writer = new StringWriter();
 
             // Configure the execution context to generate a report...
-            executionContext.setEventListener(new HtmlReportGenerator("target/report/report.html"));
-
+            executionContext.getContentDeliveryRuntime().addExecutionEventListener(htmlReportGenerator);
             smooks.filterSource(executionContext, new StreamSource(new InputStreamReader(new ByteArrayInputStream(messageIn), "UTF-8")), new StreamResult(writer));
 
             return writer.toString();
         } finally {
+            htmlReportGenerator.getReportConfiguration().getOutputWriter().close();
             smooks.close();
         }
     }

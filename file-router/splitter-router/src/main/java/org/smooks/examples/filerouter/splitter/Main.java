@@ -79,7 +79,7 @@ public class Main
             final StreamSource source = new StreamSource( new FileInputStream( "target/input-message.xml" ) );
             final StreamResult result = null;
 
-            //executionContext.setEventListener(new HtmlReportGenerator("target/report.html"));
+            //executionContext.getContentDeliveryRuntime().addExecutionEventListener(new HtmlReportGenerator("target/report.html"));
 
             //	perform the transform
             smooks.filterSource(executionContext, source, result);

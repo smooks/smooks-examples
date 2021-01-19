@@ -21,18 +21,23 @@
     </jb:bean>
 
     <!--
-    Every time we hit the end of an <order-item> element, apply this freemarker template,
-    outputting the result to the "orderItemSplitStream" OutputStream, which is the file
-    output stream configured below.
-    -->
-    <ftl:freemarker applyOnElement="order-item">
-        <ftl:template>target/classes/orderitem-split.ftl</ftl:template>
-        <ftl:use>
-            <!-- Output the templating result to the "orderItemSplitStream" file output stream... -->
-            <ftl:outputTo outputStreamResource="orderItemSplitStream"/>
-        </ftl:use>
-    </ftl:freemarker>
-
+     Every time we hit the end of an <order-item> element, apply this freemarker template,
+     outputting the result to the "orderItemSplitStream" OutputStream, which is the file
+     output stream configured below.
+     -->
+    <core:smooks filterSourceOn="order-item">
+        <core:action>
+            <core:outputTo outputStreamResource="orderItemSplitStream"/>
+        </core:action>
+        <core:config>
+            <smooks-resource-list>
+                <ftl:freemarker applyOnElement="order-item">
+                    <ftl:template>target/classes/orderitem-split.ftl</ftl:template>
+                </ftl:freemarker>
+            </smooks-resource-list>
+        </core:config>
+    </core:smooks>
+   
     <!-- Create/open a file output stream.  This is writen to by the freemarker template (above).. -->
     <file:outputStream resourceName="orderItemSplitStream" openOnElement="order-item">
         <file:fileNamePattern>order-${order.orderId}-${order.orderItem.itemId}.xml</file:fileNamePattern>

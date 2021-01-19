@@ -74,7 +74,7 @@ public class Main
         try {
             ExecutionContext execContext = smooks.createExecutionContext();
 
-            execContext.setEventListener(new HtmlReportGenerator("target/report.html"));
+            execContext.getContentDeliveryRuntime().addExecutionEventListener(new HtmlReportGenerator("target/report.html"));
             smooks.filterSource(execContext, new ByteSource(messageIn), null);
         } finally {
             smooks.close();

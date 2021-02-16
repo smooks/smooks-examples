@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<smooks-resource-list xmlns="https://www.smooks.org/xsd/smooks-2.0.xsd"
+                      xmlns:core="https://www.smooks.org/xsd/smooks/smooks-core-1.6.xsd"
+                      xmlns:ftl="https://www.smooks.org/xsd/smooks/freemarker-2.0.xsd"
+                      xmlns:edifact="https://www.smooks.org/xsd/smooks/edifact-2.0.xsd"
+                      xmlns:dfdl="https://www.smooks.org/xsd/smooks/dfdl-1.0.xsd">
+
+    <dfdl:parser schemaURI="/csv.dfdl.xsd"/>
+    
+    <core:smooks filterSourceOn="record" maxNodeDepth="0">
+        <core:action>
+            <core:outputTo outputStreamResource="inventoryOutputStream"/>
+        </core:action>
+        <core:config>
+            <smooks-resource-list>
+                <resource-config selector="#document">
+                    <resource>org.smooks.examples.pipeline.InventoryVisitor</resource>
+                </resource-config>
+            </smooks-resource-list>
+        </core:config>
+    </core:smooks>
+
+    <core:smooks filterSourceOn="record" maxNodeDepth="0">
+        <core:config>
+            <smooks-resource-list>
+                <core:node-reader>
+                    <ftl:freemarker applyOnElement="#document">
+                        <ftl:template>purchaseOrder.xml.ftl</ftl:template>
+                    </ftl:freemarker>
+                </core:node-reader>
+                <resource-config selector="purchaseOrder">
+                    <resource>org.smooks.examples.pipeline.CrmVisitor</resource>
+                </resource-config>
+            </smooks-resource-list>
+        </core:config>
+    </core:smooks>
+
+    <core:smooks filterSourceOn="#document">
+        <core:action>
+            <core:inline>
+                <core:replace/>
+            </core:inline>
+        </core:action>
+        <core:config>
+            <smooks-resource-list>
+                <core:node-reader>
+                    <ftl:freemarker applyOnElement="#document" applyBefore="true">
+                        <ftl:template>header.xml.ftl</ftl:template>
+                    </ftl:freemarker>
+                    <core:smooks filterSourceOn="record" maxNodeDepth="0">
+                        <core:config>
+                            <smooks-resource-list>
+                                <ftl:freemarker applyOnElement="#document">
+                                    <ftl:template>body.xml.ftl</ftl:template>
+                                </ftl:freemarker>
+                            </smooks-resource-list>
+                        </core:config>
+                    </core:smooks>
+                    <ftl:freemarker applyOnElement="#document">
+                        <ftl:template>footer.xml.ftl</ftl:template>
+                    </ftl:freemarker>
+                </core:node-reader>
+
+                <edifact:unparser schemaURI="/d96a/EDIFACT-Messages.dfdl.xsd" unparseOnElement="*">
+                    <edifact:messageTypes>
+                        <edifact:messageType>ORDERS</edifact:messageType>
+                    </edifact:messageTypes>
+                </edifact:unparser>
+            </smooks-resource-list>
+        </core:config>
+    </core:smooks>
+
+</smooks-resource-list>

@@ -20,6 +20,7 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>license-maven-plugin</artifactId>
                 <configuration>
+                    <licenseResolver>${project.baseUri}../license</licenseResolver>
                     <excludes>
                         <exclude>test/resources/expected.xml</exclude>
                     </excludes>

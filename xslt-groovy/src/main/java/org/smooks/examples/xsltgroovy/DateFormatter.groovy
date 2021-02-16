@@ -44,11 +44,13 @@ package org.smooks.examples.xsltgroovy
 
 import org.smooks.cdr.ResourceConfig
 import org.smooks.container.ExecutionContext
-import org.smooks.delivery.sax.ng.AfterVisitor
-import org.smooks.xml.DomUtils
-import org.w3c.dom.Document
+import org.smooks.delivery.DomToXmlWriter
+import org.smooks.delivery.sax.ng.ElementVisitor
+import org.smooks.io.Stream
+import org.w3c.dom.CharacterData
 import org.w3c.dom.Element
 
+import javax.inject.Inject
 import java.text.ParseException
 import java.text.SimpleDateFormat 
 /**
@@ -59,57 +61,67 @@ import java.text.SimpleDateFormat
  *
  * @author <a href="mailto:tom.fennelly@jboss.com">tom.fennelly@jboss.com</a>
  */
-class DateFormatter implements AfterVisitor {
+class DateFormatter implements ElementVisitor {
 
-    private SimpleDateFormat dateDecodeFormat;
-    private Properties outputFields;
+    @Inject
+    private DomToXmlWriter domToXmlWriter;
+    
+    private SimpleDateFormat dateDecodeFormat
+    private Properties outputFields
 
     void setConfiguration(ResourceConfig resourceConfig) {
-        String inputFormat = resourceConfig.getParameterValue("input-format", String.class);
-        String outputFormats = resourceConfig.getParameterValue("output-format", String.class, "time=HH:mm\nday=dd\nmonth=MM\nyear=yy");
+        String inputFormat = resourceConfig.getParameterValue("input-format", String.class)
+        String outputFormats = resourceConfig.getParameterValue("output-format", String.class, "time=HH:mm\nday=dd\nmonth=MM\nyear=yy")
 
-        assert inputFormat != null;
-        assert inputFormat != '';
-        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
-        dateDecodeFormat = new SimpleDateFormat(inputFormat);
-        outputFields = parseOutputFields(outputFormats);
+        assert inputFormat != null
+        assert inputFormat != ''
+        TimeZone.setDefault(TimeZone.getTimeZone("UTC"))
+        dateDecodeFormat = new SimpleDateFormat(inputFormat)
+        outputFields = parseOutputFields(outputFormats)
     }
 
     @Override
     void visitAfter(Element element, ExecutionContext executionContext) {
+        domToXmlWriter.writeEndElement(element, Stream.out(executionContext))
+    }
+
+    private static Properties parseOutputFields(String outputFormats) {
+        Properties properties = new Properties()
+        properties.load(new ByteArrayInputStream(outputFormats.getBytes()))
+        return properties
+    }
+
+    @Override
+    void visitChildText(CharacterData characterData, ExecutionContext executionContext) {
         // Decode the date string...
-        String dateString = element.getTextContent();
-        Date date = null;
+        String dateString = characterData.getTextContent()
+        Date date = null
         try {
-            date = dateDecodeFormat.parse(dateString);
+            date = dateDecodeFormat.parse(dateString)
         } catch (ParseException e) {
-            date = new Date(0);
+            date = new Date(0)
         }
-
-        // Clear the child contents of the element...
-        DomUtils.removeChildren(element);
-
+        
         // Define a closure that we'll use for adding formatted date fields
         // from the decoded date...
         def addDateField = { fieldName, fieldFormat ->
-            Document doc = element.getOwnerDocument();
-            Element newElement = doc.createElement(fieldName);
-            SimpleDateFormat dateFormatter = new SimpleDateFormat(fieldFormat);
-
-            element.appendChild(newElement);
-            newElement.appendChild(doc.createTextNode(dateFormatter.format(date)));
+            SimpleDateFormat dateFormatter = new SimpleDateFormat(fieldFormat)
+            Stream.out(executionContext).write(String.format("<%s>%s</%s>", fieldName, dateFormatter.format(date), fieldName))
         }
 
         // Apply the "addDateField" closure to the entries of the outputFields specified as
         // a Smooks resource parameter...
         for (entry in outputFields) {
-            addDateField(entry.key, entry.value);
+            addDateField(entry.key, entry.value)
         }
     }
 
-    private Properties parseOutputFields(String outputFormats) {
-        Properties properties = new Properties();
-        properties.load(new ByteArrayInputStream(outputFormats.getBytes()));
-        return properties;
+    @Override
+    void visitChildElement(Element childElement, ExecutionContext executionContext) {
+    }
+
+    @Override
+    void visitBefore(Element element, ExecutionContext executionContext) {
+        domToXmlWriter.writeStartElement(element, Stream.out(executionContext))
     }
 }

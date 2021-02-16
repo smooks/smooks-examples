@@ -45,32 +45,38 @@
 <smooks-resource-list xmlns="https://www.smooks.org/xsd/smooks-2.0.xsd"
                       xmlns:xsl="https://www.smooks.org/xsd/smooks/xsl-2.0.xsd"
                       xmlns:core="https://www.smooks.org/xsd/smooks/smooks-core-1.6.xsd">
-
-    <!--
-    Break out the <date> field into separate "time", "day", "month" and "year" fields using Groovy.
-    This makes the complex date field value consumable by something like XSLT.
-    -->
-    <resource-config selector="header/date">
-        <resource>/org/smooks/examples/xsltgroovy/DateFormatter.groovy</resource>
-        <param name="input-format">EEE MMM dd HH:mm:ss z yyyy</param>
-        <param name="output-format">
-            time=HH:mm
-            day=dd
-            month=MM
-            year=yy
-        </param>
-    </resource-config>
-
-    <!--
-    Transform the document (as a whole) using XSLT.  The complex date field has already been preprocessed into
-    separate fields using Groovy (see above config) - XSLT can handle it easily now :-)
-    -->
+    
     <core:smooks filterSourceOn="#document" maxNodeDepth="0">
         <core:action>
-            <core:inline directive="REPLACE"/>
+            <core:inline>
+                <core:replace/>
+            </core:inline>
         </core:action>
         <core:config>
             <smooks-resource-list>
+                <core:node-reader>
+                    <!--
+                        Break out the <date> field into separate "time", "day", "month" and "year" fields using Groovy.
+                        This makes the complex date field value consumable by something like XSLT.
+                     -->
+                    <resource-config selector="header/date">
+                        <resource>/org/smooks/examples/xsltgroovy/DateFormatter.groovy</resource>
+                        <param name="input-format">EEE MMM dd HH:mm:ss z yyyy</param>
+                        <param name="output-format">
+                            time=HH:mm
+                            day=dd
+                            month=MM
+                            year=yy
+                        </param>
+                    </resource-config>
+                    <resource-config selector="*">
+                        <resource>/org/smooks/examples/xsltgroovy/Echo.groovy</resource>
+                    </resource-config>
+                </core:node-reader>
+                <!--
+                   Transform the document (as a whole) using XSLT.  The complex date field has already been preprocessed into
+                    separate fields using Groovy (see above config) - XSLT can handle it easily now :-)
+                -->
                 <xsl:xsl applyOnElement="#document">
                     <xsl:template>/order.xsl</xsl:template>
                 </xsl:xsl>

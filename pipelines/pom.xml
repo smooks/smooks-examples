@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.smooks.examples</groupId>
+        <artifactId>smooks-examples</artifactId>
+        <version>1.0.2-SNAPSHOT</version>
+    </parent>
+
+    <name>Pipelines</name>
+    <artifactId>smooks-example-pipelines</artifactId>
+    <packaging>bundle</packaging>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>license-maven-plugin</artifactId>
+                <configuration>
+                    <licenseResolver>${project.baseUri}../license</licenseResolver>
+                    <excludes>
+                        <exclude>test/resources/expected.xml</exclude>
+                        <exclude>test/resources/expected.json</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.asynchttpclient</groupId>
+                <artifactId>async-http-client-bom</artifactId>
+                <version>2.12.2</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-xml</artifactId>
+            <version>2.12.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.asynchttpclient</groupId>
+            <artifactId>async-http-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.smooks.cartridges.edi</groupId>
+            <artifactId>smooks-edifact-cartridge</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.smooks.cartridges.edi</groupId>
+            <artifactId>edifact-schemas</artifactId>
+            <classifier>d96a</classifier>
+            <version>${smooks.edifact.cartridge.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.smooks.cartridges</groupId>
+            <artifactId>smooks-templating-cartridge</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+        </dependency>
+    </dependencies>
+</project>

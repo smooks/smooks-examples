@@ -10,6 +10,18 @@
         <version>1.0.2-SNAPSHOT</version>
     </parent>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>license-maven-plugin</artifactId>
+                <configuration>
+                    <licenseResolver>${project.baseUri}../../license</licenseResolver>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
     <name>JMS Consumer</name>
     <artifactId>smooks-example-jms-consumer</artifactId>
     <packaging>bundle</packaging>

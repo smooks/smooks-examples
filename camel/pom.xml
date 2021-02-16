@@ -15,9 +15,21 @@
     <packaging>pom</packaging>
 
     <properties>
-        <camel.version>3.4.0</camel.version>
+        <camel.version>3.7.1</camel.version>
     </properties>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>license-maven-plugin</artifactId>
+                <configuration>
+                    <licenseResolver>${project.baseUri}../license</licenseResolver>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    
     <modules>
         <module>camel-integration</module>
         <module>camel-dataformat</module>

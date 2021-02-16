@@ -45,7 +45,6 @@
                 <groupId>org.ops4j</groupId>
                 <artifactId>maven-pax-plugin</artifactId>
             </plugin>
-
             <plugin>
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>
@@ -67,6 +66,13 @@
                         <Smooks-Config>${basedir}/smooks-config.xml</Smooks-Config>
                         <Smooks-Input-File>${basedir}/input-message.xml</Smooks-Input-File>
                     </instructions>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>license-maven-plugin</artifactId>
+                <configuration>
+                    <licenseResolver>${project.baseUri}../../license</licenseResolver>
                 </configuration>
             </plugin>
         </plugins>

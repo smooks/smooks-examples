@@ -79,6 +79,7 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>license-maven-plugin</artifactId>
                 <configuration>
+                    <licenseResolver>${project.baseUri}../license</licenseResolver>
                     <includes>
                         <include>main/java/org/smooks/examples/drools/events/SmooksEventSource.java</include>
                     </includes>

@@ -18,7 +18,9 @@
     <!-- Apply a FreeMarker template to each CSV record, generating a different XML structure based on the gender value... -->
     <core:smooks filterSourceOn="person">
         <core:action>
-            <core:inline directive="REPLACE"/>
+            <core:inline>
+                <core:replace/>
+            </core:inline>
         </core:action>
         <core:config>
             <smooks-resource-list>

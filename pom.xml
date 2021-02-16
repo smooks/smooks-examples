@@ -56,6 +56,7 @@
         <module>xslt-groovy</module>
         <module>xslt-namespaces</module>
         <module>yaml-to-java</module>
+        <module>pipelines</module>
     </modules>
 
     <dependencyManagement>
@@ -148,7 +149,7 @@
                     <addJavaLicenseAfterPackage>false</addJavaLicenseAfterPackage>
                     <canUpdateDescription>false</canUpdateDescription>
                     <licenseName>lgpl_v3_apache_v2</licenseName>
-                    <licenseResolver>file://${maven.multiModuleProjectDirectory}/license</licenseResolver>
+                    <licenseResolver>file://${project.basedir}/license</licenseResolver>
                     <inceptionYear>2020</inceptionYear>
                     <organizationName>Smooks</organizationName>
                     <processStartTag>========================LICENSE_START=================================</processStartTag>

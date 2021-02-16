@@ -1,8 +1,8 @@
 /*-
  * ========================LICENSE_START=================================
- * Smooks Example :: EDI-to-Java
+ * EDI-to-Java
  * %%
- * Copyright (C) 2020 Smooks
+ * Copyright (C) 2020 - 2021 Smooks
  * %%
  * Licensed under the terms of the Apache License Version 2.0, or
  * the GNU Lesser General Public License version 3.0 or later.

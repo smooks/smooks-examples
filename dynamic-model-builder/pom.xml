@@ -42,6 +42,7 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>license-maven-plugin</artifactId>
                 <configuration>
+                    <licenseResolver>${project.baseUri}../license</licenseResolver>
                     <excludes>
                         <exclude>test/java/org/smooks/model/csv/v17/csv-config-01.xml</exclude>
                         <exclude>test/java/org/smooks/model/csv/v17/csv-config-02.xml</exclude>

@@ -58,11 +58,11 @@
     
     <route>
       <from uri="direct:ireland"/>
-      <process ref="ieLogger"></process>
+      <process ref="ieLogger"/>
     </route>
     <route>
       <from uri="direct:greatbritain"/>
-      <process ref="gbLogger"></process>
+      <process ref="gbLogger"/>
     </route>
   </camelContext>
   

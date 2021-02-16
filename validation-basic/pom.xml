@@ -14,6 +14,18 @@
     <artifactId>smooks-example-validation-basic</artifactId>
     <packaging>bundle</packaging>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>license-maven-plugin</artifactId>
+                <configuration>
+                    <licenseResolver>${project.baseUri}../license</licenseResolver>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    
     <dependencies>
         <dependency>
             <groupId>org.smooks.cartridges</groupId>

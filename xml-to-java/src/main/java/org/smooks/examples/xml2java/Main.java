@@ -43,17 +43,19 @@
 package org.smooks.examples.xml2java;
 
 import org.smooks.Smooks;
-import org.smooks.SmooksException;
-import org.smooks.event.report.HtmlReportGenerator;
+import org.smooks.api.ExecutionContext;
+import org.smooks.api.SmooksException;
+import org.smooks.engine.report.HtmlReportGenerator;
 import org.smooks.examples.xml2java.model.Order;
 import org.smooks.examples.xml2java.model.OrderItem;
-import org.smooks.payload.JavaResult;
 import org.smooks.io.StreamUtils;
-import org.smooks.container.ExecutionContext;
+import org.smooks.io.payload.JavaResult;
 import org.xml.sax.SAXException;
 
 import javax.xml.transform.stream.StreamSource;
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
 
 /**
  * Simple example main class.

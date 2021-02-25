@@ -43,14 +43,17 @@
 package org.smooks.examples.jms.splitterouter;
 
 import org.smooks.Smooks;
-import org.smooks.SmooksException;
-import org.smooks.event.report.HtmlReportGenerator;
-import org.smooks.container.ExecutionContext;
+import org.smooks.api.ExecutionContext;
+import org.smooks.api.SmooksException;
+import org.smooks.engine.report.HtmlReportGenerator;
 import org.smooks.io.StreamUtils;
-import org.smooks.payload.ByteSource;
+import org.smooks.io.payload.ByteSource;
 import org.xml.sax.SAXException;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 /**
  *

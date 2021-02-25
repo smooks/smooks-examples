@@ -45,8 +45,8 @@ package org.smooks.examples.java2edifact;
 import org.smooks.Smooks;
 import org.smooks.edifact.binding.d03b.*;
 import org.smooks.edifact.binding.service.*;
-import org.smooks.payload.ByteSource;
-import org.smooks.payload.StringResult;
+import org.smooks.io.payload.ByteSource;
+import org.smooks.io.payload.StringResult;
 import org.xml.sax.SAXException;
 
 import javax.xml.bind.JAXBContext;

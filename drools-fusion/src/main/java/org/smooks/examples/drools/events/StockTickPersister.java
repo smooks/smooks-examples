@@ -16,16 +16,11 @@
 
 package org.smooks.examples.drools.events;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.Reader;
-import java.io.Writer;
+import org.smooks.examples.drools.model.StockTick;
+
+import java.io.*;
 import java.text.MessageFormat;
 import java.text.ParseException;
-
-import org.smooks.examples.drools.model.StockTick;
 
 /**
  * A helper to save and load StockTicks

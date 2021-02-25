@@ -43,7 +43,7 @@
 package org.smooks.examples.edifact2xml;
 
 import org.smooks.Smooks;
-import org.smooks.SmooksException;
+import org.smooks.api.SmooksException;
 import org.smooks.cartridges.edifact.EdifactReaderConfigurator;
 import org.smooks.io.StreamUtils;
 import org.xml.sax.SAXException;

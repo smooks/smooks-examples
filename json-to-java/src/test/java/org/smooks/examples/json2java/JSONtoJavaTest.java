@@ -42,13 +42,12 @@
  */
 package org.smooks.examples.json2java;
 
-import java.io.IOException;
-
-
 import org.junit.jupiter.api.Test;
 import org.smooks.io.StreamUtils;
 import org.xml.sax.SAXException;
 import org.xmlunit.builder.DiffBuilder;
+
+import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 

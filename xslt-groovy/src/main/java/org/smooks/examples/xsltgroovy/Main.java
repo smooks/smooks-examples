@@ -42,21 +42,20 @@
  */
 package org.smooks.examples.xsltgroovy;
 
+import org.smooks.Smooks;
+import org.smooks.api.ExecutionContext;
+import org.smooks.api.SmooksException;
+import org.smooks.engine.report.HtmlReportGenerator;
+import org.smooks.io.StreamUtils;
+import org.smooks.io.payload.StringResult;
+import org.xml.sax.SAXException;
+
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.stream.StreamSource;
 import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Locale;
-
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.stream.StreamSource;
-
-import org.smooks.Smooks;
-import org.smooks.SmooksException;
-import org.smooks.event.report.HtmlReportGenerator;
-import org.smooks.container.ExecutionContext;
-import org.smooks.io.StreamUtils;
-import org.smooks.payload.StringResult;
-import org.xml.sax.SAXException;
 
 /**
  * Simple example main class.

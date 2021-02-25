@@ -42,10 +42,8 @@
  */
 package org.smooks.examples.osgi.peaberry;
 
-import org.smooks.Smooks;
-
 import com.google.inject.Inject;
-
+import org.smooks.Smooks;
 import org.smooks.examples.osgi.peaberry.model.Order;
 
 /**

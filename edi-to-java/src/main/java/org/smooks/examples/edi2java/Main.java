@@ -43,19 +43,15 @@
 package org.smooks.examples.edi2java;
 
 import org.smooks.Smooks;
-import org.smooks.SmooksException;
-import org.smooks.container.ExecutionContext;
-import org.smooks.event.report.HtmlReportGenerator;
+import org.smooks.api.ExecutionContext;
+import org.smooks.api.SmooksException;
+import org.smooks.engine.report.HtmlReportGenerator;
 import org.smooks.io.StreamUtils;
-import org.smooks.payload.JavaResult;
+import org.smooks.io.payload.JavaResult;
 import org.xml.sax.SAXException;
 
 import javax.xml.transform.stream.StreamSource;
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 
 /**
  * Simple example main class.
@@ -98,7 +94,7 @@ public class Main {
 
         Main smooksMain = new Main();
         ExecutionContext executionContext = smooksMain.smooks.createExecutionContext();
-        org.smooks.payload.JavaResult result = smooksMain.runSmooksTransform(executionContext);
+        org.smooks.io.payload.JavaResult result = smooksMain.runSmooksTransform(executionContext);
 
 
         System.out.println("\n==============EDI as Java Object Graph=============");

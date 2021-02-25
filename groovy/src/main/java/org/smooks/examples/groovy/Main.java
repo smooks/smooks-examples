@@ -43,11 +43,11 @@
 package org.smooks.examples.groovy;
 
 import org.smooks.Smooks;
-import org.smooks.SmooksException;
-import org.smooks.container.ExecutionContext;
-import org.smooks.event.report.HtmlReportGenerator;
+import org.smooks.api.ExecutionContext;
+import org.smooks.api.SmooksException;
+import org.smooks.engine.report.HtmlReportGenerator;
 import org.smooks.io.StreamUtils;
-import org.smooks.payload.StringSource;
+import org.smooks.io.payload.StringSource;
 import org.xml.sax.SAXException;
 
 import javax.xml.transform.stream.StreamResult;

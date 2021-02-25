@@ -48,8 +48,8 @@ import org.asynchttpclient.Request;
 import org.asynchttpclient.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.smooks.container.ExecutionContext;
-import org.smooks.delivery.sax.ng.AfterVisitor;
+import org.smooks.api.ExecutionContext;
+import org.smooks.api.resource.visitor.sax.ng.AfterVisitor;
 import org.smooks.xml.XmlUtil;
 import org.w3c.dom.Element;
 

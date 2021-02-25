@@ -42,12 +42,11 @@
  */
 package org.smooks.examples.osgi.bundleactivator.activator;
 
+import org.osgi.framework.BundleActivator;
+import org.osgi.framework.BundleContext;
 import org.smooks.Smooks;
 import org.smooks.SmooksFactory;
 import org.smooks.SmooksOSGIFactory;
-import org.osgi.framework.BundleActivator;
-import org.osgi.framework.BundleContext;
-
 import org.smooks.examples.osgi.bundleactivator.ExampleUtil;
 
 /**

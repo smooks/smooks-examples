@@ -16,10 +16,10 @@
 
 package org.smooks.examples.drools.misc;
 
+import org.smooks.examples.drools.model.Action;
+
 import java.text.DecimalFormat;
 import java.util.Random;
-
-import org.smooks.examples.drools.model.Action;
 
 public class Utils {
     private static final Random rand = new Random(System.currentTimeMillis()); 

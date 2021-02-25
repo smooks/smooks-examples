@@ -42,15 +42,13 @@
  */
 package se.sj.ipl.rollingstock.domain;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import se.sj.ipl.rollingstock.domain.types.Length;
 import se.sj.ipl.rollingstock.domain.types.Speed;
 import se.sj.ipl.rollingstock.domain.types.Weight;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Vehicle implements Serializable
 {

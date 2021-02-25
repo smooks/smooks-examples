@@ -16,18 +16,14 @@
 
 package org.smooks.examples.drools.ui;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
+import com.jgoodies.looks.FontSets;
+import org.smooks.examples.drools.model.StockTick;
+
+import javax.swing.*;
+import java.awt.*;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicInteger;
-
-import javax.swing.JComponent;
-
-import org.smooks.examples.drools.model.StockTick;
-
-import com.jgoodies.looks.FontSets;
 
 /**
  * A simple component to show the incoming stock ticks

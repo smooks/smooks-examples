@@ -42,20 +42,19 @@
  */
 package org.smooks.examples.filerouter.splitter;
 
+import org.smooks.Smooks;
+import org.smooks.api.ExecutionContext;
+import org.smooks.api.SmooksException;
+import org.smooks.cartridges.routing.file.FileListAccessor;
+import org.xml.sax.SAXException;
+
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
-
-import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
-
-import org.smooks.Smooks;
-import org.smooks.SmooksException;
-import org.smooks.container.ExecutionContext;
-import org.smooks.cartridges.routing.file.FileListAccessor;
-import org.xml.sax.SAXException;
 
 /**
  * This is a simple example that demonstrates how Smooks can be 

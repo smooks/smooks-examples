@@ -42,12 +42,12 @@
  */
 package org.smooks.examples.daorouter.jpa.entity;
 
+import org.hibernate.annotations.NamedQuery;
+
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.NamedQuery;
 
 /**
  * @author <a href="mailto:maurice.zeijen@smies.com">maurice.zeijen@smies.com</a>

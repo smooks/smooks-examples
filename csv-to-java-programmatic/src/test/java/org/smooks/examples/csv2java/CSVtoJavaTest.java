@@ -44,7 +44,6 @@ package org.smooks.examples.csv2java;
 
 
 import org.junit.jupiter.api.Test;
-import org.smooks.examples.csv2java.Main;
 import org.xml.sax.SAXException;
 
 import java.io.IOException;

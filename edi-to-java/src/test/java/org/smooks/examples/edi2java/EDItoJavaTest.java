@@ -43,17 +43,16 @@
 package org.smooks.examples.edi2java;
 
 import com.thoughtworks.xstream.XStream;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.smooks.io.StreamUtils.compareCharStreams;
-import static org.smooks.io.StreamUtils.readStreamAsString;
-
 import org.junit.jupiter.api.Test;
-import org.smooks.payload.JavaResult;
+import org.smooks.io.payload.JavaResult;
 import org.xml.sax.SAXException;
 
 import java.io.IOException;
 import java.io.StringReader;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.smooks.io.StreamUtils.compareCharStreams;
+import static org.smooks.io.StreamUtils.readStreamAsString;
 
 /**
  * @author <a href="mailto:tom.fennelly@gmail.com">tom.fennelly@gmail.com</a>

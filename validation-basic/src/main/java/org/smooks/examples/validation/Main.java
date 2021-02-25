@@ -42,20 +42,20 @@
  */
 package org.smooks.examples.validation;
 
+import org.smooks.Smooks;
+import org.smooks.api.ExecutionContext;
+import org.smooks.api.SmooksException;
+import org.smooks.cartridges.rules.RuleEvalResult;
+import org.smooks.cartridges.validation.OnFailResult;
+import org.smooks.cartridges.validation.ValidationResult;
+import org.smooks.engine.report.HtmlReportGenerator;
+import org.smooks.io.StreamUtils;
+import org.smooks.io.payload.StringSource;
+import org.xml.sax.SAXException;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Locale;
-
-import org.smooks.Smooks;
-import org.smooks.SmooksException;
-import org.smooks.payload.StringSource;
-import org.smooks.cartridges.rules.RuleEvalResult;
-import org.smooks.container.ExecutionContext;
-import org.smooks.event.report.HtmlReportGenerator;
-import org.smooks.io.StreamUtils;
-import org.smooks.cartridges.validation.ValidationResult;
-import org.smooks.cartridges.validation.OnFailResult;
-import org.xml.sax.SAXException;
 
 /**
  * Simple example main class.

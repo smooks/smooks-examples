@@ -40,10 +40,10 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * =========================LICENSE_END==================================
  */
-package org.smooks.examples.osgi.servicetracker.groovy;
+package org.smooks.examples.osgi.servicetracker.groovy
 
-import org.smooks.container.ExecutionContext;
-import org.smooks.delivery.dom.DOMVisitAfter;
+import org.smooks.api.ExecutionContext
+import org.smooks.delivery.dom.DOMVisitAfter
 
 public class Test implements DOMVisitAfter {
 

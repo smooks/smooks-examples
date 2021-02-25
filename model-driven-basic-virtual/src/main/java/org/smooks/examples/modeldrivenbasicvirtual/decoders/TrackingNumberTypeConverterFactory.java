@@ -42,9 +42,10 @@
  */
 package org.smooks.examples.modeldrivenbasicvirtual.decoders;
 
-import org.smooks.converter.TypeConverter;
-import org.smooks.converter.TypeConverterDescriptor;
-import org.smooks.converter.factory.TypeConverterFactory;
+import org.smooks.api.converter.TypeConverter;
+import org.smooks.api.converter.TypeConverterDescriptor;
+import org.smooks.api.converter.TypeConverterFactory;
+import org.smooks.engine.converter.DefaultTypeConverterDescriptor;
 
 import java.util.HashMap;
 import java.util.List;
@@ -59,13 +60,13 @@ import java.util.regex.Pattern;
  */
 public class TrackingNumberTypeConverterFactory implements TypeConverterFactory<String, List<Map<String, String>>> {
 
-    private static Pattern lineSplitter = Pattern.compile("$", Pattern.MULTILINE);
+    private static final Pattern LINE_SPLITTER = Pattern.compile("$", Pattern.MULTILINE);
     
     @Override
     public TypeConverter<String, List<Map<String, String>>> createTypeConverter() {
         return value -> {
             // break the history up line by line - 1 tracking-number per line
-            String[] unparsedTrackingNumber = lineSplitter.split(value);
+            String[] unparsedTrackingNumber = LINE_SPLITTER.split(value);
             List<Map<String, String>> trackingNumbers = new Vector<Map<String, String>>(unparsedTrackingNumber.length);
 
             // iterate over and parse the tracking-number lines
@@ -87,6 +88,6 @@ public class TrackingNumberTypeConverterFactory implements TypeConverterFactory<
 
     @Override
     public TypeConverterDescriptor<Class<String>, Class<List<Map<String, String>>>> getTypeConverterDescriptor() {
-        return new TypeConverterDescriptor(String.class, List.class);
+        return new DefaultTypeConverterDescriptor(String.class, List.class);
     }
 }

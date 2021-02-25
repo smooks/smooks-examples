@@ -42,13 +42,13 @@
  */
 package org.smooks.examples.pipeline;
 
+import org.junit.jupiter.api.Test;
+import org.smooks.io.StreamUtils;
+import org.xml.sax.SAXException;
+
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
-
-import org.junit.jupiter.api.Test;
-import org.xml.sax.SAXException;
-import org.smooks.io.StreamUtils;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

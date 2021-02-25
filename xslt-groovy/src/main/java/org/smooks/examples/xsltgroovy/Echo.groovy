@@ -42,12 +42,11 @@
  */
 package org.smooks.examples.xsltgroovy
 
-
-import org.smooks.container.ExecutionContext
-import org.smooks.delivery.DomToXmlWriter
-import org.smooks.delivery.sax.ng.AfterVisitor
-import org.smooks.delivery.sax.ng.BeforeVisitor
-import org.smooks.delivery.sax.ng.ChildrenVisitor
+import org.smooks.api.ExecutionContext
+import org.smooks.api.resource.visitor.sax.ng.AfterVisitor
+import org.smooks.api.resource.visitor.sax.ng.BeforeVisitor
+import org.smooks.api.resource.visitor.sax.ng.ChildrenVisitor
+import org.smooks.io.DomToXmlWriter
 import org.smooks.io.Stream
 import org.w3c.dom.CharacterData
 import org.w3c.dom.Element

@@ -43,9 +43,10 @@
 package org.smooks.examples.csv2java;
 
 
-import org.smooks.converter.TypeConverter;
-import org.smooks.converter.TypeConverterDescriptor;
-import org.smooks.converter.factory.TypeConverterFactory;
+import org.smooks.api.converter.TypeConverter;
+import org.smooks.api.converter.TypeConverterDescriptor;
+import org.smooks.api.converter.TypeConverterFactory;
+import org.smooks.engine.converter.DefaultTypeConverterDescriptor;
 
 public class GenderTypeConverterFactory implements TypeConverterFactory<String, Gender> {
     @Override
@@ -55,6 +56,6 @@ public class GenderTypeConverterFactory implements TypeConverterFactory<String, 
 
     @Override
     public TypeConverterDescriptor<Class<String>, Class<Gender>> getTypeConverterDescriptor() {
-        return new TypeConverterDescriptor<>(String.class, Gender.class);
+        return new DefaultTypeConverterDescriptor<>(String.class, Gender.class);
     }
 }

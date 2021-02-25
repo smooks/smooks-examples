@@ -42,23 +42,18 @@
  */
 package org.smooks.examples.yaml2java;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Locale;
-
-import javax.xml.transform.stream.StreamSource;
-
 import org.smooks.Smooks;
-import org.smooks.SmooksException;
-import org.smooks.container.ExecutionContext;
-import org.smooks.event.report.HtmlReportGenerator;
+import org.smooks.api.ExecutionContext;
+import org.smooks.api.SmooksException;
+import org.smooks.engine.report.HtmlReportGenerator;
 import org.smooks.examples.yaml2java.model.Order;
 import org.smooks.io.FileUtils;
-import org.smooks.payload.StringResult;
+import org.smooks.io.payload.StringResult;
 import org.xml.sax.SAXException;
+
+import javax.xml.transform.stream.StreamSource;
+import java.io.*;
+import java.util.Locale;
 
 /**
  * Simple example main class.

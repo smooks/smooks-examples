@@ -42,28 +42,22 @@
  */
 package org.smooks.examples.etl;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import org.smooks.Smooks;
+import org.smooks.api.ExecutionContext;
+import org.smooks.api.SmooksException;
+import org.smooks.cartridges.routing.db.StatementExec;
+import org.smooks.engine.report.HtmlReportGenerator;
+import org.smooks.io.StreamUtils;
+import org.smooks.tck.HsqlServer;
+import org.xml.sax.SAXException;
+
+import javax.xml.transform.stream.StreamSource;
+import java.io.*;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-
-import javax.xml.transform.stream.StreamSource;
-
-import org.smooks.Smooks;
-import org.smooks.SmooksException;
-import org.smooks.container.ExecutionContext;
-import org.smooks.event.report.HtmlReportGenerator;
-import org.smooks.cartridges.routing.db.StatementExec;
-import org.smooks.io.StreamUtils;
-import org.smooks.util.HsqlServer;
-import org.xml.sax.SAXException;
 
 /**
  * Simple example main class.

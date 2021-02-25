@@ -42,10 +42,10 @@
  */
 package org.smooks.examples.camel.csv2xml;
 
-import java.io.File;
-
 import org.apache.camel.builder.RouteBuilder;
 import org.smooks.cartridges.camel.dataformat.SmooksDataFormat;
+
+import java.io.File;
 
 /**
  * 

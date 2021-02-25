@@ -18,12 +18,6 @@ package org.smooks.examples.drools;
 
 import org.drools.core.impl.InternalKnowledgeBase;
 import org.drools.core.impl.KnowledgeBaseFactory;
-import org.smooks.examples.drools.events.Event;
-import org.smooks.examples.drools.events.EventReceiver;
-import org.smooks.examples.drools.model.Company;
-import org.smooks.examples.drools.model.CompanyRegistry;
-import org.smooks.examples.drools.model.StockTick;
-import org.smooks.examples.drools.ui.BrokerWindow;
 import org.kie.api.KieBaseConfiguration;
 import org.kie.api.conf.EventProcessingOption;
 import org.kie.api.conf.MBeansOption;
@@ -33,6 +27,12 @@ import org.kie.api.runtime.rule.EntryPoint;
 import org.kie.internal.builder.KnowledgeBuilder;
 import org.kie.internal.builder.KnowledgeBuilderFactory;
 import org.kie.internal.io.ResourceFactory;
+import org.smooks.examples.drools.events.Event;
+import org.smooks.examples.drools.events.EventReceiver;
+import org.smooks.examples.drools.model.Company;
+import org.smooks.examples.drools.model.CompanyRegistry;
+import org.smooks.examples.drools.model.StockTick;
+import org.smooks.examples.drools.ui.BrokerWindow;
 
 /**
  * The broker application

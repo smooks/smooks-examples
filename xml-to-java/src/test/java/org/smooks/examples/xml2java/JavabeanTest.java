@@ -42,13 +42,12 @@
  */
 package org.smooks.examples.xml2java;
 
+import org.junit.jupiter.api.Test;
 import org.smooks.examples.xml2java.model.Order;
 import org.smooks.examples.xml2java.model.OrderItem;
+import org.xml.sax.SAXException;
 
 import java.io.IOException;
-
-import org.junit.jupiter.api.Test;
-import org.xml.sax.SAXException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;

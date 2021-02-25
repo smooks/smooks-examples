@@ -43,12 +43,13 @@
 package org.smooks.examples.groovy;
 
 import org.junit.Test;
-import static org.junit.Assert.*;
 import org.smooks.io.StreamUtils;
 import org.xml.sax.SAXException;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author <a href="mailto:tom.fennelly@gmail.com">tom.fennelly@gmail.com</a>

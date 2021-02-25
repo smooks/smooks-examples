@@ -42,12 +42,12 @@
  */
 package org.smooks.examples.flatfile2xmlregex;
 
-import java.io.IOException;
-import java.io.ByteArrayInputStream;
-
 import org.junit.jupiter.api.Test;
-import org.xml.sax.SAXException;
 import org.smooks.io.StreamUtils;
+import org.xml.sax.SAXException;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

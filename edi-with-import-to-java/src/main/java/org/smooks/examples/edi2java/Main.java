@@ -42,15 +42,16 @@
  */
 package org.smooks.examples.edi2java;
 
-import org.smooks.*;
-import org.smooks.container.*;
-import org.smooks.event.report.*;
-import org.smooks.io.*;
-import org.xml.sax.*;
+import org.smooks.Smooks;
+import org.smooks.api.ExecutionContext;
+import org.smooks.api.SmooksException;
+import org.smooks.engine.report.HtmlReportGenerator;
+import org.smooks.io.StreamUtils;
+import org.xml.sax.SAXException;
 
-import javax.xml.transform.stream.*;
+import javax.xml.transform.stream.StreamSource;
 import java.io.*;
-import java.util.*;
+import java.util.Locale;
 
 /**
  * Simple example main class.
@@ -67,12 +68,12 @@ public class Main {
         smooks = new Smooks("smooks-config.xml");
     }
 
-    protected org.smooks.payload.JavaResult runSmooksTransform(ExecutionContext executionContext) throws IOException, SAXException, SmooksException {
+    protected org.smooks.io.payload.JavaResult runSmooksTransform(ExecutionContext executionContext) throws IOException, SAXException, SmooksException {
     	try {
             Locale defaultLocale = Locale.getDefault();
             Locale.setDefault(new Locale("en", "IE"));
 
-            org.smooks.payload.JavaResult javaResult = new org.smooks.payload.JavaResult();
+            org.smooks.io.payload.JavaResult javaResult = new org.smooks.io.payload.JavaResult();
 
             // Configure the execution context to generate a report...
             executionContext.getContentDeliveryRuntime().addExecutionEventListener(new HtmlReportGenerator("target/report/report.html"));
@@ -97,7 +98,7 @@ public class Main {
 
         Main smooksMain = new Main();
         ExecutionContext executionContext = smooksMain.smooks.createExecutionContext();
-        org.smooks.payload.JavaResult result = smooksMain.runSmooksTransform(executionContext);
+        org.smooks.io.payload.JavaResult result = smooksMain.runSmooksTransform(executionContext);
 
 
         System.out.println("\n==============EDI as Java Object Graph=============");
@@ -126,7 +127,7 @@ public class Main {
         System.out.println("\n");
     }
 
-    public org.smooks.payload.JavaResult runSmooksTransform() throws IOException, SAXException {
+    public org.smooks.io.payload.JavaResult runSmooksTransform() throws IOException, SAXException {
         ExecutionContext executionContext = smooks.createExecutionContext();
         return runSmooksTransform(executionContext);
     }

@@ -42,15 +42,19 @@
  */
 package org.smooks.examples.java2java;
 
-import org.smooks.*;
-import org.smooks.container.*;
-import org.smooks.event.report.*;
+import org.smooks.Smooks;
+import org.smooks.api.ExecutionContext;
+import org.smooks.api.SmooksException;
+import org.smooks.engine.report.HtmlReportGenerator;
 import org.smooks.examples.java2java.srcmodel.Order;
 import org.smooks.examples.java2java.trgmodel.LineOrder;
-import org.smooks.payload.*;
-import org.xml.sax.*;
+import org.smooks.io.payload.JavaResult;
+import org.smooks.io.payload.JavaSource;
+import org.xml.sax.SAXException;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 /**
  * Simple example main class.

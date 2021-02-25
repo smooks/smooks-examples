@@ -42,9 +42,10 @@
  */
 package org.smooks.examples.modeldrivenbasic.model;
 
-import org.smooks.converter.TypeConverter;
-import org.smooks.converter.TypeConverterDescriptor;
-import org.smooks.converter.factory.TypeConverterFactory;
+import org.smooks.api.converter.TypeConverter;
+import org.smooks.api.converter.TypeConverterDescriptor;
+import org.smooks.api.converter.TypeConverterFactory;
+import org.smooks.engine.converter.DefaultTypeConverterDescriptor;
 
 import java.util.List;
 import java.util.Vector;
@@ -89,6 +90,6 @@ public class TrackingNumberTypeConverterFactory implements TypeConverterFactory<
 
     @Override
     public TypeConverterDescriptor<Class<String>, Class<TrackingNumber[]>> getTypeConverterDescriptor() {
-        return new TypeConverterDescriptor<>(String.class, TrackingNumber[].class);
+        return new DefaultTypeConverterDescriptor<>(String.class, TrackingNumber[].class);
     }
 }

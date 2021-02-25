@@ -42,13 +42,13 @@
  */
 package org.smooks.examples.validation;
 
+import org.junit.jupiter.api.Test;
+import org.smooks.cartridges.validation.OnFailResult;
+import org.smooks.cartridges.validation.ValidationResult;
+import org.xml.sax.SAXException;
+
 import java.io.IOException;
 import java.util.List;
-
-import org.junit.jupiter.api.Test;
-import org.xml.sax.SAXException;
-import org.smooks.cartridges.validation.ValidationResult;
-import org.smooks.cartridges.validation.OnFailResult;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

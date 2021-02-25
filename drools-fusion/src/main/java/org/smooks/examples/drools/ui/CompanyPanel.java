@@ -16,18 +16,14 @@
 
 package org.smooks.examples.drools.ui;
 
-import java.awt.Color;
-import java.text.NumberFormat;
-
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
-
-import org.smooks.examples.drools.model.Company;
-
 import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
+import org.smooks.examples.drools.model.Company;
+
+import javax.swing.*;
+import java.awt.*;
+import java.text.NumberFormat;
 
 /**
  * A class that manages a company UI panel

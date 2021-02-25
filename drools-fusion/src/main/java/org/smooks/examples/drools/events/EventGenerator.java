@@ -16,13 +16,13 @@
 
 package org.smooks.examples.drools.events;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.Random;
-
 import org.smooks.examples.drools.model.Company;
 import org.smooks.examples.drools.model.CompanyRegistry;
 import org.smooks.examples.drools.model.StockTick;
+
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Random;
 
 
 /**

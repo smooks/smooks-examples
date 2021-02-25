@@ -42,12 +42,10 @@
  */
 package org.smooks.examples.osgi.peaberry.activator;
 
-import static org.ops4j.peaberry.Peaberry.service;
-
-
+import com.google.inject.AbstractModule;
 import org.smooks.Smooks;
 
-import com.google.inject.AbstractModule;
+import static org.ops4j.peaberry.Peaberry.service;
 
 /**
  * 

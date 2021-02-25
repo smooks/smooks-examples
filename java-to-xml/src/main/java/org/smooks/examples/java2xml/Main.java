@@ -42,12 +42,12 @@
  */
 package org.smooks.examples.java2xml;
 
-import org.smooks.examples.java2xml.model.Order;
 import org.smooks.Smooks;
-import org.smooks.SmooksException;
-import org.smooks.event.report.HtmlReportGenerator;
-import org.smooks.container.ExecutionContext;
-import org.smooks.payload.JavaSource;
+import org.smooks.api.ExecutionContext;
+import org.smooks.api.SmooksException;
+import org.smooks.engine.report.HtmlReportGenerator;
+import org.smooks.examples.java2xml.model.Order;
+import org.smooks.io.payload.JavaSource;
 import org.xml.sax.SAXException;
 
 import javax.xml.transform.stream.StreamResult;

@@ -42,44 +42,36 @@
  */
 package org.smooks.examples.daorouter;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.sql.SQLException;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import com.ibatis.common.resources.Resources;
+import com.ibatis.sqlmap.client.SqlMapClient;
+import com.ibatis.sqlmap.client.SqlMapClientBuilder;
+import org.smooks.Smooks;
+import org.smooks.api.ExecutionContext;
+import org.smooks.api.SmooksException;
+import org.smooks.cartridges.persistence.util.PersistenceUtil;
+import org.smooks.cartridges.routing.db.StatementExec;
+import org.smooks.engine.report.HtmlReportGenerator;
+import org.smooks.examples.daorouter.dao.CustomerDao;
+import org.smooks.examples.daorouter.dao.OrderDao;
+import org.smooks.examples.daorouter.dao.ProductDao;
+import org.smooks.io.StreamUtils;
+import org.smooks.scribe.adapter.ibatis.SqlMapClientRegister;
+import org.smooks.scribe.adapter.jpa.EntityManagerRegister;
+import org.smooks.scribe.register.DaoRegister;
+import org.smooks.scribe.register.MapDaoRegister;
+import org.smooks.tck.HsqlServer;
+import org.xml.sax.SAXException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.xml.transform.stream.StreamSource;
-
-import org.smooks.Smooks;
-import org.smooks.SmooksException;
-import org.smooks.container.ExecutionContext;
-import org.smooks.event.report.HtmlReportGenerator;
-import org.smooks.examples.daorouter.dao.CustomerDao;
-import org.smooks.examples.daorouter.dao.OrderDao;
-import org.smooks.examples.daorouter.dao.ProductDao;
-import org.smooks.io.StreamUtils;
-import org.smooks.cartridges.persistence.util.PersistenceUtil;
-import org.smooks.cartridges.routing.db.StatementExec;
-import org.smooks.scribe.adapter.ibatis.SqlMapClientRegister;
-import org.smooks.scribe.adapter.jpa.EntityManagerRegister;
-import org.smooks.scribe.register.DaoRegister;
-import org.smooks.scribe.register.MapDaoRegister;
-import org.smooks.util.HsqlServer;
-import org.xml.sax.SAXException;
-
-import com.ibatis.common.resources.Resources;
-import com.ibatis.sqlmap.client.SqlMapClient;
-import com.ibatis.sqlmap.client.SqlMapClientBuilder;
+import java.io.*;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Simple example main class.

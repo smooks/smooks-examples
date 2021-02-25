@@ -43,9 +43,9 @@
 package org.smooks.examples.edi2java;
 
 import org.junit.jupiter.api.Test;
-import org.xml.sax.*;
+import org.xml.sax.SAXException;
 
-import java.io.*;
+import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -59,7 +59,7 @@ public class EDItoJavaTest {
         String expected = org.smooks.io.StreamUtils.readStreamAsString(getClass().getResourceAsStream("/expected.xml"), "UTF-8");
         Main smooksMain = new Main();
 
-        org.smooks.payload.JavaResult result = smooksMain.runSmooksTransform();
+        org.smooks.io.payload.JavaResult result = smooksMain.runSmooksTransform();
 
         com.thoughtworks.xstream.XStream xstream = new com.thoughtworks.xstream.XStream();
         String actual = xstream.toXML(result.getBean("order"));

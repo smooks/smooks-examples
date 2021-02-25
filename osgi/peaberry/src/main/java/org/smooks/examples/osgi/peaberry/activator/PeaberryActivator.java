@@ -42,17 +42,15 @@
  */
 package org.smooks.examples.osgi.peaberry.activator;
 
-import static org.ops4j.peaberry.Peaberry.osgiModule;
-
-import org.osgi.framework.BundleActivator;
-import org.osgi.framework.BundleContext;
-
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-
+import org.osgi.framework.BundleActivator;
+import org.osgi.framework.BundleContext;
 import org.smooks.examples.osgi.peaberry.ExampleUtil;
 import org.smooks.examples.osgi.peaberry.Pojo;
 import org.smooks.examples.osgi.peaberry.model.Order;
+
+import static org.ops4j.peaberry.Peaberry.osgiModule;
 
 /**
  * 

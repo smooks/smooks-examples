@@ -42,11 +42,11 @@
  */
 package org.smooks.examples.osgi.servicetracker.activator;
 
-import org.smooks.examples.osgi.servicetracker.ExampleUtil;
-import org.smooks.Smooks;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.util.tracker.ServiceTracker;
+import org.smooks.Smooks;
+import org.smooks.examples.osgi.servicetracker.ExampleUtil;
 
 /**
  * @author Daniel Bevenius

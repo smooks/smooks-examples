@@ -42,11 +42,11 @@
  */
 package org.smooks.examples.drools.events;
 
-import org.smooks.examples.drools.model.StockTick;
 import org.smooks.Smooks;
-import org.smooks.javabean.lifecycle.BeanContextLifecycleEvent;
-import org.smooks.javabean.lifecycle.BeanContextLifecycleObserver;
-import org.smooks.javabean.lifecycle.BeanLifecycle;
+import org.smooks.api.bean.lifecycle.BeanContextLifecycleEvent;
+import org.smooks.api.bean.lifecycle.BeanContextLifecycleObserver;
+import org.smooks.api.bean.lifecycle.BeanLifecycle;
+import org.smooks.examples.drools.model.StockTick;
 import org.xml.sax.SAXException;
 
 import javax.xml.transform.stream.StreamSource;
@@ -60,8 +60,8 @@ import java.util.concurrent.SynchronousQueue;
  */
 public class SmooksEventSource implements EventSource {
 
-    private Smooks smooks;
-    private BlockingQueue<StockTick> inQueue = new SynchronousQueue<StockTick>();
+    private final Smooks smooks;
+    private final BlockingQueue<StockTick> inQueue = new SynchronousQueue<StockTick>();
 
     public SmooksEventSource() throws IOException, SAXException {
         smooks = new Smooks("./smooks-config.xml");

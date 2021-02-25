@@ -47,7 +47,9 @@ import org.smooks.Smooks;
 import org.xml.sax.SAXException;
 
 import javax.xml.transform.stream.StreamSource;
-import java.io.*;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 

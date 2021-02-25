@@ -16,12 +16,8 @@
 
 package org.smooks.examples.drools.ui;
 
-import java.awt.BorderLayout;
-
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * A panel to log information

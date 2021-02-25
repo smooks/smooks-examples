@@ -43,7 +43,7 @@
 package org.smooks.examples.freemarkerhugetransform;
 
 import org.smooks.Smooks;
-import org.smooks.SmooksException;
+import org.smooks.api.SmooksException;
 import org.xml.sax.SAXException;
 
 import javax.xml.transform.stream.StreamResult;

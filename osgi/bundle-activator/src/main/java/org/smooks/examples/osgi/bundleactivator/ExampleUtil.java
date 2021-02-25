@@ -42,19 +42,17 @@
  */
 package org.smooks.examples.osgi.bundleactivator;
 
+import org.smooks.Smooks;
+import org.smooks.api.ExecutionContext;
+import org.smooks.examples.osgi.bundleactivator.model.Order;
+import org.smooks.examples.osgi.bundleactivator.model.OrderItem;
+import org.smooks.io.StreamUtils;
+import org.smooks.io.payload.JavaResult;
+
+import javax.xml.transform.stream.StreamSource;
 import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
-
-import javax.xml.transform.stream.StreamSource;
-
-import org.smooks.Smooks;
-import org.smooks.container.ExecutionContext;
-import org.smooks.io.StreamUtils;
-import org.smooks.payload.JavaResult;
-
-import org.smooks.examples.osgi.bundleactivator.model.Order;
-import org.smooks.examples.osgi.bundleactivator.model.OrderItem;
 
 public class ExampleUtil
 {

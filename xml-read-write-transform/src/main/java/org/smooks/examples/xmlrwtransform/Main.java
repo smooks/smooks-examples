@@ -42,12 +42,12 @@
  */
 package org.smooks.examples.xmlrwtransform;
 
-import org.smooks.SmooksException;
+import org.smooks.api.SmooksException;
 import org.smooks.cartridges.javabean.binding.xml.XMLBinding;
 import org.smooks.examples.xmlrwtransform.model.Order;
 import org.smooks.examples.xmlrwtransform.model.OrderItem;
 import org.smooks.io.StreamUtils;
-import org.smooks.payload.StringSource;
+import org.smooks.io.payload.StringSource;
 import org.xml.sax.SAXException;
 
 import java.io.BufferedReader;

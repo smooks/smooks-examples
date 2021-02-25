@@ -42,12 +42,12 @@
  */
 package org.smooks.examples.xslt;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-
 import org.junit.jupiter.api.Test;
 import org.smooks.io.StreamUtils;
 import org.xml.sax.SAXException;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

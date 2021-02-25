@@ -42,15 +42,13 @@
  */
 package org.smooks.examples.osgi.blueprint;
 
-import org.smooks.examples.osgi.blueprint.model.Order;
-import org.smooks.examples.osgi.blueprint.model.OrderItem;
-
-import java.io.IOException;
-
 import org.junit.jupiter.api.Test;
 import org.smooks.Smooks;
-import org.smooks.examples.osgi.blueprint.Pojo;
+import org.smooks.examples.osgi.blueprint.model.Order;
+import org.smooks.examples.osgi.blueprint.model.OrderItem;
 import org.xml.sax.SAXException;
+
+import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;

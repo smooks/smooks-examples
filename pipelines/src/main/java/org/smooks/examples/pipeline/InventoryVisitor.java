@@ -49,7 +49,7 @@ import org.smooks.api.ExecutionContext;
 import org.smooks.api.SmooksException;
 import org.smooks.api.resource.visitor.sax.ng.AfterVisitor;
 import org.smooks.io.Stream;
-import org.smooks.xml.XmlUtil;
+import org.smooks.support.XmlUtil;
 import org.w3c.dom.Element;
 
 import java.io.IOException;

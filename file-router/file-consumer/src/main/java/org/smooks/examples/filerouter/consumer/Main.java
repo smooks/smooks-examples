@@ -42,7 +42,7 @@
  */
 package org.smooks.examples.filerouter.consumer;
 
-import org.smooks.io.FileUtils;
+import org.smooks.support.FileUtils;
 
 import java.io.File;
 import java.io.FileFilter;

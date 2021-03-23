@@ -43,7 +43,7 @@
 package org.smooks.examples.flatfile2xmlregex;
 
 import org.junit.jupiter.api.Test;
-import org.smooks.io.StreamUtils;
+import org.smooks.support.StreamUtils;
 import org.xml.sax.SAXException;
 
 import java.io.ByteArrayInputStream;

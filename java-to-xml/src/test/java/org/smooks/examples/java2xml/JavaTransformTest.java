@@ -44,7 +44,7 @@ package org.smooks.examples.java2xml;
 
 import org.junit.jupiter.api.Test;
 import org.smooks.examples.java2xml.model.Order;
-import org.smooks.io.StreamUtils;
+import org.smooks.support.StreamUtils;
 import org.xml.sax.SAXException;
 
 import java.io.ByteArrayInputStream;

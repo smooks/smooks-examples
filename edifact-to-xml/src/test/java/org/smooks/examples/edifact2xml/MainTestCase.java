@@ -43,7 +43,7 @@
 package org.smooks.examples.edifact2xml;
 
 import org.junit.jupiter.api.Test;
-import org.smooks.io.StreamUtils;
+import org.smooks.support.StreamUtils;
 import org.xml.sax.SAXException;
 import org.xmlunit.builder.DiffBuilder;
 

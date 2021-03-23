@@ -54,7 +54,7 @@ import org.smooks.engine.report.HtmlReportGenerator;
 import org.smooks.examples.daorouter.dao.CustomerDao;
 import org.smooks.examples.daorouter.dao.OrderDao;
 import org.smooks.examples.daorouter.dao.ProductDao;
-import org.smooks.io.StreamUtils;
+import org.smooks.support.StreamUtils;
 import org.smooks.scribe.adapter.ibatis.SqlMapClientRegister;
 import org.smooks.scribe.adapter.jpa.EntityManagerRegister;
 import org.smooks.scribe.register.DaoRegister;

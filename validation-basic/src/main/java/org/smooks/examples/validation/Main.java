@@ -49,7 +49,7 @@ import org.smooks.cartridges.rules.RuleEvalResult;
 import org.smooks.cartridges.validation.OnFailResult;
 import org.smooks.cartridges.validation.ValidationResult;
 import org.smooks.engine.report.HtmlReportGenerator;
-import org.smooks.io.StreamUtils;
+import org.smooks.support.StreamUtils;
 import org.smooks.io.payload.StringSource;
 import org.xml.sax.SAXException;
 

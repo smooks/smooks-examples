@@ -44,7 +44,7 @@ package org.smooks.examples.camel.integration;
 
 import org.apache.camel.CamelContext;
 import org.apache.camel.impl.DefaultCamelContext;
-import org.smooks.io.StreamUtils;
+import org.smooks.support.StreamUtils;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 

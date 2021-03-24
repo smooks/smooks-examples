@@ -46,7 +46,7 @@ import org.smooks.Smooks;
 import org.smooks.api.ExecutionContext;
 import org.smooks.examples.osgi.servicetracker.model.Order;
 import org.smooks.examples.osgi.servicetracker.model.OrderItem;
-import org.smooks.io.StreamUtils;
+import org.smooks.support.StreamUtils;
 import org.smooks.io.payload.JavaResult;
 
 import javax.xml.transform.stream.StreamSource;

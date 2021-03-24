@@ -43,7 +43,7 @@
 package org.smooks.examples.java2edifact;
 
 import org.junit.jupiter.api.Test;
-import org.smooks.io.StreamUtils;
+import org.smooks.support.StreamUtils;
 import org.xml.sax.SAXException;
 
 import javax.xml.bind.JAXBException;

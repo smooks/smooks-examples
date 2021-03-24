@@ -51,8 +51,8 @@ import java.io.IOException;
 import java.io.StringReader;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.smooks.io.StreamUtils.compareCharStreams;
-import static org.smooks.io.StreamUtils.readStreamAsString;
+import static org.smooks.support.StreamUtils.compareCharStreams;
+import static org.smooks.support.StreamUtils.readStreamAsString;
 
 /**
  * @author <a href="mailto:tom.fennelly@gmail.com">tom.fennelly@gmail.com</a>

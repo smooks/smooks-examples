@@ -47,7 +47,7 @@ import org.smooks.api.ExecutionContext;
 import org.smooks.api.SmooksException;
 import org.smooks.engine.report.HtmlReportGenerator;
 import org.smooks.examples.yaml2java.model.Order;
-import org.smooks.io.FileUtils;
+import org.smooks.support.FileUtils;
 import org.smooks.io.payload.StringResult;
 import org.xml.sax.SAXException;
 

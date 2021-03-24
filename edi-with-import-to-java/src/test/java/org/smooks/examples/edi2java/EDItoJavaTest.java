@@ -56,7 +56,7 @@ public class EDItoJavaTest {
 
     @Test
     public void test() throws IOException, SAXException {
-        String expected = org.smooks.io.StreamUtils.readStreamAsString(getClass().getResourceAsStream("/expected.xml"), "UTF-8");
+        String expected = org.smooks.support.StreamUtils.readStreamAsString(getClass().getResourceAsStream("/expected.xml"), "UTF-8");
         Main smooksMain = new Main();
 
         org.smooks.io.payload.JavaResult result = smooksMain.runSmooksTransform();
@@ -66,7 +66,7 @@ public class EDItoJavaTest {
 
         actual = actual.replaceFirst("<date>.*</date>", "<date/>");
 
-        boolean matchesExpected = org.smooks.io.StreamUtils.compareCharStreams(new java.io.StringReader(expected), new java.io.StringReader(actual));
+        boolean matchesExpected = org.smooks.support.StreamUtils.compareCharStreams(new java.io.StringReader(expected), new java.io.StringReader(actual));
         if (!matchesExpected) {
             assertEquals(expected, actual, "Actual does not match expected.");
         }

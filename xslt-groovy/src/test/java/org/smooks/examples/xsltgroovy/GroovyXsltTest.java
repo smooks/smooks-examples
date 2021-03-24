@@ -43,7 +43,7 @@
 package org.smooks.examples.xsltgroovy;
 
 import org.junit.Test;
-import org.smooks.io.StreamUtils;
+import org.smooks.support.StreamUtils;
 import org.xml.sax.SAXException;
 import org.xmlunit.builder.DiffBuilder;
 

@@ -45,8 +45,8 @@ package org.smooks.examples.pipeline;
 import org.smooks.Smooks;
 import org.smooks.api.ExecutionContext;
 import org.smooks.io.AbstractOutputStreamResource;
-import org.smooks.io.FileUtils;
 import org.smooks.io.payload.StringResult;
+import org.smooks.support.FileUtils;
 import org.xml.sax.SAXException;
 
 import javax.xml.transform.stream.StreamSource;

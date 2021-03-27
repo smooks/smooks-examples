@@ -51,8 +51,7 @@ import org.smooks.examples.osgi.servicetracker.ExampleUtil;
 /**
  * @author Daniel Bevenius
  */
-public class
-        MainActivator implements BundleActivator {
+public class MainActivator implements BundleActivator {
     private ServiceTracker serviceTracker;
 
     public void start(BundleContext context) throws Exception {

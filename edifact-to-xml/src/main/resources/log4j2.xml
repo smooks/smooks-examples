@@ -1,9 +1,9 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
   ========================LICENSE_START=================================
-  Smooks Example - UN/EDIFACT - To XML
+  EDIFACT to XML
   %%
-  Copyright (C) 2020 Smooks
+  Copyright (C) 2020 - 2021 Smooks
   %%
   Licensed under the terms of the Apache License Version 2.0, or
   the GNU Lesser General Public License version 3.0 or later.
@@ -42,17 +42,15 @@
   =========================LICENSE_END==================================
   -->
 
-<smooks-resource-list xmlns="https://www.smooks.org/xsd/smooks-2.0.xsd"
-                      xmlns:edifact="https://www.smooks.org/xsd/smooks/edifact-2.0.xsd">
-
-    <!--
-      Configure the EDI reader to parse the UN/EDIFACT d03b message set.
-      Reader configured with a URI of the bundled schema downloaded from Maven
-      -->
-    <edifact:parser schemaURI="/d03b/EDIFACT-Messages.dfdl.xsd">
-        <edifact:messageTypes>
-            <edifact:messageType>PAXLST</edifact:messageType>
-        </edifact:messageTypes>
-    </edifact:parser>
-
-</smooks-resource-list>
+<Configuration>
+    <Appenders>
+        <Console name="Console">
+            <PatternLayout pattern="%-5p %d [%t] %c: %m%n"/>
+        </Console>
+    </Appenders>
+    <Loggers>
+        <Root level="info">
+            <AppenderRef ref="Console"/>
+        </Root>
+    </Loggers>
+</Configuration>

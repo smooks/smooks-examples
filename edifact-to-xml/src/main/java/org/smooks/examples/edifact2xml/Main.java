@@ -1,8 +1,8 @@
 /*-
  * ========================LICENSE_START=================================
- * Smooks Example - UN/EDIFACT - To XML
+ * EDIFACT to XML
  * %%
- * Copyright (C) 2020 Smooks
+ * Copyright (C) 2020 - 2021 Smooks
  * %%
  * Licensed under the terms of the Apache License Version 2.0, or
  * the GNU Lesser General Public License version 3.0 or later.
@@ -44,7 +44,6 @@ package org.smooks.examples.edifact2xml;
 
 import org.smooks.Smooks;
 import org.smooks.api.SmooksException;
-import org.smooks.cartridges.edifact.EdifactReaderConfigurator;
 import org.smooks.support.StreamUtils;
 import org.xml.sax.SAXException;
 
@@ -53,7 +52,6 @@ import javax.xml.transform.stream.StreamSource;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.StringWriter;
-import java.util.Arrays;
 
 /**
  * Main class that uses a Smooks XML configuration to configure the UN/EDIFACT
@@ -64,17 +62,16 @@ import java.util.Arrays;
 public class Main {
 
     protected static String runSmooksTransform() throws IOException, SAXException, SmooksException {
-
         // Configure Smooks using a Smooks config...
-        //Smooks smooks = new Smooks("smooks-config.xml");
-        
+        Smooks smooks = new Smooks("smooks-config.xml");
+
         // Or, configure Smooks programmatically...
-        final Smooks smooks = new Smooks();
-        smooks.setReaderConfig(new EdifactReaderConfigurator("/d03b/EDIFACT-Messages.dfdl.xsd").setMessageTypes(Arrays.asList("PAXLST")));
+        // final Smooks smooks = new Smooks();
+        // smooks.setReaderConfig(new EdifactReaderConfigurator("/d03b/EDIFACT-Messages.dfdl.xsd").setMessageTypes(Arrays.asList("PAXLST")));
 
         try {
             final StringWriter writer = new StringWriter();
-            smooks.filterSource(new StreamSource(new FileInputStream("PAXLST.edi")), new StreamResult(writer));
+            smooks.filterSource(new StreamSource(Main.class.getResourceAsStream("/PAXLST.edi")), new StreamResult(writer));
 
             return writer.toString();
         } finally {
@@ -95,6 +92,6 @@ public class Main {
     }
 
     private static String readInputMessage() throws IOException {
-        return StreamUtils.readStreamAsString(new FileInputStream("PAXLST.edi"), "UTF-8");
+        return StreamUtils.readStreamAsString(Main.class.getResourceAsStream("/PAXLST.edi"), "UTF-8");
     }
 }

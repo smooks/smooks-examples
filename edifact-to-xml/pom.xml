@@ -7,8 +7,12 @@
         <artifactId>smooks-examples</artifactId>
         <version>1.0.3-SNAPSHOT</version>
     </parent>
-    <name>UN/EDIFACT - To XML</name>
+    <name>EDIFACT to XML</name>
     <artifactId>smooks-example-unedifact-to-xml</artifactId>
+
+    <properties>
+        <mainClass>org.smooks.examples.edifact2xml.Main</mainClass>
+    </properties>
 
     <build>
         <plugins>

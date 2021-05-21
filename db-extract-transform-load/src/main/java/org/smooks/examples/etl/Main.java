@@ -97,9 +97,6 @@ public class Main {
     }
 
     protected void runSmooksTransform() throws IOException, SAXException, SmooksException {
-    	Locale defaultLocale = Locale.getDefault();
-
-    	
     	Smooks smooks = new Smooks("./smooks-configs/smooks-config.xml");
 
         try {
@@ -109,8 +106,6 @@ public class Main {
             executionContext.getContentDeliveryRuntime().addExecutionEventListener(new HtmlReportGenerator("target/report/report.html"));
 
             smooks.filterSource(executionContext, new StreamSource(new ByteArrayInputStream(messageIn)), null);
-
-            Locale.setDefault(defaultLocale);
         } finally {
             smooks.close();
         }

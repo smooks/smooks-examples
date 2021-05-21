@@ -61,7 +61,7 @@
                     </ftl:freemarker>
                 </core:delegate-reader>
 
-                <edifact:unparser schemaURI="/d96a/EDIFACT-Messages.dfdl.xsd" unparseOnElement="*">
+                <edifact:unparser schemaURI="/d96a/EDIFACT-Messages.dfdl.xsd" unparseOnNode="*">
                     <edifact:messageTypes>
                         <edifact:messageType>ORDERS</edifact:messageType>
                     </edifact:messageTypes>

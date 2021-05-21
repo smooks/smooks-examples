@@ -32,6 +32,10 @@
             <artifactId>smooks-validation-cartridge</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.smooks.cartridges</groupId>
+            <artifactId>smooks-javabean-cartridge</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
         </dependency>

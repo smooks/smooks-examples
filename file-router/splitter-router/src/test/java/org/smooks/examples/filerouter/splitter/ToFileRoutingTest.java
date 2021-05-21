@@ -102,7 +102,7 @@ public class ToFileRoutingTest {
 
     @Test
     public void test_sax() throws IOException, SAXException {
-        test(StreamFilterType.SAX);
+        test(StreamFilterType.SAX_NG);
     }
 
     public void test(StreamFilterType filterType) throws IOException, SAXException {

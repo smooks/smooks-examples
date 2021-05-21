@@ -28,15 +28,15 @@
     
     <dependencies>
         <dependency>
-            <groupId>org.smooks</groupId>
+            <groupId>org.smooks.cartridges.persistence</groupId>
             <artifactId>smooks-scribe-jpa</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.smooks</groupId>
+            <groupId>org.smooks.cartridges.persistence</groupId>
             <artifactId>smooks-scribe-ibatis</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.smooks.cartridges</groupId>
+            <groupId>org.smooks.cartridges.persistence</groupId>
             <artifactId>smooks-persistence-cartridge</artifactId>
         </dependency>
         <dependency>

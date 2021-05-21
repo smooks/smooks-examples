@@ -45,7 +45,7 @@ package org.smooks.examples.etl;
 import org.smooks.Smooks;
 import org.smooks.api.ExecutionContext;
 import org.smooks.api.SmooksException;
-import org.smooks.cartridges.routing.db.StatementExec;
+import org.smooks.cartridges.persistence.jdbc.StatementExec;
 import org.smooks.engine.report.HtmlReportGenerator;
 import org.smooks.support.StreamUtils;
 import org.smooks.tck.HsqlServer;

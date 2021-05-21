@@ -73,9 +73,6 @@ public class Main {
 
     protected String runSmooksTransform(ExecutionContext executionContext) throws IOException, SAXException, SmooksException {
         try {
-            Locale defaultLocale = Locale.getDefault();
-            Locale.setDefault(new Locale("en", "IE"));
-
             StringResult result = new StringResult();
 
             // Configure the execution context to generate a report...
@@ -83,8 +80,6 @@ public class Main {
 
             // Filter the input message to the outputWriter, using the execution context...
             smooks.filterSource(executionContext, new StreamSource(new ByteArrayInputStream(messageIn)), result);
-
-            Locale.setDefault(defaultLocale);
 
             return result.toString();
         } finally {

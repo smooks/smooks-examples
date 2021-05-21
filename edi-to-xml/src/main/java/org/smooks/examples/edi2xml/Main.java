@@ -63,10 +63,6 @@ public class Main {
     private static byte[] messageIn = readInputMessage();
 
     protected static String runSmooksTransform() throws IOException, SAXException, SmooksException {
-    	
-    	Locale defaultLocale = Locale.getDefault();
-    	Locale.setDefault(new Locale("en", "IE"));
-    	
         // Instantiate Smooks with the config...
         Smooks smooks = new Smooks("smooks-config.xml");
         try {
@@ -80,8 +76,6 @@ public class Main {
 
             // Filter the input message to the outputWriter, using the execution context...
             smooks.filterSource(executionContext, new StreamSource(new ByteArrayInputStream(messageIn)), result);
-
-            Locale.setDefault(defaultLocale);
 
             return result.getResult();
         } finally {

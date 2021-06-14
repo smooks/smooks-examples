@@ -13,7 +13,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <smooks.version>2.0.0-RC1-SNAPSHOT</smooks.version>
         <smooks.edifact.cartridge.version>2.0.0-RC1-SNAPSHOT</smooks.edifact.cartridge.version>
-        <spring.version>5.3.7</spring.version>
+        <spring.version>5.3.8</spring.version>
     </properties>
 
     <modules>

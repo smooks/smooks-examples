@@ -108,12 +108,12 @@
     	<jb:wiring property="billingAddress" beanIdRef="billingAddress"/>
     	<jb:wiring property="shippingAddress" beanIdRef="shippingAddress"/>
 
-    	<jb:value property="orderId" data="header order-id" />
-    	<jb:value property="orderStatus" data="header status-code" decoder="Long" />
-    	<jb:value property="netAmount" data="header net-amount" decoder="BigDecimal"/>
-    	<jb:value property="totalAmount" data="header total-amount" decoder="BigDecimal"/>
-    	<jb:value property="tax" data="header tax" decoder="BigDecimal"/>
-    	<jb:value property="date" data="header date-and-time" decoder="Date">
+    	<jb:value property="orderId" data="header/order-id" />
+    	<jb:value property="orderStatus" data="header/status-code" decoder="Long" />
+    	<jb:value property="netAmount" data="header/net-amount" decoder="BigDecimal"/>
+    	<jb:value property="totalAmount" data="header/total-amount" decoder="BigDecimal"/>
+    	<jb:value property="tax" data="header/tax" decoder="BigDecimal"/>
+    	<jb:value property="date" data="header/date-and-time" decoder="Date">
             <jb:decodeParam name="format">EEE MMM dd HH:mm:ss z yyyy</jb:decodeParam>
             <jb:decodeParam name="locale-language">en</jb:decodeParam>
             <jb:decodeParam name="locale-country">IE</jb:decodeParam>
@@ -127,9 +127,9 @@
     it is target by that bean via a bean binding.
     -->
     <jb:bean class="org.smooks.examples.yaml2java.model.Customer" beanId="customer" createOnElement="customer">
-    	<jb:value property="userName" data="customer user-name" />
-    	<jb:value property="firstName" data="customer first-name" />
-    	<jb:value property="lastName" data="customer last-name"/>
+    	<jb:value property="userName" data="customer/user-name" />
+    	<jb:value property="firstName" data="customer/first-name" />
+    	<jb:value property="lastName" data="customer/last-name"/>
     </jb:bean>
 
     <!--
@@ -139,9 +139,9 @@
     it is target by that bean via a bean binding.
     -->
     <jb:bean class="org.smooks.examples.yaml2java.model.Address" beanId="billingAddress" createOnElement="billing-address">
-    	<jb:value property="street" data="billing-address street" />
-    	<jb:value property="city" data="billing-address city" />
-    	<jb:value property="zipcode" data="billing-address zip-code"/>
+    	<jb:value property="street" data="billing-address/street" />
+    	<jb:value property="city" data="billing-address/city" />
+    	<jb:value property="zipcode" data="billing-address/zip-code"/>
     </jb:bean>
 
     <!--
@@ -151,9 +151,9 @@
     it is target by that bean via a bean binding.
     -->
     <jb:bean class="org.smooks.examples.yaml2java.model.Address" beanId="shippingAddress" createOnElement="shipping-address">
-    	<jb:value property="street" data="shipping-address street" />
-    	<jb:value property="city" data="shipping-address city" />
-    	<jb:value property="zipcode" data="shipping-address zip-code"/>
+    	<jb:value property="street" data="shipping-address/street" />
+    	<jb:value property="city" data="shipping-address/city" />
+    	<jb:value property="zipcode" data="shipping-address/zip-code"/>
     </jb:bean>
 
 	<!--
@@ -172,11 +172,11 @@
     This bean is add to the on the previous declared ArrayList as soon as it is created, because
     it is target by that ArrayList via a bean binding.
     -->
-    <jb:bean class="org.smooks.examples.yaml2java.model.OrderItem" beanId="orderItem" createOnElement="order-item element">
-    	<jb:value property="quantity" data="order-item element quantity" decoder="Integer"/>
-        <jb:value property="productId" data="order-item element product-id" />
-        <jb:value property="price" data="order-item element price" decoder="BigDecimal" />
-        <jb:value property="title" data="order-item element title" />
+    <jb:bean class="org.smooks.examples.yaml2java.model.OrderItem" beanId="orderItem" createOnElement="order-item/element">
+    	<jb:value property="quantity" data="order-item/element/quantity" decoder="Integer"/>
+        <jb:value property="productId" data="order-item/element/product-id" />
+        <jb:value property="price" data="order-item/element/price" decoder="BigDecimal" />
+        <jb:value property="title" data="order-item/element/title" />
     </jb:bean>
 
 </smooks-resource-list>

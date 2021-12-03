@@ -59,11 +59,11 @@ public class BasicJavaTransformer implements DOMElementVisitor {
 
     @Inject
     @Named("newName")
-    private String newElementName = "xxx";
+    private String newElementName;
 
     public void visitBefore(Element element, ExecutionContext executionContext) {
         // Not doing anything on this visit - wait untill after visiting the elements child content...
-    }
+        }
 
     public void visitAfter(Element element, ExecutionContext executionContext) {
         // Just rename the target element - keeping child elements - not keeping attributes.

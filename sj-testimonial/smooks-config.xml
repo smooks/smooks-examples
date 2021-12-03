@@ -23,10 +23,10 @@
     <jb:bean beanId="rollingstock_schedule" class="se.sj.ipl.rollingstock.domain.Schedule"
              createOnElement="rollingstocks/rollingstock">
 
-        <jb:value property="departureStation" data="rollingstock departureSignature"/>
-        <jb:value property="departureDate" decoder="Date" data="rollingstock departureDate"/>
-        <jb:value property="departureTime" decoder="Time" data="rollingstock departureTime"/>
-        <jb:value property="destination" data="rollingstock destinationSignature"/>
+        <jb:value property="departureStation" data="rollingstock/departureSignature"/>
+        <jb:value property="departureDate" decoder="Date" data="rollingstock/departureDate"/>
+        <jb:value property="departureTime" decoder="Time" data="rollingstock/departureTime"/>
+        <jb:value property="destination" data="rollingstock/destinationSignature"/>
     </jb:bean>
 
     <jb:bean beanId="vehicles" class="java.util.ArrayList" createOnElement="rollingstocks/rollingstock">
@@ -45,49 +45,49 @@
         <jb:wiring property="phoneNumbers" beanIdRef="vehicle_phonenumbers"/>
         <jb:wiring property="passengerCarConfiguration" beanIdRef="passenger_car_configuration"/>
 
-        <jb:value property="litt" data="vehicle litt"/>
-        <jb:value property="originalLitt" data="vehicle originalLitt"/>
-        <jb:value property="ticketId" data="vehicle ticketId"/>
-        <jb:value property="vehicleId" data="vehicle vehicleId"/>
-        <jb:value property="vehicleType" data="vehicle vehicleType"/>
-        <jb:value property="nrOfAxles" decoder="Integer" data="vehicle nrOfAxles"/>
-        <jb:value property="serviceType" data="vehicle serviceType"/>
-        <jb:value property="canDoorsBeLocked" decoder="Boolean" data="vehicle canDoorsBeLocked"/>
-        <jb:value property="positionInTrainAssembly" decoder="Boolean" data="vehicle positionInTrainAssembly"/>
+        <jb:value property="litt" data="vehicle/litt"/>
+        <jb:value property="originalLitt" data="vehicle/originalLitt"/>
+        <jb:value property="ticketId" data="vehicle/ticketId"/>
+        <jb:value property="vehicleId" data="vehicle/vehicleId"/>
+        <jb:value property="vehicleType" data="vehicle/vehicleType"/>
+        <jb:value property="nrOfAxles" decoder="Integer" data="vehicle/nrOfAxles"/>
+        <jb:value property="serviceType" data="vehicle/serviceType"/>
+        <jb:value property="canDoorsBeLocked" decoder="Boolean" data="vehicle/canDoorsBeLocked"/>
+        <jb:value property="positionInTrainAssembly" decoder="Boolean" data="vehicle/positionInTrainAssembly"/>
     </jb:bean>
 
 
     <jb:bean beanId="vehicle_schedule" class="se.sj.ipl.rollingstock.domain.Schedule"
              createOnElement="rollingstock/vehicle">
-        <jb:value property="departureStation" data="vehicle departureStation"/>
-        <jb:value property="departureDate" decoder="Date" data="vehicle departureDate"/>
-        <jb:value property="departureTime" decoder="Time" data="vehicle departureTime"/>
-        <jb:value property="destination" data="vehicle destination"/>
+        <jb:value property="departureStation" data="vehicle/departureStation"/>
+        <jb:value property="departureDate" decoder="Date" data="vehicle/departureDate"/>
+        <jb:value property="departureTime" decoder="Time" data="vehicle/departureTime"/>
+        <jb:value property="destination" data="vehicle/destination"/>
     </jb:bean>
 
     <jb:bean beanId="vehicle_weight" class="se.sj.ipl.rollingstock.domain.types.Weight"
              createOnElement="rollingstock/vehicle">
-        <jb:value property="weight" decoder="Double" data="vehicle weight" default="0"/>
+        <jb:value property="weight" decoder="Double" data="vehicle/weight" default="0"/>
     </jb:bean>
 
     <jb:bean beanId="vehicle_dynamic_weight" class="se.sj.ipl.rollingstock.domain.types.Weight"
              createOnElement="rollingstock/vehicle">
-        <jb:value property="weight" decoder="Double" data="vehicle dynamicWeight" default="0"/>
+        <jb:value property="weight" decoder="Double" data="vehicle/dynamicWeight" default="0"/>
     </jb:bean>
 
     <jb:bean beanId="vehicle_dynamic_brake_weight" class="se.sj.ipl.rollingstock.domain.types.Weight"
              createOnElement="rollingstock/vehicle">
-        <jb:value property="weight" decoder="Double" data="vehicle brakeWeight" default="0"/>
+        <jb:value property="weight" decoder="Double" data="vehicle/brakeWeight" default="0"/>
     </jb:bean>
 
     <jb:bean beanId="vehicle_length" class="se.sj.ipl.rollingstock.domain.types.Length"
              createOnElement="rollingstock/vehicle">
-        <jb:value property="length" decoder="Double" data="vehicle length" default="0"/>
+        <jb:value property="length" decoder="Double" data="vehicle/length" default="0"/>
     </jb:bean>
 
     <jb:bean beanId="vehicle_speed" class="se.sj.ipl.rollingstock.domain.types.Speed"
              createOnElement="rollingstock/vehicle">
-        <jb:value property="speed" decoder="Double" data="vehicle speed" default="0"/>
+        <jb:value property="speed" decoder="Double" data="vehicle/speed" default="0"/>
     </jb:bean>
 
     <jb:bean beanId="vehicle_comments" class="java.util.ArrayList" createOnElement="rollingstock/vehicle">
@@ -112,10 +112,10 @@
 
     <jb:bean beanId="passenger_car_configuration" class="se.sj.ipl.rollingstock.domain.PassengerCarConfiguration"
              createOnElement="rollingstock/vehicle">
-        <jb:value property="class1" decoder="Integer" data="vehicle class1" default="0"/>
-        <jb:value property="class2" decoder="Integer" data="vehicle class2" default="0"/>
-        <jb:value property="couchette" decoder="Integer" data="vehicle couchette" default="0"/>
-        <jb:value property="compartments" decoder="Integer" data="vehicle compartments" default="0"/>
+        <jb:value property="class1" decoder="Integer" data="vehicle/class1" default="0"/>
+        <jb:value property="class2" decoder="Integer" data="vehicle/class2" default="0"/>
+        <jb:value property="couchette" decoder="Integer" data="vehicle/couchette" default="0"/>
+        <jb:value property="compartments" decoder="Integer" data="vehicle/compartments" default="0"/>
     </jb:bean>
 
     <resource-config selector="decoder:Time">

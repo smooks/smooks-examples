@@ -67,8 +67,8 @@ public class XMLReadWriteTest {
         XMLBinding xmlV1Binding = new XMLBinding().add("v1-binding-config.xml");
         XMLBinding xmlV2Binding = new XMLBinding().add("v2-binding-config.xml");
 
-        xmlV1Binding.intialise();
-        xmlV2Binding.intialise();
+        xmlV1Binding.initialise();
+        xmlV2Binding.initialise();
 
         Order order = xmlV1Binding.fromXML(new StringSource(Main.orderV1XMLMessage), Order.class);
 

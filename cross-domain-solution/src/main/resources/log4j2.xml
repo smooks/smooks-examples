@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   ========================LICENSE_START=================================
-  Smooks Example :: Smooks Camel CSV to XML
+  Cross Domain Solution
   %%
-  Copyright (C) 2020 Smooks
+  Copyright (C) 2020 - 2021 Smooks
   %%
   Licensed under the terms of the Apache License Version 2.0, or
   the GNU Lesser General Public License version 3.0 or later.
@@ -45,17 +45,11 @@
 <Configuration>
     <Appenders>
         <Console name="Console">
-            <PatternLayout pattern="%d{ABSOLUTE} %-5p [%t][%c{1}] %m%n"/>
+            <PatternLayout pattern="%-5p %d [%t] %c: %m%n"/>
         </Console>
     </Appenders>
     <Loggers>
-<!--        <Logger name="org.smooks.cdr.xpath" level="debug"/>-->
-        <Logger name="org.apache.activemq" level="info"/>
-<!--        <Logger name="org.hsqldb" level="debug"/>-->
-        <Logger name="org.apache.camel" level="info"/>
-        <Logger name="org.smooks.examples.camel.csv2xml" level="info"/>
-
-        <Root>
+        <Root level="info">
             <AppenderRef ref="Console"/>
         </Root>
     </Loggers>

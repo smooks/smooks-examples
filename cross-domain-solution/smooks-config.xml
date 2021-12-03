@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<smooks-resource-list xmlns="https://www.smooks.org/xsd/smooks-2.0.xsd"
+                      xmlns:core="https://www.smooks.org/xsd/smooks/smooks-core-1.6.xsd"
+                      xmlns:dfdl="https://www.smooks.org/xsd/smooks/dfdl-1.0.xsd">
+
+    <dfdl:parser schemaURI="/nitf.dfdl.xsd"/>
+
+    <core:smooks filterSourceOn="/NITF">
+        <core:action>
+            <core:inline>
+                <core:replace/>
+            </core:inline>
+        </core:action>
+        <core:config>
+            <smooks-resource-list>
+                <dfdl:unparser schemaURI="/nitf.dfdl.xsd" unparseOnNode="//*[not(self::InvalidData)]"
+                               distinguishedRootNode="{urn:nitf:2.1}ValidData"/>
+            </smooks-resource-list>
+        </core:config>
+    </core:smooks>
+
+    <core:smooks filterSourceOn="/NITF">
+        <core:action>
+            <core:outputTo outputStreamResource="deadLetterStream"/>
+        </core:action>
+        <core:config>
+            <smooks-resource-list>
+                <resource-config selector="InvalidData">
+                    <resource>org.smooks.examples.cds.EchoVisitor</resource>
+                </resource-config>
+            </smooks-resource-list>
+        </core:config>
+    </core:smooks>
+
+</smooks-resource-list>

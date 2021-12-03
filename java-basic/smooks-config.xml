@@ -44,7 +44,7 @@
 
 <smooks-resource-list xmlns="https://www.smooks.org/xsd/smooks-2.0.xsd">
 
-    <resource-config selector="c b">
+    <resource-config selector="c/b">
 	    <resource>org.smooks.examples.javabasic.BasicJavaTransformer</resource>
 		<param name="newName">xxx</param>
 	</resource-config>

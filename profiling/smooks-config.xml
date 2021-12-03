@@ -58,12 +58,12 @@
 		<param name="newName">from-a</param>
 	</resource-config>
 
-    <resource-config selector="a b" target-profile="to-b">
+    <resource-config selector="a/b" target-profile="to-b">
 	    <resource>org.smooks.examples.profiling.BasicJavaTransformer</resource>
 		<param name="newName">to-b</param>
 	</resource-config>
 
-    <resource-config selector="c b" target-profile="to-c">
+    <resource-config selector="c/b" target-profile="to-c">
 	    <resource>org.smooks.examples.profiling.BasicJavaTransformer</resource>
 		<param name="newName">to-c</param>
 	</resource-config>
@@ -73,12 +73,12 @@
 		<param name="newName">to-d</param>
 	</resource-config>
 
-    <resource-config selector="b c" target-profile="message-exchange-5">
+    <resource-config selector="b/c" target-profile="message-exchange-5">
 	    <resource>org.smooks.examples.profiling.BasicJavaTransformer</resource>
 		<param name="newName">message-exchange-5</param>
 	</resource-config>
 
-    <resource-config selector="c b" target-profile="to-b AND from-d">
+    <resource-config selector="c/b" target-profile="to-b AND from-d">
 	    <resource>org.smooks.examples.profiling.BasicJavaTransformer</resource>
 		<param name="newName">d-to-b</param>
 	</resource-config>

@@ -70,8 +70,8 @@ public class Main {
         // Create and initilise the XMLBinding instances for v1 and v2 of the XMLs...
         XMLBinding xmlBindingV1 = new XMLBinding().add("v1-binding-config.xml");
         XMLBinding xmlBindingV2 = new XMLBinding().add("v2-binding-config.xml");
-        xmlBindingV1.intialise();
-        xmlBindingV2.intialise();
+        xmlBindingV1.initialise();
+        xmlBindingV2.initialise();
 
         // Read the v1 order XML into the Order Object model...
         Order order = xmlBindingV1.fromXML(new StringSource(orderV1XMLMessage), Order.class);

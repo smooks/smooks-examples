@@ -63,7 +63,7 @@ public class XMLReadWriteTest {
 	@Test
     public void test() throws IOException, SAXException {
         XMLBinding xmlBinding = new XMLBinding().add("smooks-config.xml");
-        xmlBinding.intialise();
+        xmlBinding.initialise();
 
         Order order = xmlBinding.fromXML(new StringSource(Main.orderXMLMessage), Order.class);
 

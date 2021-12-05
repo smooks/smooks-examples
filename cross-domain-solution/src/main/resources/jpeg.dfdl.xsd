@@ -1,0 +1,892 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+           xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/"
+           xmlns:daf="urn:ogf:dfdl:2013:imp:daffodil.apache.org:2018:ext"
+           xmlns:fn="http://www.w3.org/2005/xpath-functions">
+
+    <!--
+        NOTICE
+
+        This software was produced for the U. S. Government under
+        Basic Contract No. W15P7T-13-C-A802, and is subject to the
+        Rights in Noncommercial Computer Software and Noncommercial
+        Computer Software Documentation Clause 252.227-7014 (FEB 2012)
+
+        Copyright 2017 The MITRE Corporation.
+    -->
+    <!--
+        DFDL Schema for the JFIF image format.
+        Author: Roger Costello, The MITRE Corporation.
+        Version: 1.0
+        Date: January 13, 2017
+      -->
+    <!-- 
+        With modifications by Tresys Technology.
+      -->
+    <xs:annotation>
+        <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:format alignmentUnits="bits" lengthUnits="bits" representation="binary" binaryNumberRep="binary" 
+            	         byteOrder="bigEndian" bitOrder="mostSignificantBitFirst" lengthKind="implicit" alignment="1" encodingErrorPolicy="replace" 
+                         binaryFloatRep="ieee" calendarPatternKind="implicit" documentFinalTerminatorCanBeMissing="yes" 
+                         emptyValueDelimiterPolicy="none" escapeSchemeRef="" fillByte="f" floating="no" ignoreCase="no" 
+                         initiatedContent="no" initiator="" leadingSkip="0" separator="" separatorPolicy="suppressed" 
+                         outputNewLine="%CR;%LF;"
+                         textStandardZeroRep="0" textStandardInfinityRep="Inf" textStandardExponentRep="E" 
+                         textStandardNaNRep="NaN" textNumberPattern="#,##0.###;-#,##0.###" textNumberRounding="explicit" 
+                         textNumberRoundingMode="roundUnnecessary" textNumberRoundingIncrement="0" textStandardGroupingSeparator="," 
+                         separatorPosition="infix" sequenceKind="ordered" terminator="" textBidi="no" textNumberCheckPolicy="strict" 
+                         textNumberRep="standard" textOutputMinLength="0" textPadKind="none" textStandardBase="10" textTrimKind="none" trailingSkip="0" truncateSpecifiedLengthString="no" 
+                         utf16Width="fixed" encoding="US-ASCII" nilKind="literalValue" nilValueDelimiterPolicy="none" occursCountKind="parsed"
+                         choiceLengthKind="implicit"
+                         />
+                         <!--daf:parseUnparsePolicy="parseOnly" />-->
+        </xs:appinfo>
+    </xs:annotation>
+	
+	<xs:element name="JFIF">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Segment" minOccurs="0" maxOccurs="unbounded" dfdl:occursCountKind="implicit">
+					<xs:complexType>
+						<xs:choice>
+							<xs:element name="DataBlob" type="xs:hexBinary" dfdl:lengthKind="pattern" dfdl:lengthPattern="[\x00-\xFF]*?(?=\xFF+[\x01-\xFE])" dfdl:encoding="ISO-8859-1">
+								<xs:annotation>
+									<xs:appinfo source="http://www.ogf.org/dfdl/">
+										<dfdl:discriminator test="{ dfdl:valueLength(., 'bytes') gt 0 }" />
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+							<xs:group ref="Markers" />
+						</xs:choice>
+					</xs:complexType>
+				</xs:element>
+                <xs:sequence>
+                  <xs:annotation>
+                    <xs:appinfo source="http://www.ogf.org/dfdl/">
+                      <!--
+                        This schema accepts any sequence of JPEG segments.
+                        These assertions insist that some constraints on those are met. 
+                        
+                        Note: Since JPEG gets embedded in other file formats like NITF
+                        it is important not to use absolute paths. All paths must be relative.
+                       -->
+                      <dfdl:assert message="Does not begin with an SOI segment.">{ fn:exists(Segment[1]/SOI) }</dfdl:assert>
+                      <dfdl:assert message="Does not end with an EOI segment.">{ fn:exists(Segment[fn:count(Segment)]/EOI) }</dfdl:assert>
+                    </xs:appinfo>
+                  </xs:annotation>
+                </xs:sequence>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:group name="hiddenFillMarker">
+		<xs:sequence>
+			<xs:element name="Fill" type="xs:hexBinary" dfdl:lengthUnits="bytes" dfdl:lengthKind="pattern" dfdl:lengthPattern="\xFF+(?=[\x01-\xFE])" dfdl:encoding="ISO-8859-1" dfdl:outputValueCalc="{
+				xs:hexBinary('FF') 
+				}" />
+			<xs:element name="MarkerID" type="xs:hexBinary" dfdl:lengthUnits="bytes" dfdl:lengthKind="explicit" dfdl:length="1" dfdl:outputValueCalc="{
+				if (fn:exists(../SOI)) then xs:hexBinary('D8')
+				else if (fn:exists(../APP0)) then xs:hexBinary('E0')
+				else if (fn:exists(../APP1)) then xs:hexBinary('E1')
+				else if (fn:exists(../APP2)) then xs:hexBinary('E2')
+				else if (fn:exists(../APP3)) then xs:hexBinary('E3')
+				else if (fn:exists(../APP4)) then xs:hexBinary('E4')
+				else if (fn:exists(../APP5)) then xs:hexBinary('E5')
+				else if (fn:exists(../APP6)) then xs:hexBinary('E6')
+				else if (fn:exists(../APP7)) then xs:hexBinary('E7')
+				else if (fn:exists(../APP8)) then xs:hexBinary('E8')
+				else if (fn:exists(../APP9)) then xs:hexBinary('E9')
+				else if (fn:exists(../APP10)) then xs:hexBinary('EA')
+				else if (fn:exists(../APP11)) then xs:hexBinary('EB')
+				else if (fn:exists(../APP12)) then xs:hexBinary('EC')
+				else if (fn:exists(../APP13)) then xs:hexBinary('ED')
+				else if (fn:exists(../APP14)) then xs:hexBinary('EE')
+				else if (fn:exists(../APP15)) then xs:hexBinary('EF')
+				else if (fn:exists(../DQT)) then xs:hexBinary('DB')
+				else if (fn:exists(../SOF0)) then xs:hexBinary('C0')
+				else if (fn:exists(../SOF1)) then xs:hexBinary('C1')
+				else if (fn:exists(../SOF2)) then xs:hexBinary('C2')
+				else if (fn:exists(../SOF3)) then xs:hexBinary('C3')
+				else if (fn:exists(../SOF5)) then xs:hexBinary('C5')
+				else if (fn:exists(../SOF6)) then xs:hexBinary('C6')
+				else if (fn:exists(../SOF7)) then xs:hexBinary('C7')
+				else if (fn:exists(../SOF9)) then xs:hexBinary('C9')
+				else if (fn:exists(../SOF10)) then xs:hexBinary('CA')
+				else if (fn:exists(../SOF11)) then xs:hexBinary('CB')
+				else if (fn:exists(../SOF13)) then xs:hexBinary('CD')
+				else if (fn:exists(../SOF14)) then xs:hexBinary('CE')
+				else if (fn:exists(../SOF15)) then xs:hexBinary('CF')
+				else if (fn:exists(../DRI)) then xs:hexBinary('DD')
+				else if (fn:exists(../DHT)) then xs:hexBinary('C4')
+				else if (fn:exists(../COM)) then xs:hexBinary('FE')
+				else if (fn:exists(../DNL)) then xs:hexBinary('DC')
+				else if (fn:exists(../EXP)) then xs:hexBinary('DF')
+				else if (fn:exists(../DHP)) then xs:hexBinary('DE')
+				else if (fn:exists(../DAC)) then xs:hexBinary('CC')
+				else if (fn:exists(../SOS)) then xs:hexBinary('DA')
+				else if (fn:exists(../RST0)) then xs:hexBinary('D0')
+				else if (fn:exists(../RST1)) then xs:hexBinary('D1')
+				else if (fn:exists(../RST2)) then xs:hexBinary('D2')
+				else if (fn:exists(../RST3)) then xs:hexBinary('D3')
+				else if (fn:exists(../RST4)) then xs:hexBinary('D4')
+				else if (fn:exists(../RST5)) then xs:hexBinary('D5')
+				else if (fn:exists(../RST6)) then xs:hexBinary('D6')
+				else if (fn:exists(../RST7)) then xs:hexBinary('D7')
+				else if (fn:exists(../EOI)) then xs:hexBinary('D9')
+				else fn:error('jpeg', 'fn:error called.', .)
+				}" />
+		</xs:sequence>
+	</xs:group>
+	
+	<xs:group name="Markers">
+		<xs:sequence>
+			<xs:sequence dfdl:hiddenGroupRef="hiddenFillMarker"/>
+			<xs:choice dfdl:choiceDispatchKey="{ xs:string(MarkerID) }">
+			    <xs:element ref="SOI" dfdl:choiceBranchKey="D8"/><!--  SOI = D8 = Start of Image -->
+			    <xs:element ref="APP0" dfdl:choiceBranchKey="E0"/><!--  APP0 = E0 = Application-specific 0 -->
+			    <xs:element ref="APP1" dfdl:choiceBranchKey="E1"/><!--  APP1 = E1 = Application-specific 1 -->
+			    <xs:element ref="APP2" dfdl:choiceBranchKey="E2"/><!--  APP2 = E2 = Application-specific 2 -->
+			    <xs:element ref="APP3" dfdl:choiceBranchKey="E3"/><!--  APP3 = E3 = Application-specific 3 -->
+			    <xs:element ref="APP4" dfdl:choiceBranchKey="E4"/><!--  APP4 = E4 = Application-specific 4 -->
+			    <xs:element ref="APP5" dfdl:choiceBranchKey="E5"/><!--  APP5 = E5 = Application-specific 5 -->
+			    <xs:element ref="APP6" dfdl:choiceBranchKey="E6"/><!--  APP6 = E6 = Application-specific 6 -->
+			    <xs:element ref="APP7" dfdl:choiceBranchKey="E7"/><!--  APP7 = E7 = Application-specific 7 -->
+			    <xs:element ref="APP8" dfdl:choiceBranchKey="E8"/><!--  APP8 = E8 = Application-specific 8 -->
+			    <xs:element ref="APP9" dfdl:choiceBranchKey="E9"/><!--  APP9 = E9 = Application-specific 9 -->
+			    <xs:element ref="APP10" dfdl:choiceBranchKey="EA"/><!--  APP10 = EA = Application-specific 10 -->
+			    <xs:element ref="APP11" dfdl:choiceBranchKey="EB"/><!--  APP11 = EB = Application-specific 11 -->
+			    <xs:element ref="APP12" dfdl:choiceBranchKey="EC"/><!--  APP12 = EC = Application-specific 12 -->
+			    <xs:element ref="APP13" dfdl:choiceBranchKey="ED"/><!--  APP13 = ED = Application-specific 13 -->
+			    <xs:element ref="APP14" dfdl:choiceBranchKey="EE"/><!--  APP14 = EE = Application-specific 14 -->
+			    <xs:element ref="APP15" dfdl:choiceBranchKey="EF"/><!--  APP15 = EF = Application-specific 15 -->
+			    <xs:element ref="DQT" dfdl:choiceBranchKey="DB"/><!--  DQT = DB = Define Quantization Table -->
+			
+			    <!-- Start of Frame markers, non-differential Huffman coding -->
+			
+			    <xs:element ref="SOF0" dfdl:choiceBranchKey="C0"/><!--  SOF0 = C0 = Start of Frame 0 -->
+			    <xs:element ref="SOF1" dfdl:choiceBranchKey="C1"/><!--  SOF1 = C1 = Start of Frame 1 -->
+			    <xs:element ref="SOF2" dfdl:choiceBranchKey="C2"/><!--  SOF2 = C2 = Start of Frame 2 -->
+			    <xs:element ref="SOF3" dfdl:choiceBranchKey="C3"/><!--  SOF3 = C3 = Start of Frame 3 -->
+			
+			    <!-- Start of Frame markers, differential Huffman coding -->
+			
+			    <xs:element ref="SOF5" dfdl:choiceBranchKey="C5"/><!--  SOF5 = C5 = Start of Frame 5 -->
+			    <xs:element ref="SOF6" dfdl:choiceBranchKey="C6"/><!--  SOF6 = C6 = Start of Frame 6 -->
+			    <xs:element ref="SOF7" dfdl:choiceBranchKey="C7"/><!--  SOF7 = C7 = Start of Frame 7 -->
+			
+			    <!-- Start of Frame markers, non-differential arithmetic coding -->
+			
+			    <xs:element ref="SOF9" dfdl:choiceBranchKey="C9"/><!--  SOF9 = C9 = Start of Frame 9 -->
+			    <xs:element ref="SOF10" dfdl:choiceBranchKey="CA"/><!--  SOF10 = CA = Start of Frame 10 -->
+			    <xs:element ref="SOF11" dfdl:choiceBranchKey="CB"/><!--  SOF11 = CB = Start of Frame 11 -->
+			
+			    <!-- Start of Frame markers, differential arithmetic coding -->
+			
+			    <xs:element ref="SOF13" dfdl:choiceBranchKey="CD"/><!--  SOF13 = CD = Start of Frame 13 -->
+			    <xs:element ref="SOF14" dfdl:choiceBranchKey="CE"/><!--  SOF14 = CE = Start of Frame 14 -->
+			    <xs:element ref="SOF15" dfdl:choiceBranchKey="CF"/><!--  SOF15 = CF = Start of Frame 15 -->
+			
+			    <xs:element ref="DRI" dfdl:choiceBranchKey="DD"/><!--  DRI = DD = Define Restart Interval -->
+			    <xs:element ref="DHT" dfdl:choiceBranchKey="C4"/><!--  DHT = C4 = Define Huffman Table -->
+			    <xs:element ref="COM" dfdl:choiceBranchKey="FE"/><!--  COM = FE = Comment -->
+			    <xs:element ref="DNL" dfdl:choiceBranchKey="DC"/><!--  DNL = DC = Define Number of Lines -->
+			    <xs:element ref="EXP" dfdl:choiceBranchKey="DF"/><!--  EXP = DF = Expand Segment -->
+			    <xs:element ref="DHP" dfdl:choiceBranchKey="DE"/><!--  DHP = DE = Define Hierarchical Progression -->
+			    <xs:element ref="DAC" dfdl:choiceBranchKey="CC"/><!--  DAC = CC = Define Arithmetic Code -->
+			    <xs:element ref="SOS" dfdl:choiceBranchKey="DA"/><!--  SOS = DA = Start of Scan -->
+			
+			    <xs:element ref="RST0" dfdl:choiceBranchKey="D0"/><!--  RST0 = D0 = Reset 0 -->
+			    <xs:element ref="RST1" dfdl:choiceBranchKey="D1"/><!--  RST1 = D1 = Reset 1 -->
+			    <xs:element ref="RST2" dfdl:choiceBranchKey="D2"/><!--  RST2 = D2 = Reset 2 -->
+			    <xs:element ref="RST3" dfdl:choiceBranchKey="D3"/><!--  RST3 = D3 = Reset 3 -->
+			    <xs:element ref="RST4" dfdl:choiceBranchKey="D4"/><!--  RST4 = D4 = Reset 4 -->
+			    <xs:element ref="RST5" dfdl:choiceBranchKey="D5"/><!--  RST5 = D5 = Reset 5 -->
+			    <xs:element ref="RST6" dfdl:choiceBranchKey="D6"/><!--  RST6 = D6 = Reset 6 -->
+			    <xs:element ref="RST7" dfdl:choiceBranchKey="D7"/><!--  RST7 = D7 = Reset 7 -->
+			
+			    <xs:element ref="EOI" dfdl:choiceBranchKey="D9"/><!--  EOI = D9 = End of Image -->
+			</xs:choice>
+		</xs:sequence>
+	</xs:group>
+	
+	<!-- 	SOI = Start Of Image -->
+	<xs:element name="SOI" type="empty" />
+	
+	<!-- 	RST = Reset -->
+	<xs:element name="RST0" type="empty" />
+	<xs:element name="RST1" type="empty" />
+	<xs:element name="RST2" type="empty" />
+	<xs:element name="RST3" type="empty" />
+	<xs:element name="RST4" type="empty" />
+	<xs:element name="RST5" type="empty" />
+	<xs:element name="RST6" type="empty" />
+	<xs:element name="RST7" type="empty" />
+	
+	<!-- 	SOS = Start of Scan -->
+	<xs:element name="SOS">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Length" type="unsignedint16" dfdl:outputValueCalc="{ 4 + (2 * ../Number_of_Image_Components_in_Scan) + 2 }"/>
+				<xs:element name="Number_of_Image_Components_in_Scan" type="unsignedint8" dfdl:outputValueCalc="{ fn:count(../Image_Components_in_Scan/Image_Component) }" />
+				<xs:element name="Image_Components_in_Scan" dfdl:lengthKind="explicit" dfdl:lengthUnits="bytes" dfdl:length="{2 * ../Number_of_Image_Components_in_Scan}">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Image_Component" maxOccurs="unbounded" dfdl:occursCountKind="implicit">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Scan_Component_Selector" type="unsignedint8"/>
+										<xs:sequence dfdl:hiddenGroupRef="hidden_SOS_DC_Entropy_Coding_Table_Selector_Group" />
+										<xs:element name='DC_Entropy_Coding_Table_Selector' type='xs:string' dfdl:inputValueCalc='{
+											if (xs:integer(../Hidden_SOS_DC_Entropy_Coding_Table_Selector) eq xs:integer(0)) then "0"
+											else if (xs:integer(../Hidden_SOS_DC_Entropy_Coding_Table_Selector) eq xs:integer(1)) then "1"
+											else if (xs:integer(../Hidden_SOS_DC_Entropy_Coding_Table_Selector) eq xs:integer(2)) then "2"
+											else if (xs:integer(../Hidden_SOS_DC_Entropy_Coding_Table_Selector) eq xs:integer(3)) then "3"
+											else fn:error("jpeg", "fn:error called.", .)
+											}' />
+										<xs:sequence dfdl:hiddenGroupRef="hidden_SOS_AC_Entropy_Coding_Table_Selector_Group" />
+										<xs:element name='AC_Entropy_Coding_Table_Selector' type='xs:string' dfdl:inputValueCalc='{
+											if (xs:integer(../Hidden_SOS_AC_Entropy_Coding_Table_Selector) eq xs:integer(0)) then "0"
+											else if (xs:integer(../Hidden_SOS_AC_Entropy_Coding_Table_Selector) eq xs:integer(1)) then "1"
+											else if (xs:integer(../Hidden_SOS_AC_Entropy_Coding_Table_Selector) eq xs:integer(2)) then "2"
+											else if (xs:integer(../Hidden_SOS_AC_Entropy_Coding_Table_Selector) eq xs:integer(3)) then "3"
+											else fn:error("jpeg", "fn:error called.", .)
+											}' />
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Start_of_Spectral_or_Predictor_Selection" type="unsignedint8"/>
+				<xs:element name="End_of_Spectral_or_Predictor_Selection" type="unsignedint8"/>
+				<xs:element name="Successive_Approximation_Bit_Position_High" type="unsignedint4"/>
+				<xs:element name="Successive_Approximation_Bit_Position_Low_or_Point_Transform" type="unsignedint4"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:group name="hidden_SOS_DC_Entropy_Coding_Table_Selector_Group">
+		<xs:sequence>
+			<xs:element name="Hidden_SOS_DC_Entropy_Coding_Table_Selector" type="unsignedint4" dfdl:outputValueCalc="{
+				xs:unsignedInt(../DC_Entropy_Coding_Table_Selector)
+				}" />
+		</xs:sequence>
+	</xs:group>
+	
+	<xs:group name="hidden_SOS_AC_Entropy_Coding_Table_Selector_Group">
+		<xs:sequence>
+			<xs:element name="Hidden_SOS_AC_Entropy_Coding_Table_Selector" type="unsignedint4" dfdl:outputValueCalc="{
+				xs:unsignedInt(../AC_Entropy_Coding_Table_Selector)
+				}" />
+		</xs:sequence>
+	</xs:group>
+	
+	<!-- 	DHP = Define Hierarchical Progression -->
+	<xs:element name="DHP">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Length" type="unsignedint16" dfdl:outputValueCalc="{ 6 + (3 * ../Number_of_Source_Image_Components_in_the_Frame) + 2}" />
+				<xs:element name="Precision" type="unsignedint8"/>
+				<xs:element name="Number_of_Lines_in_Source_Image" type="unsignedint16"/>
+				<xs:element name="Number_of_Samples_per_Line" type="unsignedint16"/>
+				<xs:element name="Number_of_Source_Image_Components_in_the_Frame" type="unsignedint8" dfdl:outputValueCalc="{ fn:count(../Image_Components_in_Frame/Image_Component) }"/>
+				<xs:element name="Image_Components_in_Frame" dfdl:lengthKind="explicit" dfdl:lengthUnits="bytes" dfdl:length="{3 * ../Number_of_Source_Image_Components_in_the_Frame}">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Image_Component" maxOccurs="unbounded" dfdl:occursCountKind="implicit">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Component_Identifier" type="unsignedint8"/>
+										<xs:element name="Horizontal_Sampling_Factor" type="unsignedint4"/>
+										<xs:element name="Vertical_Sampling_Factor" type="unsignedint4"/>
+										<xs:element name="Quantization_Table_Selector" type="unsignedint8">
+											<xs:annotation>
+												<xs:appinfo source="http://www.ogf.org/dfdl/">
+													<dfdl:assert><![CDATA[{ . eq 0 }]]></dfdl:assert>
+												</xs:appinfo>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<!-- 	DAC = Define Arithmetic Code -->
+	<xs:element name="DAC">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Length" type="unsignedint16" dfdl:outputValueCalc="{ dfdl:valueLength(../Arithmetic_Codes, 'bytes') + 2 }" />
+				<xs:element name="Arithmetic_Codes" dfdl:lengthKind="explicit" dfdl:lengthUnits="bytes" dfdl:length="{../Length - 2}">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Arithmetic_Code" maxOccurs="unbounded" dfdl:occursCountKind="implicit">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:sequence dfdl:hiddenGroupRef="hidden_DAC_Class_Group" />
+										<xs:element name='Class' type='xs:string' dfdl:inputValueCalc='{
+											if (xs:integer(../Hidden_DAC_Class) eq xs:integer(0)) then "DC table or lossless table"
+											else if (xs:integer(../Hidden_DAC_Class) eq xs:integer(1)) then "AC table"
+											else fn:error("jpeg", "fn:error called.", .)
+											}' />
+										<xs:sequence dfdl:hiddenGroupRef="hidden_DAC_Identifier_Group" />
+										<xs:element name='Identifier' type='xs:string' dfdl:inputValueCalc='{
+											if (xs:integer(../Hidden_DAC_Identifier) eq xs:integer(0)) then "0"
+											else if (xs:integer(../Hidden_DAC_Identifier) eq xs:integer(1)) then "1"
+											else if (xs:integer(../Hidden_DAC_Identifier) eq xs:integer(2)) then "2"
+											else if (xs:integer(../Hidden_DAC_Identifier) eq xs:integer(3)) then "3"
+											else fn:error("jpeg", "fn:error called.", .)
+											}' />
+										<xs:choice>
+											<xs:sequence>
+												<xs:annotation>
+													<xs:appinfo source="http://www.ogf.org/dfdl/">
+														<dfdl:discriminator test="{xs:integer(Hidden_DAC_Class) eq xs:integer(0)}" />  <!-- DC -->
+													</xs:appinfo>
+												</xs:annotation>
+												<xs:element name="DC-Value">
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="U" type="unsignedint4"/>
+															<xs:element name="L" type="unsignedint4"/>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+											</xs:sequence>
+											<xs:sequence>
+												<xs:annotation>
+													<xs:appinfo source="http://www.ogf.org/dfdl/">
+														<dfdl:discriminator test="{xs:integer(Hidden_DAC_Class) eq xs:integer(1)}" />  <!-- AC -->
+													</xs:appinfo>
+												</xs:annotation>
+												<xs:element name="AC-Value" type="unsignedint8">
+													<xs:annotation>
+														<xs:appinfo source="http://www.ogf.org/dfdl/">
+															<dfdl:assert><![CDATA[{ (xs:integer(.) ge xs:integer(1)) and (xs:integer(.) le xs:integer(63)) }]]></dfdl:assert>
+														</xs:appinfo>
+													</xs:annotation>
+												</xs:element>
+											</xs:sequence>
+										</xs:choice>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:group name="hidden_DAC_Class_Group">
+		<xs:sequence>
+			<xs:element name="Hidden_DAC_Class" type="unsignedint4" dfdl:outputValueCalc="{
+				if (../Class eq 'DC table or lossless table') then xs:unsignedInt('0')
+				else if (../Class eq 'AC table') then xs:unsignedInt('1')
+				else fn:error('jpeg', 'fn:error called.', .)
+				}"/>
+		</xs:sequence>
+	</xs:group>
+	
+	<xs:group name="hidden_DAC_Identifier_Group">
+		<xs:sequence>
+			<xs:element name="Hidden_DAC_Identifier" type="unsignedint4" dfdl:outputValueCalc="{
+				xs:unsignedInt(../Identifier)
+				}"/>
+		</xs:sequence>
+	</xs:group>
+	
+	<!-- 	EXP = Expand Segment -->
+	<xs:element name="EXP">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Length" type="unsignedint16" dfdl:outputValueCalc="{ 2 + 2 }"/>
+				<xs:sequence dfdl:hiddenGroupRef="hidden_EXP_Expand_Horizontally_Group" />
+				<xs:element name='Expand_Horizontally' type='xs:string' dfdl:inputValueCalc='{
+					if (xs:integer(../Hidden_Expand_Horizontally) eq xs:integer(0)) then "Horizontal expansion not required"
+					else if (xs:integer(../Hidden_Expand_Horizontally) eq xs:integer(1)) then "The reference components shall be expanded horizontally"
+					else fn:error("jpeg", "fn:error called.", .)
+					}' />
+				<xs:sequence dfdl:hiddenGroupRef="hidden_EXP_Expand_Vertically_Group" />
+				<xs:element name='Expand_Vertically' type='xs:string' dfdl:inputValueCalc='{
+					if (xs:integer(../Hidden_Expand_Vertically) eq xs:integer(0)) then "Vertical expansion not required"
+					else if (xs:integer(../Hidden_Expand_Vertically) eq xs:integer(1)) then "The reference components shall be expanded vertically"
+					else fn:error("jpeg", "fn:error called.", .)
+					}' />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:group name="hidden_EXP_Expand_Horizontally_Group">
+		<xs:sequence>
+			<xs:element name="Hidden_Expand_Horizontally" type="unsignedint4" dfdl:outputValueCalc="{
+				if (../Expand_Horizontally eq 'Horizontal expansion not required') then xs:unsignedInt('0')
+				else if (../Expand_Horizontally eq 'The reference components shall be expanded horizontally') then xs:unsignedInt('1')
+				else fn:error('jpeg', 'fn:error called.', .)
+				}"/>
+		</xs:sequence>
+	</xs:group>
+	
+	<xs:group name="hidden_EXP_Expand_Vertically_Group">
+		<xs:sequence>
+			<xs:element name="Hidden_Expand_Vertically" type="unsignedint4" dfdl:outputValueCalc="{
+				if (../Expand_Vertically eq 'Vertical expansion not required') then xs:unsignedInt('0')
+				else if (../Expand_Vertically eq 'The reference components shall be expanded vertically') then xs:unsignedInt('1')
+				else fn:error('jpeg', 'fn:error called.', .)
+				}"/>
+		</xs:sequence>
+	</xs:group>
+	
+	<!-- 	DNL = Define Number of Lines -->
+	<xs:element name="DNL">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Length" type="unsignedint16" dfdl:outputValueCalc="{ 2 + 2 }"/>
+				<xs:element name="Number_of_Lines_in_the_Frame" type="unsignedint16"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<!-- 	COM = Comment -->
+	<xs:element name="COM">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Length" type="unsignedint16" dfdl:outputValueCalc="{ dfdl:valueLength(../Text, 'bytes') + 2 } "/>
+				<xs:element name="Text" type="xs:string" dfdl:alignmentUnits="bytes" dfdl:representation="text" dfdl:lengthKind="explicit" dfdl:lengthUnits="bytes" dfdl:length="{ ../Length - 2}"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<!-- 	DRI = Define Restart Interval -->
+	<xs:element name="DRI">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Length" type="unsignedint16" dfdl:outputValueCalc="{ 2 + 2 }"/>
+				<xs:element name="Restart_Interval" type="unsignedint16"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:complexType name="SOF">
+		<xs:sequence>
+			<xs:element name="Length" type="unsignedint16" dfdl:outputValueCalc="{ 6 + (3 * ../Number_of_Source_Image_Components_in_the_Frame) + 2}"/>
+			<xs:element name="Precision" type="unsignedint8"/>
+			<xs:element name="Number_of_Lines_in_Source_Image" type="unsignedint16"/>
+			<xs:element name="Number_of_Samples_per_Line" type="unsignedint16"/>
+			<xs:element name="Number_of_Source_Image_Components_in_the_Frame" type="unsignedint8" dfdl:outputValueCalc="{ fn:count(../Image_Components_in_Frame/Image_Component) }"/>
+			<xs:element name="Image_Components_in_Frame" dfdl:lengthKind="explicit" dfdl:lengthUnits="bytes" dfdl:length="{3 * ../Number_of_Source_Image_Components_in_the_Frame}">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Image_Component" maxOccurs="unbounded" dfdl:occursCountKind="implicit">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="Component_Identifier" type="unsignedint8"/>
+									<xs:element name="Horizontal_Sampling_Factor" type="unsignedint4"/>
+									<xs:element name="Vertical_Sampling_Factor" type="unsignedint4"/>
+									<xs:element name="Quantization_Table_Selector" type="unsignedint8"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:element name="SOF0" type="SOF" />
+	<xs:element name="SOF1" type="SOF" />
+	<xs:element name="SOF2" type="SOF" />
+	<xs:element name="SOF3" type="SOF" />
+	<xs:element name="SOF5" type="SOF" />
+	<xs:element name="SOF6" type="SOF" />
+	<xs:element name="SOF7" type="SOF" />
+	<xs:element name="SOF9" type="SOF" />
+	<xs:element name="SOF10" type="SOF" />
+	<xs:element name="SOF11" type="SOF" />
+	<xs:element name="SOF13" type="SOF" />
+	<xs:element name="SOF14" type="SOF" />
+	<xs:element name="SOF15" type="SOF" />
+	
+	<!-- 	DHT = Define Huffman Table -->
+	<xs:element name="DHT">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Length" type="unsignedint16" dfdl:outputValueCalc="{ dfdl:valueLength(../Huffman_Tables, 'bytes') + 2 }" />
+				<xs:element name="Huffman_Tables" dfdl:lengthKind="explicit" dfdl:lengthUnits="bytes" dfdl:length="{../Length - 2}">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Table" maxOccurs="unbounded" dfdl:occursCountKind="implicit">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:sequence dfdl:hiddenGroupRef="hidden_DHT_Class_Group" />
+										<xs:element name='Class' type='xs:string' dfdl:inputValueCalc='{
+											if (xs:integer(../Hidden_DHT_Class) eq xs:integer(0)) then "The Huffman code is for the DC coefficients"
+											else if (xs:integer(../Hidden_DHT_Class) eq xs:integer(1)) then "The Huffman code is for the AC coefficients"
+											else fn:error("jpeg", "fn:error called.", .)
+											}' />
+										<xs:sequence dfdl:hiddenGroupRef="hidden_DHT_Destination_Identifier_Group" />
+										<xs:element name='Destination_Identifier' type='xs:string' dfdl:inputValueCalc='{
+											if (xs:string(../Hidden_DHT_Destination_Identifier) eq "0") then "0"
+											else if (xs:integer(../Hidden_DHT_Destination_Identifier) eq xs:integer(1)) then "1"
+											else if (xs:integer(../Hidden_DHT_Destination_Identifier) eq xs:integer(2)) then "2"
+											else if (xs:integer(../Hidden_DHT_Destination_Identifier) eq xs:integer(3)) then "3"
+											else fn:error("jpeg", "fn:error called.", .)
+											}' />
+										<xs:element name="Huffman_Code">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="Lengths">
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="Length" dfdl:occursCountKind="fixed" minOccurs="16" maxOccurs="16">
+																	<xs:complexType>
+																		<xs:sequence>
+																			<xs:element name="Value" type="unsignedint8"
+																				dfdl:outputValueCalc="{ dfdl:valueLength(../../../Values/Value[dfdl:occursIndex()], 'bytes') }" />
+																		</xs:sequence>
+																	</xs:complexType>
+																</xs:element>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="Values">
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="Value" type="xs:hexBinary" dfdl:occursCountKind="fixed" minOccurs="16" maxOccurs="16"
+																	dfdl:lengthKind="explicit" dfdl:lengthUnits="bytes" dfdl:length="{ ../../Lengths/Length[dfdl:occursIndex()]/Value }" />
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:group name="hidden_DHT_Class_Group">
+		<xs:sequence>
+			<xs:element name="Hidden_DHT_Class" type="unsignedint4" dfdl:outputValueCalc="{
+				if (../Class eq 'The Huffman code is for the DC coefficients') then xs:unsignedInt('0')
+				else if (../Class eq 'The Huffman code is for the AC coefficients') then xs:unsignedInt('1')
+				else fn:error('jpeg', 'fn:error called.', .)
+				}"/>
+		</xs:sequence>
+	</xs:group>
+	
+	<xs:group name="hidden_DHT_Destination_Identifier_Group">
+		<xs:sequence>
+			<xs:element name="Hidden_DHT_Destination_Identifier" type="unsignedint4" dfdl:outputValueCalc="{
+				xs:unsignedInt(../Destination_Identifier)
+				}"/>
+		</xs:sequence>
+	</xs:group>
+	
+	<!-- 	DQT = Define Quantization Table -->
+	<xs:element name="DQT">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Length" type="unsignedint16" dfdl:outputValueCalc="{ dfdl:valueLength(../Quantization_Tables, 'bytes') + 2 }" />
+				<xs:element name="Quantization_Tables" dfdl:lengthKind="explicit" dfdl:lengthUnits="bytes" dfdl:length="{../Length - 2}">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Table" maxOccurs="unbounded" dfdl:occursCountKind="implicit">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:sequence dfdl:hiddenGroupRef="hidden_DQT_Precision_Group" />
+										<xs:element name='Precision' type='xs:string' dfdl:inputValueCalc='{
+											if (xs:integer(../Hidden_DQT_Precision) eq xs:integer(0)) then "A single byte is used for each quantization value"
+											else if (xs:integer(../Hidden_DQT_Precision) eq xs:integer(1)) then "Two bytes are used for each quantization value"
+											else fn:error("jpeg", "fn:error called.", .)
+											}' />
+										<xs:sequence dfdl:hiddenGroupRef="hidden_DQT_Destination_Identifier_Group" />
+										<xs:element name='Destination_Identifier' type='xs:string' dfdl:inputValueCalc='{
+											if (xs:string(../Hidden_DQT_Destination_Identifier) eq "0") then "0"
+											else if (xs:integer(../Hidden_DQT_Destination_Identifier) eq xs:integer(1)) then "1"
+											else if (xs:integer(../Hidden_DQT_Destination_Identifier) eq xs:integer(2)) then "2"
+											else if (xs:integer(../Hidden_DQT_Destination_Identifier) eq xs:integer(3)) then "3"
+											else fn:error("jpeg", "fn:error called.", .)
+											}' />
+										<xs:element name="Elements">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:choice>
+														<xs:sequence>
+															<xs:annotation>
+																<xs:appinfo source="http://www.ogf.org/dfdl/">
+																	<dfdl:discriminator test="{xs:integer(../Hidden_DQT_Precision) eq xs:integer(0)}" />  <!-- Single byte -->
+																</xs:appinfo>
+															</xs:annotation>
+															<xs:element name="Index" type="unsignedint8" minOccurs="64" maxOccurs="64" dfdl:occursCountKind="fixed" />
+														</xs:sequence>
+														<xs:sequence>
+															<xs:annotation>
+																<xs:appinfo source="http://www.ogf.org/dfdl/">
+																	<dfdl:discriminator test="{xs:integer(../Hidden_DQT_Precision) eq xs:integer(1)}" />  <!-- Two bytes -->
+																</xs:appinfo>
+															</xs:annotation>
+															<xs:element name="Index_long" type="unsignedint16" minOccurs="64" maxOccurs="64" dfdl:occursCountKind="fixed" />
+														</xs:sequence>
+													</xs:choice>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:group name="hidden_DQT_Precision_Group">
+		<xs:sequence>
+			<xs:element name="Hidden_DQT_Precision" type="unsignedint4" dfdl:outputValueCalc="{
+				if (../Precision eq 'A single byte is used for each quantization value') then xs:unsignedInt('0')
+				else if (../Precision eq 'Two bytes are used for each quantization value') then xs:unsignedInt('1')
+				else fn:error('jpeg', 'fn:error called.', .)
+				}"/>
+		</xs:sequence>
+	</xs:group>
+	
+	<xs:group name="hidden_DQT_Destination_Identifier_Group">
+		<xs:sequence>
+			<xs:element name="Hidden_DQT_Destination_Identifier" type="unsignedint4" dfdl:outputValueCalc="{
+				xs:unsignedInt(../Destination_Identifier)
+				}"/>
+		</xs:sequence>
+	</xs:group>
+	
+	<!-- 	APP0 = Application-specific marker APP0 -->
+	<xs:element name="APP0">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Length" type="unsignedint16"/>
+				<xs:sequence dfdl:hiddenGroupRef="hidden_APP0_Identifier_Group" />
+				<xs:element name='Identifier' type='xs:string' dfdl:inputValueCalc='{
+					if (xs:string(../Hidden_APP0_Identifier) eq "4A46494600") then "JFIF-APP0"    
+					else if (xs:string(../Hidden_APP0_Identifier) eq "4A46585800") then "JFXX-APP0"    
+					else fn:error("jpeg", "fn:error called.", .)
+					}' />
+				<xs:choice dfdl:choiceDispatchKey="{ Identifier }">
+					<xs:sequence dfdl:choiceBranchKey="JFIF-APP0">
+						<xs:element name="version">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="major" type="unsignedint8" />
+									<xs:element name="minor" type="unsignedint8" />
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:sequence dfdl:hiddenGroupRef="hidden_APP0_Units_Group" />
+						<xs:element name='Units' type='xs:string' dfdl:inputValueCalc='{
+							if (xs:integer(../Hidden_APP0_Units) eq xs:integer(0)) then "No units"
+							else if (xs:integer(../Hidden_APP0_Units) eq xs:integer(1)) then "Dots per inch"
+							else if (xs:integer(../Hidden_APP0_Units) eq xs:integer(2)) then "Dots per cm"
+							else fn:error("jpeg", "fn:error called.", .)
+							}' />
+						<xs:element name="Xdensity" type="unsignedint16" />
+						<xs:element name="Ydensity" type="unsignedint16" />
+						<xs:element name="Xthumbnail" type="unsignedint8" />
+						<xs:element name="Ythumbnail" type="unsignedint8" />
+						<xs:element name="RGB" type="xs:hexBinary" minOccurs="0" dfdl:occursCountKind="implicit" dfdl:lengthKind="explicit" dfdl:lengthUnits="bytes" dfdl:length="{3 * (../Xthumbnail * ../Ythumbnail)}"/>
+					</xs:sequence>
+					<xs:sequence dfdl:choiceBranchKey="JFXX-APP0">
+						<xs:sequence dfdl:hiddenGroupRef="hidden_APP0X_Thumbnail_Format_Group" />
+						<xs:element name='Thumbnail_Format' type='xs:string' dfdl:inputValueCalc='{
+							if (../Hidden_Thumbnail_Format eq xs:integer(16)) then "Thumbnail stored using JPEG encoding"
+							else if (xs:integer(../Hidden_Thumbnail_Format) eq xs:integer(17)) then "Thumbnail stored using one byte per pixel"
+							else if (xs:integer(../Hidden_Thumbnail_Format) eq xs:integer(19)) then "Thumbnail stored using three byte per pixel"
+							else fn:error("jpeg", "fn:error called.", .)
+							}' />
+						<xs:choice>
+							<xs:sequence>
+								<xs:annotation>
+									<xs:appinfo source="http://www.ogf.org/dfdl/">
+										<dfdl:discriminator test="{xs:integer(Hidden_Thumbnail_Format) eq xs:integer(16)}" />
+									</xs:appinfo>
+								</xs:annotation>
+								<xs:element name="Thumbnail_stored_using_JPEG_encoding">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element ref="SOI" />
+											<xs:element name="Thumbnail-data" type="xs:hexBinary" minOccurs="0" dfdl:occursCountKind="implicit" dfdl:lengthKind="explicit" dfdl:lengthUnits="bytes" dfdl:length="{../../Length - 10}"/>
+											<xs:element ref="EOI" />
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+							<xs:sequence>
+								<xs:annotation>
+									<xs:appinfo source="http://www.ogf.org/dfdl/">
+										<dfdl:discriminator test="{xs:integer(Hidden_Thumbnail_Format) eq xs:integer(17)}" />
+									</xs:appinfo>
+								</xs:annotation>
+								<xs:element name="Thumbnail_stored_using_one_byte_per_pixel">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="Xthumbnail" type="unsignedint8" />
+											<xs:element name="Ythumbnail" type="unsignedint8" />
+											<xs:element name="Thumbnail_palette" dfdl:lengthKind="explicit" dfdl:lengthUnits="bytes" dfdl:length="{768}">
+												<xs:complexType>
+													<xs:sequence>
+														<xs:element name="RGB" minOccurs="256" maxOccurs="256" dfdl:occursCountKind="implicit">
+															<xs:complexType>
+																<xs:sequence>
+																	<xs:element name="Red" type="unsignedint8" />
+																	<xs:element name="Green" type="unsignedint8" />
+																	<xs:element name="Blue" type="unsignedint8" />							
+																</xs:sequence>
+															</xs:complexType>
+														</xs:element>
+													</xs:sequence>
+												</xs:complexType>
+											</xs:element>
+											<xs:element name="Thumbnail_data" type="xs:hexBinary" minOccurs="0" dfdl:occursCountKind="implicit" dfdl:lengthKind="explicit" dfdl:lengthUnits="bytes" dfdl:length="{../Xthumbnail * ../Ythumbnail}"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+							<xs:sequence>
+								<xs:annotation>
+									<xs:appinfo source="http://www.ogf.org/dfdl/">
+										<dfdl:discriminator test="{xs:integer(Hidden_Thumbnail_Format) eq xs:integer(19)}" />
+									</xs:appinfo>
+								</xs:annotation>
+								<xs:element name="Thumbnail_stored_using_three_bytes_per_pixel">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="Xthumbnail" type="unsignedint8" />
+											<xs:element name="Ythumbnail" type="unsignedint8" />
+											<xs:element name="Thumbnail_data" dfdl:lengthKind="explicit" dfdl:lengthUnits="bytes" dfdl:length="{3 * (../Xthumbnail * ../Ythumbnail)}">
+												<xs:complexType>
+													<xs:sequence>
+														<xs:element name="RGB" maxOccurs="unbounded" dfdl:occursCountKind="implicit">
+															<xs:complexType>
+																<xs:sequence>
+																	<xs:element name="Red" type="unsignedint8" />
+																	<xs:element name="Green" type="unsignedint8" />
+																	<xs:element name="Blue" type="unsignedint8" />							
+																</xs:sequence>
+															</xs:complexType>
+														</xs:element>
+													</xs:sequence>
+												</xs:complexType>
+											</xs:element>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:choice>
+					</xs:sequence>
+				</xs:choice>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:group name="hidden_APP0_Identifier_Group">
+		<xs:sequence>
+			<xs:element name="Hidden_APP0_Identifier" type="xs:hexBinary" dfdl:length="5" dfdl:lengthKind="explicit"  dfdl:lengthUnits="bytes" dfdl:outputValueCalc="{
+				if (../Identifier eq 'JFIF-APP0') then xs:hexBinary('4A46494600')
+				else if (../Identifier eq 'JFXX-APP0') then xs:hexBinary('4A46585800')
+				else fn:error('jpeg', 'fn:error called.', .)
+				}">
+				<xs:annotation>
+					<xs:appinfo source="http://www.ogf.org/dfdl/">
+						<!-- The identifier is 4A 46 49 46 00 (JFIF0) -->
+						<dfdl:assert><![CDATA[{ xs:string(.) eq "4A46494600" or xs:string(.) eq "4A46585800" }]]></dfdl:assert>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:group>
+	
+	<xs:group name="hidden_APP0_Units_Group">
+		<xs:sequence>
+			<xs:element name="Hidden_APP0_Units" type="unsignedint8" dfdl:outputValueCalc="{
+				if (../Units eq 'No units') then xs:unsignedInt('0')
+				else if (../Units eq 'Dots per inch') then xs:unsignedInt('1')
+				else if (../Units eq 'Dots per cm') then xs:unsignedInt('2')
+				else fn:error('jpeg', 'fn:error called.', .)
+				}"/>
+		</xs:sequence>
+	</xs:group>
+	
+	<xs:group name="hidden_APP0X_Thumbnail_Format_Group">
+		<xs:sequence>
+			<xs:element name="Hidden_Thumbnail_Format" type="unsignedint8" dfdl:outputValueCalc="{
+				if (../Thumbnail_Format eq 'Thumbnail stored using JPEG encoding') then xs:unsignedInt('16')
+				else if (../Thumbnail_Format eq 'Thumbnail stored using one byte per pixel') then xs:unsignedInt('17')
+				else if (../Thumbnail_Format eq 'Thumbnail stored using three byte per pixel') then xs:unsignedInt('19')
+				else fn:error('jpeg', 'fn:error called.', .)
+				}"/>
+		</xs:sequence>
+	</xs:group>
+	
+	<xs:complexType name="APP">
+		<xs:sequence>
+			<xs:element name="Length" type="unsignedint16" dfdl:outputValueCalc="{ dfdl:valueLength(../APP-data, 'bytes') + 2 }"/>
+			<xs:element name="APP-data" type="xs:hexBinary" minOccurs="0" dfdl:occursCountKind="implicit" dfdl:lengthKind="explicit" dfdl:lengthUnits="bytes" dfdl:length="{../Length - 2}"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:element name="APP1" type="APP" />
+	<xs:element name="APP2" type="APP" />
+	<xs:element name="APP3" type="APP" />
+	<xs:element name="APP4" type="APP" />
+	<xs:element name="APP5" type="APP" />
+	<xs:element name="APP6" type="APP" />
+	<xs:element name="APP7" type="APP" />
+	<xs:element name="APP8" type="APP" />
+	<xs:element name="APP9" type="APP" />
+	<xs:element name="APP10" type="APP" />
+	<xs:element name="APP11" type="APP" />
+	<xs:element name="APP12" type="APP" />
+	<xs:element name="APP13" type="APP" />
+	<xs:element name="APP14" type="APP" />
+	<xs:element name="APP15" type="APP" />
+	
+	<!-- 	EOI = End Of Image -->
+	<xs:element name="EOI" type="empty" />
+	
+	<xs:complexType name="empty">
+		<xs:sequence/>
+	</xs:complexType>
+	
+	<xs:simpleType name="unsignedint2" dfdl:length="2" dfdl:lengthKind="explicit">
+		<xs:restriction base="xs:unsignedInt"/>
+	</xs:simpleType>
+	
+	<xs:simpleType name="unsignedint4" dfdl:length="4" dfdl:lengthKind="explicit">
+		<xs:restriction base="xs:unsignedInt"/>
+	</xs:simpleType>
+	
+	<xs:simpleType name="unsignedint8" dfdl:length="8" dfdl:lengthKind="explicit">
+		<xs:restriction base="xs:unsignedInt"/>
+	</xs:simpleType>
+	
+	<xs:simpleType name="unsignedint16" dfdl:length="16" dfdl:lengthKind="explicit">
+		<xs:restriction base="xs:unsignedInt"/>
+	</xs:simpleType>
+	
+	<xs:simpleType name="unsignedint24" dfdl:length="24" dfdl:lengthKind="explicit">
+		<xs:restriction base="xs:unsignedInt"/>
+	</xs:simpleType>
+	
+	<xs:simpleType name="unsignedint32" dfdl:length="32" dfdl:lengthKind="explicit">
+		<xs:restriction base="xs:unsignedInt"/>
+	</xs:simpleType>
+
+</xs:schema>

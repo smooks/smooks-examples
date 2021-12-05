@@ -1,8 +1,8 @@
 /*-
  * ========================LICENSE_START=================================
- * Smooks Example :: Smooks Camel CSV to XML
+ * Cross Domain Solution
  * %%
- * Copyright (C) 2020 Smooks
+ * Copyright (C) 2020 - 2021 Smooks
  * %%
  * Licensed under the terms of the Apache License Version 2.0, or
  * the GNU Lesser General Public License version 3.0 or later.
@@ -40,58 +40,53 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * =========================LICENSE_END==================================
  */
-package org.smooks.examples.camel.csv2xml;
+package org.smooks.examples.cds;
 
-import org.apache.camel.CamelContext;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.smooks.api.ExecutionContext;
+import org.smooks.api.SmooksException;
+import org.smooks.api.resource.visitor.sax.ng.ElementVisitor;
+import org.smooks.io.DomToXmlWriter;
+import org.smooks.io.Stream;
+import org.w3c.dom.CharacterData;
+import org.w3c.dom.Element;
 
-import java.io.BufferedReader;
+import javax.inject.Inject;
 import java.io.IOException;
-import java.io.InputStreamReader;
 
-/**
- * Simple example main class.
- * 
- * @author Daniel Bevenius
- */
-public class Main
-{
-    private static final String camelConfig = "META-INF/spring/camel-context.xml";
+public class EchoVisitor implements ElementVisitor {
 
-    public static void main(String... args) throws Exception
-    {
-        CamelContext camelContext = configureAndStartCamel(camelConfig);
-        // Give Camel time to process the file.
-        Thread.sleep(3000);
-        camelContext.stop();
-        printEndMessage();
-    }
+    @Inject
+    private DomToXmlWriter domToXmlWriter;
 
-    private static void pause(String message)
-    {
-        try
-        {
-            BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-            System.out.print("> " + message);
-            in.readLine();
-        } catch (IOException e)
-        {
-            e.printStackTrace();
+    @Override
+    public void visitAfter(Element element, ExecutionContext executionContext) {
+        try {
+            domToXmlWriter.writeEndElement(element, Stream.out(executionContext));
+        } catch (IOException e) {
+            throw new SmooksException(e);
         }
-        System.out.println("\n");
     }
 
-    private static CamelContext configureAndStartCamel(String camelConfig) throws Exception
-    {
-        ApplicationContext springContext = new ClassPathXmlApplicationContext(camelConfig);
-        return (CamelContext) springContext.getBean("camelContext");
+    @Override
+    public void visitChildText(CharacterData characterData, ExecutionContext executionContext) {
+        try {
+            domToXmlWriter.writeCharacterData(characterData, Stream.out(executionContext));
+        } catch (IOException e) {
+            throw new SmooksException(e);
+        }
     }
 
-    private static void printEndMessage()
-    {
-        System.out.println("\n\n");
-        pause("And that's it!  Press 'enter' to finish...");
+    @Override
+    public void visitChildElement(Element childElement, ExecutionContext executionContext) {
+
     }
 
+    @Override
+    public void visitBefore(Element element, ExecutionContext executionContext) {
+        try {
+            domToXmlWriter.writeStartElement(element, Stream.out(executionContext));
+        } catch (IOException e) {
+            throw new SmooksException(e);
+        }
+    }
 }

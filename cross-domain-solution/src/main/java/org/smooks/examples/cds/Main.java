@@ -1,6 +1,6 @@
 /*-
  * ========================LICENSE_START=================================
- * Pipelines
+ * Cross Domain Solution
  * %%
  * Copyright (C) 2020 - 2021 Smooks
  * %%
@@ -40,55 +40,73 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * =========================LICENSE_END==================================
  */
-package org.smooks.examples.pipeline;
+package org.smooks.examples.cds;
 
 import org.smooks.Smooks;
 import org.smooks.api.ExecutionContext;
+import org.smooks.engine.report.HtmlReportGenerator;
 import org.smooks.io.AbstractOutputStreamResource;
-import org.smooks.io.payload.StringResult;
-import org.smooks.support.FileUtils;
 import org.xml.sax.SAXException;
 
+import javax.xml.transform.Result;
+import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 public class Main {
 
     public static void main(String... args) throws IOException, SAXException {
-        File file = new File("input-message.csv");
-        ByteArrayOutputStream fakeHttpInventoryOutputStream = new ByteArrayOutputStream();
+        FileOutputStream badResultOutputStream = new FileOutputStream("bad-result.xml");
+        File result = new File("good-result.ntf");
+        Smooks smooks = createSmooks(badResultOutputStream);
 
-        System.out.println("\n\n==============Message In==============");
-        System.out.println(new String(FileUtils.readFile(file)));
-        System.out.println("======================================\n");
-
-        String messageOut;
-        try (InputStream fakeFtpCsvInputStream = new FileInputStream(file)) {
-            messageOut = filterSource(fakeFtpCsvInputStream, fakeHttpInventoryOutputStream);
+        System.out.println("\n============== Filtering 'i_3001a.good.ntf' ==============\n");
+        try (InputStream inputStream = new FileInputStream("i_3001a.good.ntf")) {
+            filterSource(smooks, inputStream, new StreamResult(new FileOutputStream(result)));
         }
-        System.out.println("==============Message Out=============");
-        System.out.println(messageOut);
-        System.out.println("======================================\n\n");
+        System.out.println("============== Saved valid result to 'good-result.ntf' ==============\n");
+
+        System.out.println("============== Filtering 'i_3001a.bad.ntf' ==============");
+        try (InputStream inputStream = new FileInputStream("i_3001a.bad.ntf")) {
+            filterSource(smooks, inputStream, new StreamResult(new FileOutputStream(result)));
+        }
+        System.out.println("============== Saved invalid result to 'bad-result.xml' ==============\n");
+
+        badResultOutputStream.close();
     }
 
-    protected static String filterSource(InputStream ftpInputStream, OutputStream inventoryOutputStream) throws IOException, SAXException {
-        AbstractOutputStreamResource abstractOutputStreamResource = new AbstractOutputStreamResource() {
+    protected static Smooks createSmooks(OutputStream deadLetterOutputStream) throws IOException, SAXException {
+        AbstractOutputStreamResource deadLetterOutputStreamResource = new AbstractOutputStreamResource() {
             @Override
             public OutputStream getOutputStream(ExecutionContext executionContext) {
-                return inventoryOutputStream;
+                return deadLetterOutputStream;
+            }
+
+            @Override
+            protected void closeResource(ExecutionContext executionContext) {
             }
         };
-        abstractOutputStreamResource.setResourceName("inventoryOutputStream");
+        deadLetterOutputStreamResource.setResourceName("deadLetterStream");
 
         Smooks smooks = new Smooks("smooks-config.xml");
-        StringResult stringResult = new StringResult();
+        smooks.addVisitor(deadLetterOutputStreamResource, "#document");
+
+        return smooks;
+    }
+
+    protected static void filterSource(Smooks smooks, InputStream inputStream, Result result) throws IOException {
         try {
-            smooks.addVisitor(abstractOutputStreamResource, "#document");
-            smooks.filterSource(new StreamSource(ftpInputStream), stringResult);
+            ExecutionContext executionContext = smooks.createExecutionContext();
+            executionContext.getContentDeliveryRuntime().addExecutionEventListener(new HtmlReportGenerator("target/report/report.html"));
+            executionContext.setContentEncoding("ISO-8859-1");
+            smooks.filterSource(executionContext, new StreamSource(inputStream), result);
         } finally {
             smooks.close();
         }
-
-        return stringResult.toString();
     }
 }

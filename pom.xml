@@ -57,6 +57,7 @@
         <module>xslt-namespaces</module>
         <module>yaml-to-java</module>
         <module>pipelines</module>
+        <module>cross-domain-solution</module>
     </modules>
 
     <dependencyManagement>
@@ -115,6 +116,18 @@
                     <groupId>org.ops4j</groupId>
                     <artifactId>maven-pax-plugin</artifactId>
                     <version>1.6.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>exec-maven-plugin</artifactId>
+                    <version>3.0.0</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>java</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                 </plugin>
             </plugins>
         </pluginManagement>

@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!--
+Copyright (c) 2021 Owl Cyber Defense.  All rights reserved.
+
+Developed by: Owl Cyber Defense
+              http://www.owlcyberdefense.com
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal with
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+of the Software, and to permit persons to whom the Software is furnished to do
+so, subject to the following conditions:
+
+ 1. Redistributions of source code must retain the above copyright notice,
+    this list of conditions and the following disclaimers.
+
+ 2. Redistributions in binary form must reproduce the above copyright
+    notice, this list of conditions and the following disclaimers in the
+    documentation and/or other materials provided with the distribution.
+
+ 3. Neither the names of Tresys Technology, nor the names of its contributors
+    may be used to endorse or promote products derived from this Software
+    without specific prior written permission.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+CONTRIBUTORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS WITH THE
+SOFTWARE.
+-->
+
+
+<!--
+Version 0.0.1  nitf_extension_types.dfdl.xsd
+
+This DFDL schema provides basic, default support for various extendable types
+in NITF, such as TaggedRecordExtensions and ImageData formats.
+-->
+
+<xs:schema targetNamespace="urn:nitfExtensionTypes" xmlns:tns="urn:nitfExtensionTypes"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:fn="http://www.w3.org/2005/xpath-functions"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/"
+  xmlns:dfdlx="http://www.ogf.org/dfdl/dfdl-1.0/extensions"
+  xmlns:nitf="urn:nitf:2.1"
+  xmlns:nitfc="urn:nitfCommonTypes"
+  elementFormDefault="unqualified">
+
+  <xs:import namespace="urn:nitfCommonTypes" schemaLocation="nitf_common_types.dfdl.xsd" />
+  <xs:import namespace="urn:nitf:2.1" schemaLocation="nitf.dfdl.xsd" />
+
+  <xs:import schemaLocation="jpeg.dfdl.xsd" />
+
+  <xs:annotation>
+    <xs:appinfo source="http://www.ogf.org/dfdl/">
+      <dfdl:format ref="nitfc:nitfGeneralFormat" />
+    </xs:appinfo>
+  </xs:annotation>
+
+  <xs:complexType name="taggedRecordExtension">
+    <xs:sequence>
+      <xs:element name="UniqueExtensionTypeIdentifier" type="nitfc:BCS-A" dfdl:length="6" />
+      <xs:element name="LengthOfData" type="nitfc:BCS-NP" dfdl:length="5" />
+      <xs:sequence>
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:newVariableInstance ref="nitf:payloadSizeInBytes" />
+            <dfdl:setVariable ref="nitf:payloadSizeInBytes" value="{ LengthOfData }" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:element name="UserDefinedData" type="nitfc:hexBinaryOrBlob" dfdl:lengthKind="explicit" dfdl:length="{ ../LengthOfData }" />
+      </xs:sequence>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="imageData">
+    <xs:sequence>
+      <xs:element name="MaskTable" type="nitfc:maskTable" minOccurs="0" dfdl:occursCountKind="expression" dfdl:occursCount="{ if (fn:contains(../../Header/ImageCompression, 'M')) then 1 else 0 }" />
+      <xs:element name="PayloadLength" type="xs:long" dfdl:inputValueCalc="{ (../../../Header/ImageSegmentLengths[dfdl:occursIndex()]/DataLength) - (if (fn:exists(../MaskTable)) then dfdl:valueLength(../MaskTable[1], 'bytes') else 0) }" />
+      <xs:choice dfdl:choiceDispatchKey="{ ../Header/ImageCompression }">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:newVariableInstance ref="nitf:payloadSizeInBytes" />
+            <dfdl:setVariable ref="nitf:payloadSizeInBytes" value="{ PayloadLength }" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:element ref="JFIF" dfdl:choiceBranchKey="C3 M3 C5 M5 I1" dfdl:lengthKind="explicit" dfdl:length="{ ../PayloadLength }" />
+        <xs:element name="JPEG2000" dfdl:choiceBranchKey="C8 M8" type="nitfc:hexBinaryOrBlob" />
+        <xs:element name="BiLevel" dfdl:choiceBranchKey="C1 M1" type="nitfc:hexBinaryOrBlob" />
+        <xs:element name="VectorQuantization" dfdl:choiceBranchKey="C4 M4" type="nitfc:hexBinaryOrBlob" />
+        <xs:element name="NoCompression" dfdl:choiceBranchKey="NC NM" type="nitfc:hexBinaryOrBlob" />
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+
+</xs:schema>

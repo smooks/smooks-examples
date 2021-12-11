@@ -19,17 +19,10 @@
         </core:config>
     </core:smooks>
 
-    <core:smooks filterSourceOn="/NITF">
+    <core:smooks filterSourceOn="/NITF/InvalidData">
         <core:action>
             <core:outputTo outputStreamResource="deadLetterStream"/>
         </core:action>
-        <core:config>
-            <smooks-resource-list>
-                <resource-config selector="InvalidData">
-                    <resource>org.smooks.examples.cds.EchoVisitor</resource>
-                </resource-config>
-            </smooks-resource-list>
-        </core:config>
     </core:smooks>
 
 </smooks-resource-list>

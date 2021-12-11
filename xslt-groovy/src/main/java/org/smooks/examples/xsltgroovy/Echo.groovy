@@ -46,7 +46,7 @@ import org.smooks.api.ExecutionContext
 import org.smooks.api.resource.visitor.sax.ng.AfterVisitor
 import org.smooks.api.resource.visitor.sax.ng.BeforeVisitor
 import org.smooks.api.resource.visitor.sax.ng.ChildrenVisitor
-import org.smooks.io.DomToXmlWriter
+import org.smooks.io.DomSerializer
 import org.smooks.io.Stream
 import org.w3c.dom.CharacterData
 import org.w3c.dom.Element
@@ -63,19 +63,19 @@ import javax.inject.Inject
 class Echo implements BeforeVisitor, AfterVisitor, ChildrenVisitor {
     
     @Inject
-    private DomToXmlWriter domToXmlWriter;
+    private DomSerializer domSerializer;
 
     @Override
     void visitAfter(Element element, ExecutionContext executionContext) {
         if (element.getLocalName() != "date") {
-            domToXmlWriter.writeEndElement(element, Stream.out(executionContext))
+            domSerializer.writeEndElement(element, Stream.out(executionContext))
         }
     }
 
     @Override
     void visitChildText(CharacterData characterData, ExecutionContext executionContext) {
         if (characterData.getParentNode().getLocalName() != "date") {
-            domToXmlWriter.writeCharacterData(characterData, Stream.out(executionContext))
+            domSerializer.writeCharacterData(characterData, Stream.out(executionContext))
         }
     }
 
@@ -86,7 +86,7 @@ class Echo implements BeforeVisitor, AfterVisitor, ChildrenVisitor {
     @Override
     void visitBefore(Element element, ExecutionContext executionContext) {
         if (element.getLocalName() != "date") {
-            domToXmlWriter.writeStartElement(element, Stream.out(executionContext))
+            domSerializer.writeStartElement(element, Stream.out(executionContext))
         }
     }
 }

@@ -45,7 +45,7 @@ package org.smooks.examples.xsltgroovy
 import org.smooks.api.ExecutionContext
 import org.smooks.api.resource.config.ResourceConfig
 import org.smooks.api.resource.visitor.sax.ng.ElementVisitor
-import org.smooks.io.DomToXmlWriter
+import org.smooks.io.DomSerializer
 import org.smooks.io.Stream
 import org.w3c.dom.CharacterData
 import org.w3c.dom.Element
@@ -64,7 +64,7 @@ import java.text.SimpleDateFormat
 class DateFormatter implements ElementVisitor {
 
     @Inject
-    private DomToXmlWriter domToXmlWriter;
+    private DomSerializer domSerializer;
     
     private SimpleDateFormat dateDecodeFormat
     private Properties outputFields
@@ -82,7 +82,7 @@ class DateFormatter implements ElementVisitor {
 
     @Override
     void visitAfter(Element element, ExecutionContext executionContext) {
-        domToXmlWriter.writeEndElement(element, Stream.out(executionContext))
+        domSerializer.writeEndElement(element, Stream.out(executionContext))
     }
 
     private static Properties parseOutputFields(String outputFormats) {
@@ -122,6 +122,6 @@ class DateFormatter implements ElementVisitor {
 
     @Override
     void visitBefore(Element element, ExecutionContext executionContext) {
-        domToXmlWriter.writeStartElement(element, Stream.out(executionContext))
+        domSerializer.writeStartElement(element, Stream.out(executionContext))
     }
 }

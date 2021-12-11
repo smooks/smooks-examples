@@ -1,6 +1,6 @@
 /*-
  * ========================LICENSE_START=================================
- * Pipelines
+ * Cross Domain Solution
  * %%
  * Copyright (C) 2020 - 2021 Smooks
  * %%
@@ -40,29 +40,53 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * =========================LICENSE_END==================================
  */
-package org.smooks.examples.pipeline;
+package org.smooks.examples.cds;
 
+import org.apache.commons.io.FileUtils;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.smooks.Smooks;
+import org.smooks.io.payload.ByteResult;
 import org.smooks.support.StreamUtils;
 import org.xml.sax.SAXException;
+import org.xmlunit.builder.DiffBuilder;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
-public class MainTest {
+public class MainTestCase {
+
+    private static Smooks smooks;
+    private static ByteArrayOutputStream deadLetterOutputStream;
+
+    @BeforeAll
+    public static void beforeAll() throws IOException, SAXException {
+        deadLetterOutputStream = new ByteArrayOutputStream();
+        smooks = Main.createSmooks(deadLetterOutputStream);
+    }
 
 	@Test
-    public void testFilterSource() throws IOException, SAXException {
-        ByteArrayOutputStream inventoryOutputStream = new ByteArrayOutputStream();
-        String result = Main.filterSource(new FileInputStream("input-message.csv"), inventoryOutputStream);
+    public void testFilterSourceGivenValidFile() throws IOException {
+        File inputFile = new File("i_3001a.good.ntf");
+        ByteResult byteResult = new ByteResult();
+        Main.filterSource(smooks, new FileInputStream(inputFile), byteResult);
+        assertArrayEquals(FileUtils.readFileToByteArray(inputFile), byteResult.getResult());
+    }
 
-        String expectedEdifact = StreamUtils.readStreamAsString(getClass().getResourceAsStream("/expected.txt"), "UTF-8");
-        assertEquals(expectedEdifact.replaceAll("\\n", "\r\n"), result);
-
-        String expectedJson = StreamUtils.readStreamAsString(getClass().getResourceAsStream("/expected.json"), "UTF-8");
-        assertEquals(expectedJson, inventoryOutputStream.toString("UTF-8"));
+    @Test
+    public void testFilterSourceGivenInvalidFile() throws IOException {
+        ByteResult byteResult = new ByteResult();
+        Main.filterSource(smooks, new FileInputStream("i_3001a.bad.ntf"), byteResult);
+        assertEquals(0, byteResult.getResult().length);
+        assertFalse(DiffBuilder.compare(StreamUtils.readStreamAsString(Thread.currentThread().getContextClassLoader().getResourceAsStream("expected.xml"), "UTF-8"))
+                .ignoreWhitespace()
+                .withTest(new String(deadLetterOutputStream.toByteArray(), StandardCharsets.UTF_8)).build().hasDifferences());
     }
 }

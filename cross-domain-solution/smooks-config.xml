@@ -3,22 +3,26 @@
                       xmlns:core="https://www.smooks.org/xsd/smooks/smooks-core-1.6.xsd"
                       xmlns:dfdl="https://www.smooks.org/xsd/smooks/dfdl-1.0.xsd">
 
+    <!-- ingest the stream from the input source (i.e., untrusted system) -->
     <dfdl:parser schemaURI="/nitf.dfdl.xsd"/>
 
     <core:smooks filterSourceOn="/NITF">
         <core:action>
             <core:inline>
+                <!-- consume the root event (i.e., 'NITF') and its descendants -->
                 <core:replace/>
             </core:inline>
         </core:action>
         <core:config>
             <smooks-resource-list>
+                <!-- happy path: serialize the valid event stream to NITF before writing it out to the execution result stream (i.e., trusted system) -->
                 <dfdl:unparser schemaURI="/nitf.dfdl.xsd" unparseOnNode="//*[not(self::InvalidData)]"
                                distinguishedRootNode="{urn:nitf:2.1}ValidData"/>
             </smooks-resource-list>
         </core:config>
     </core:smooks>
 
+    <!-- unhappy path: write the invalid event stream to a side output resource -->
     <core:smooks filterSourceOn="/NITF/InvalidData">
         <core:action>
             <core:outputTo outputStreamResource="deadLetterStream"/>

@@ -7,11 +7,11 @@ This example illustrates the power of pipelines in a real-world use case. Consid
 
 <img src="docs/images/smooks-2-pipelines.png" alt="Smooks 2 pipelines"/>
 
-Every data integration point is implemented in its own pipeline. Smooks converts the CSV input into a stream of events, triggering the pipelines at different points in the stream. The document root event (i.e., `#document` or `file`) triggers the EDI pipeline while `record` (i.e., order) events drive the inventory and CRM pipelines. Time to get cracking and implement the solution in a Smooks config.
+Every data integration point is implemented in its own pipeline. Smooks converts the CSV input into a stream of events, triggering the pipelines at different points in the stream. The document root event (i.e., `#document` or `file`) triggers the EDI pipeline while `record` (i.e., order) events drive the inventory and CRM pipelines.
 
 ### Reader
 
-The first step to implementing the solution is to turn the CSV file stream into an event stream using the [DFDL](https://daffodil.apache.org/) parser added in Smooks 2.0.0-M1 (alternatively, a simpler but less flexible reader from the CSV cartridge can be used for this purpose):
+The [DFDL](https://daffodil.apache.org/) parser turns the CSV file stream into an event stream (alternatively, a simpler but less flexible reader from the CSV cartridge can be used for this purpose):
 
 ```xml
 <!-- smooks-config.xml -->
@@ -149,7 +149,7 @@ The inventory pipeline maps each order to JSON and writes it to an HTTP stream w
 
 The `filterSourceOn` XPath expression selects the event/s for `core:smooks` to visit. In this snippet, the pipeline visits `record` events, including their child `item` events. The root event in the pipeline’s context is `record`; not `file`. Although the parent of the `item` event is `record`, the latter has no parent node given that it’s the root event in the inventory pipeline. It follows then that the `#document` selector in the inventory pipeline is equivalent to the `record` selector.
 
-`maxNodeDepth` is set to 0 (i.e., infinite) so as to append the item events/nodes to the record tree instead of discarding them. By default, Smooks never accumulates child events in order to keep a low-memory footprint but in this instance we assume the number of item events within a record node is manageable within main memory.
+`maxNodeDepth` is set to 0 (i.e., infinite) so as to append the item events/nodes to the record tree instead of discarding them. By default, Smooks never accumulates child events in order to keep a low-memory footprint but, in this example, the number of item events within a record node is assumed to be manageable within main memory.
 
 `InventoryVisitor` visits record events and writes its output to a stream declared within the `core:action` element (the output stream is registered programmatically). Drilling down to the `InventoryVisitor` class will yield the Java code:
 
@@ -209,9 +209,7 @@ Like the inventory pipeline, the CRM pipeline visits each `record` event:
 </smooks-resource-list>
 ```
 
-Spot the differences between the inventory and CRM pipelines. This pipeline omits `core:action` because the `CrmVisitor` resource HTTP POSTs the result directly to the CRM service. Another notable difference is the appearance of a new Smooks 2 reader.
-
-`core:delegate-reader` delegates the pipeline event stream to an enclosed `ftl:freemarker` visitor which instantiates the underneath template with the selected `record` event as a parameter:
+This pipeline omits `core:action` because the `CrmVisitor` resource HTTP POSTs the result directly to the CRM service. Another notable difference from the CRM pipeline is the `core:delegate-reader`. `delegate-reader` delegates the pipeline event stream to an enclosed `ftl:freemarker` visitor which instantiates the underneath template with the selected `record` event as a parameter:
 
 ```xml
 <!-- purchaseOrder.xml.ftl -->
@@ -261,11 +259,11 @@ public class CrmVisitor implements AfterVisitor {
 }
 ```
 
-`CrmVisitor`’s code should be self-explanatory. Observe `org.asynchttpclient.AsyncHttpClient` is referenced in `visitAfter(...)`to perform a non-blocking HTTP POST. All framework execution in Smooks happens in a single thread so blocking calls should be avoided to keep the throughput rate acceptable.
+`CrmVisitor`’s code is self-explanatory. `org.asynchttpclient.AsyncHttpClient` is referenced in `visitAfter(...)`to perform a non-blocking HTTP POST. All framework execution in Smooks happens in a single thread so blocking calls in the application should be avoided to keep the throughput rate acceptable.
 
 ### EDI Pipeline
 
-The EDI pipeline requires more thought than the earlier pipelines because (a) it needs to aggregate the orders, (b) wrap a header and footer around the aggregated orders, and (c) convert the event stream into one that the `edifact:unparser` visitor can digest. After which it needs to write `edifact:unparser`’s EDI output to the result stream, overwriting the XML stream produced from the `dfdl:parser` reader. The latter is accomplished with the `replace` pipeline action:
+The EDI pipeline (a) aggregates the orders, (b) wraps a header and footer around the aggregated orders, and (c) converts the event stream into one that the `edifact:unparser` visitor can digest. After which it writes `edifact:unparser`’s EDI output to the result stream, overwriting the XML stream produced from the `dfdl:parser` reader. The latter is accomplished with the `replace` pipeline action:
 
 ```xml
 <!-- smooks-config.xml -->
@@ -292,9 +290,9 @@ The EDI pipeline requires more thought than the earlier pipelines because (a) it
 </smooks-resource-list>
 ```
 
-The selector for this pipeline is set to `#document`; not `record`. `#document`, which denotes the opening root tag, leads to the pipeline firing only once, necessary for creating a single EDIFACT document header and footer. We’ll worry later about how to enumerate the `record` events.
+The selector for this pipeline is set to `#document`; not `record`. `#document`, which denotes the opening root tag, leads to the pipeline firing only once, necessary for creating a single EDIFACT document header and footer. The enumeration of `record` events is covered later.
 
-The subsequent pipeline config leverages `core:delegate-reader`, introduced in the previous pipeline, to convert the event stream into a stream `edifact:unparser` (covered furthered on) can understand:
+The subsequent pipeline config leverages `core:delegate-reader` to convert the event stream into a stream `edifact:unparser` (covered furthered on) can understand:
 
 ```xml
 <!-- smooks-config.xml -->
@@ -344,7 +342,6 @@ The subsequent pipeline config leverages `core:delegate-reader`, introduced in t
 ```
 
 `core:delegate-reader` delivers the pipeline event stream to its child visitors. Triggered FreeMarker visitors proceed to materialise their templates and have their output fed to the `edifact:unparser` for serialisation. The previous snippet has a lot to unpack therefore a brief explanation of each enclosed visitor’s role is in order.
-
 
 * ##### Header Visitor
 

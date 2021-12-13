@@ -517,7 +517,7 @@ This FreeMarker visitor is fired on the closing root tag, following the serialis
 </D96A:Interchange>
 ```
 
-The final piece to the solution is to configure the `edifact:unparser`:
+The final piece of the solution is the `edifact:unparser`:
 
 ```xml
 <!-- smooks-config.xml -->

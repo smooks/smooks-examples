@@ -63,15 +63,15 @@ public class Main {
         System.out.println("======================================\n");
 
         String messageOut;
-        try (InputStream fakeFtpCsvInputStream = new FileInputStream(file)) {
-            messageOut = filterSource(fakeFtpCsvInputStream, fakeHttpInventoryOutputStream);
+        try (InputStream csvInputStream = new FileInputStream(file)) {
+            messageOut = filterSource(csvInputStream, fakeHttpInventoryOutputStream);
         }
         System.out.println("==============Message Out=============");
         System.out.println(messageOut);
         System.out.println("======================================\n\n");
     }
 
-    protected static String filterSource(InputStream ftpInputStream, OutputStream inventoryOutputStream) throws IOException, SAXException {
+    protected static String filterSource(InputStream inputStream, OutputStream inventoryOutputStream) throws IOException, SAXException {
         AbstractOutputStreamResource abstractOutputStreamResource = new AbstractOutputStreamResource() {
             @Override
             public OutputStream getOutputStream(ExecutionContext executionContext) {
@@ -84,7 +84,7 @@ public class Main {
         StringResult stringResult = new StringResult();
         try {
             smooks.addVisitor(abstractOutputStreamResource, "#document");
-            smooks.filterSource(new StreamSource(ftpInputStream), stringResult);
+            smooks.filterSource(new StreamSource(inputStream), stringResult);
         } finally {
             smooks.close();
         }

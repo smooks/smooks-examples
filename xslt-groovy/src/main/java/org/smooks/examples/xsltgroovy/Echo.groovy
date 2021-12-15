@@ -43,15 +43,10 @@
 package org.smooks.examples.xsltgroovy
 
 import org.smooks.api.ExecutionContext
-import org.smooks.api.resource.visitor.sax.ng.AfterVisitor
-import org.smooks.api.resource.visitor.sax.ng.BeforeVisitor
-import org.smooks.api.resource.visitor.sax.ng.ChildrenVisitor
-import org.smooks.io.DomSerializer
-import org.smooks.io.Stream
+import org.smooks.engine.delivery.sax.ng.SimpleSerializerVisitor
 import org.w3c.dom.CharacterData
 import org.w3c.dom.Element
 
-import javax.inject.Inject 
 /**
  * Date Formatting class.
  * <p/>
@@ -60,22 +55,19 @@ import javax.inject.Inject
  *
  * @author <a href="mailto:tom.fennelly@jboss.com">tom.fennelly@jboss.com</a>
  */
-class Echo implements BeforeVisitor, AfterVisitor, ChildrenVisitor {
-    
-    @Inject
-    private DomSerializer domSerializer;
+class Echo extends SimpleSerializerVisitor {
 
     @Override
     void visitAfter(Element element, ExecutionContext executionContext) {
         if (element.getLocalName() != "date") {
-            domSerializer.writeEndElement(element, Stream.out(executionContext))
+            super.visitAfter(element, executionContext)
         }
     }
 
     @Override
     void visitChildText(CharacterData characterData, ExecutionContext executionContext) {
         if (characterData.getParentNode().getLocalName() != "date") {
-            domSerializer.writeCharacterData(characterData, Stream.out(executionContext))
+            super.visitChildText(characterData, executionContext)
         }
     }
 
@@ -86,7 +78,7 @@ class Echo implements BeforeVisitor, AfterVisitor, ChildrenVisitor {
     @Override
     void visitBefore(Element element, ExecutionContext executionContext) {
         if (element.getLocalName() != "date") {
-            domSerializer.writeStartElement(element, Stream.out(executionContext))
+            super.visitBefore(element, executionContext)
         }
     }
 }

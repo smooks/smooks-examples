@@ -23,6 +23,13 @@
                     <licenseResolver>${project.baseUri}../license</licenseResolver>
                 </configuration>
             </plugin>
+             <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>org.smooks.examples.xmlrwtransform.Main</mainClass>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
     

@@ -53,8 +53,8 @@ import org.smooks.api.resource.visitor.sax.ng.AfterVisitor;
 import org.smooks.support.XmlUtil;
 import org.w3c.dom.Element;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 

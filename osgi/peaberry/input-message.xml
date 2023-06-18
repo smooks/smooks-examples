@@ -1,6 +1,6 @@
 <order>
     <header>
-        <date>Wed Nov 15 13:45:28 EST 2006</date>
+        <date>Wed Nov 15 13:45:28 GMT-05:00 2006</date>
         <customer number="123123">Joe</customer>
     </header>
     <order-items>

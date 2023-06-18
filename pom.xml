@@ -16,6 +16,18 @@
         <spring.version>5.3.16</spring.version>
     </properties>
 
+    <profiles>
+        <profile>
+            <id>post-java-8</id>
+            <activation>
+                <jdk>[9,)</jdk>
+            </activation>
+            <properties>
+                <maven.compiler.release>8</maven.compiler.release>
+            </properties>
+        </profile>
+    </profiles>
+
     <modules>
         <module>camel</module>
         <module>csv-to-java</module>

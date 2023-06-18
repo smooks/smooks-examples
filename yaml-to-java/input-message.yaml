@@ -4,7 +4,7 @@ header:
    net amount: 59.97
    total amount: 64.92
    tax: 4.95
-   date&time: Wed Nov 15 13:45:28 EST 2006
+   date&time: Wed Nov 15 13:45:28 GMT-05:00 2006
    customer:
        user name: HenkJansen
        first name: Henk

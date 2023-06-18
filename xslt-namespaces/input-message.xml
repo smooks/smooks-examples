@@ -5,7 +5,7 @@
         <net-amount>59.97</net-amount>
         <total-amount>64.92</total-amount>
         <tax>4.95</tax>
-        <date>Wed Nov 15 13:45:28 EST 2006</date>
+        <date>Wed Nov 15 13:45:28 GMT-05:00 2006</date>
     </header>
     <customer-details>
         <username>user1</username>

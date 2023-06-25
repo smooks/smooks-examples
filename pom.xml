@@ -50,6 +50,7 @@
         <module>groovy</module>
         <module>java-basic</module>
         <module>java-to-edifact</module>
+        <module>java-to-edifact-programmatic</module>
         <module>java-to-java</module>
         <module>java-to-xml</module>
         <module>jms-router</module>
@@ -117,6 +118,11 @@
                 <artifactId>mockito-core</artifactId>
                 <version>5.4.0</version>
                 <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.glassfish.jaxb</groupId>
+                <artifactId>jaxb-runtime</artifactId>
+                <version>4.0.3</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

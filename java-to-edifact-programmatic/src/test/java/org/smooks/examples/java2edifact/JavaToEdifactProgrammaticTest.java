@@ -51,10 +51,10 @@ import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class JavaToEdifactTest {
+public class JavaToEdifactProgrammaticTest {
 
     @Test
-    public void testRun() throws IOException, SAXException, JAXBException {
+    public void testRun() throws IOException, JAXBException {
         assertEquals(new String(StreamUtils.readStream(getClass().getResourceAsStream("/expected.txt"))).
                 replaceAll("\n", "\r\n"), Main.run());
     }

@@ -71,11 +71,11 @@ import java.util.Properties;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException, SAXException, JAXBException {
+    public static void main(String[] args) throws JAXBException {
         System.out.println("\n" + run());
     }
 
-    protected static String run() throws JAXBException, IOException, SAXException {
+    protected static String run() throws JAXBException {
         // Build Java model
         Interchange interchange = new Interchange().
                 withUNA(new UNA().
@@ -145,13 +145,6 @@ public class Main {
         edifactUnparser.setResourceType("dfdl");
         edifactUnparser.setParameter("dataProcessorFactory", "org.smooks.cartridges.edifact.EdifactDataProcessorFactory");
         edifactUnparser.setParameter("messageType", "INVOIC");
-        edifactUnparser.setParameter("segmentTerminator", "'");
-        edifactUnparser.setParameter("dataElementSeparator", "+");
-        edifactUnparser.setParameter("compositeDataElementSeparator", ":");
-        edifactUnparser.setParameter("escapeCharacter", "?");
-        edifactUnparser.setParameter("repetitionSeparator", "*");
-        edifactUnparser.setParameter("decimalSign", ".");
-        edifactUnparser.setParameter("triadSeparator", ",");
 
         // Build pipeline resource config programmatically
         ResourceConfig pipeline = new DefaultResourceConfig("/Interchange", new Properties());

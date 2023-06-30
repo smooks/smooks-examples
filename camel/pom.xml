@@ -15,7 +15,7 @@
     <packaging>pom</packaging>
 
     <properties>
-        <camel.version>3.20.6</camel.version>
+        <camel.version>3.21.0</camel.version>
     </properties>
 
     <build>

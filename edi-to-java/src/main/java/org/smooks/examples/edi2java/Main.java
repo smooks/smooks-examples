@@ -69,7 +69,7 @@ public class Main {
         smooks = new Smooks("smooks-config.xml");
     }
 
-    protected JavaResult runSmooksTransform(ExecutionContext executionContext) throws IOException, SAXException, SmooksException {
+    protected JavaResult runSmooksTransform(ExecutionContext executionContext) throws IOException, SmooksException {
         try {
             JavaResult javaResult = new JavaResult();
 

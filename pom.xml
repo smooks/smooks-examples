@@ -42,6 +42,7 @@
         <module>edi-to-xml</module>
         <module>edi-to-java</module>
         <module>edi-with-import-to-java</module>
+        <module>edifact-to-java</module>
         <module>edifact-to-xml</module>
         <module>file-router</module>
         <module>fixed-length-to-java</module>

@@ -4,7 +4,7 @@
                       xmlns:dfdl="https://www.smooks.org/xsd/smooks/dfdl-1.0.xsd">
 
     <!-- ingest the stream from the input source (i.e., untrusted system) -->
-    <dfdl:parser schemaURI="/nitf.dfdl.xsd"/>
+    <dfdl:parser schemaUri="/nitf.dfdl.xsd"/>
 
     <core:smooks filterSourceOn="/NITF">
         <core:action>
@@ -16,7 +16,7 @@
         <core:config>
             <smooks-resource-list>
                 <!-- happy path: serialize the valid event stream to NITF before writing it out to the execution result stream (i.e., trusted system) -->
-                <dfdl:unparser schemaURI="/nitf.dfdl.xsd" unparseOnNode="//*[not(self::InvalidData)]"
+                <dfdl:unparser schemaUri="/nitf.dfdl.xsd" unparseOnNode="//*[not(self::InvalidData)]"
                                distinguishedRootNode="{urn:nitf:2.1}ValidData"/>
             </smooks-resource-list>
         </core:config>

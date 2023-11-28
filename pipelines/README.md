@@ -19,7 +19,7 @@ The [DFDL](https://daffodil.apache.org/) parser turns the CSV file stream into a
                       xmlns:core="https://www.smooks.org/xsd/smooks/smooks-core-1.6.xsd"
                       xmlns:dfdl="https://www.smooks.org/xsd/smooks/dfdl-1.0.xsd">
 
-   <dfdl:parser schemaURI="/csv.dfdl.xsd"/>
+   <dfdl:parser schemaUri="/csv.dfdl.xsd"/>
    
 </smooks-resource-list>
 ```
@@ -31,14 +31,14 @@ _csv.dfdl.xsd_ holds the DFDL schema for translating the CSV into XML:
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
            xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/" xmlns:ex="http://example.com"
            targetNamespace="http://example.com" elementFormDefault="unqualified">
-
-   <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd" />
+    
+   <xs:include schemaLocation="org/apache/daffodil/xsd/GeneralFormat.dfdl.xsd" />
 
    <xs:annotation>
        <xs:appinfo source="http://www.ogf.org/dfdl/">
            <dfdl:defineVariable name="Delimiter" type="xs:string" external="true" defaultValue=","/>
 
-           <dfdl:format ref="ex:GeneralFormatPortable" separator="" initiator=""
+           <dfdl:format ref="ex:GeneralFormat" separator="" initiator=""
                         terminator="" textTrimKind="none" initiatedContent="no" ignoreCase="no"
                         separatorPosition="infix" occursCountKind="implicit"
                         emptyValueDelimiterPolicy="both" representation="text" textNumberRep="standard"
@@ -129,7 +129,7 @@ The inventory pipeline maps each order to JSON and writes it to an HTTP stream w
                       xmlns:core="https://www.smooks.org/xsd/smooks/smooks-core-1.6.xsd"
                       xmlns:dfdl="https://www.smooks.org/xsd/smooks/dfdl-1.0.xsd">
 
-   <dfdl:parser schemaURI="/csv.dfdl.xsd"/>
+   <dfdl:parser schemaUri="/csv.dfdl.xsd"/>
 
    <core:smooks filterSourceOn="record" maxNodeDepth="0">
        <core:action>
@@ -187,7 +187,7 @@ Like the inventory pipeline, the CRM pipeline visits each `record` event:
                       xmlns:ftl="https://www.smooks.org/xsd/smooks/freemarker-2.0.xsd"
                       xmlns:dfdl="https://www.smooks.org/xsd/smooks/dfdl-1.0.xsd">
   
-   <dfdl:parser schemaURI="/csv.dfdl.xsd"/>
+   <dfdl:parser schemaUri="/csv.dfdl.xsd"/>
   
    ...
 
@@ -273,7 +273,7 @@ The EDI pipeline (a) aggregates the orders, (b) wraps a header and footer around
                       xmlns:edifact="https://www.smooks.org/xsd/smooks/edifact-2.0.xsd"
                       xmlns:dfdl="https://www.smooks.org/xsd/smooks/dfdl-1.0.xsd">
 
-   <dfdl:parser schemaURI="/csv.dfdl.xsd"/>
+   <dfdl:parser schemaUri="/csv.dfdl.xsd"/>
 
    ...
    ...
@@ -302,7 +302,7 @@ The subsequent pipeline config leverages `core:delegate-reader` to convert the e
                       xmlns:edifact="https://www.smooks.org/xsd/smooks/edifact-2.0.xsd"
                       xmlns:dfdl="https://www.smooks.org/xsd/smooks/dfdl-1.0.xsd">
 
-   <dfdl:parser schemaURI="/csv.dfdl.xsd"/>
+   <dfdl:parser schemaUri="/csv.dfdl.xsd"/>
 
    ...
    ...
@@ -527,7 +527,7 @@ The final piece of the solution is the `edifact:unparser`:
                       xmlns:edifact="https://www.smooks.org/xsd/smooks/edifact-2.0.xsd"
                       xmlns:dfdl="https://www.smooks.org/xsd/smooks/dfdl-1.0.xsd">
 
-   <dfdl:parser schemaURI="/csv.dfdl.xsd"/>
+   <dfdl:parser schemaUri="/csv.dfdl.xsd"/>
 
    ...
    ...
@@ -558,7 +558,7 @@ The final piece of the solution is the `edifact:unparser`:
                    </ftl:freemarker>
                </core:delegate-reader>
 
-               <edifact:unparser schemaURI="/d96a/EDIFACT-Messages.dfdl.xsd" unparseOnElement="*">
+               <edifact:unparser schemaUri="/d96a/EDIFACT-Messages.dfdl.xsd" unparseOnElement="*">
                    <edifact:messageTypes>
                        <edifact:messageType>ORDERS</edifact:messageType>
                    </edifact:messageTypes>

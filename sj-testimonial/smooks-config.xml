@@ -3,7 +3,7 @@
                       xmlns:edi="https://www.smooks.org/xsd/smooks/edi-2.0.xsd"
                       xmlns:jb="https://www.smooks.org/xsd/smooks/javabean-1.6.xsd">
 
-    <edi:parser schemaURI="/edi-mapping.dfdl.xsd" segmentTerminator="%NL;" dataElementSeparator=","
+    <edi:parser schemaUri="/edi-mapping.dfdl.xsd" segmentTerminator="%NL;" dataElementSeparator=","
                 compositeDataElementSeparator="*"/>
 
     <jb:bean beanId="rollingstocks" class="se.sj.ipl.rollingstock.domain.RollingStockList"

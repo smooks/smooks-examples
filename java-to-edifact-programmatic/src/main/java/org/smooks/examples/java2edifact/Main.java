@@ -141,7 +141,7 @@ public class Main {
         // Build EDIFACT unparser resource config programmatically
         ResourceConfig edifactUnparser = new DefaultResourceConfig("*", new Properties());
         edifactUnparser.setResource("");
-        edifactUnparser.setParameter("schemaURI", "/d03b/EDIFACT-Messages.dfdl.xsd");
+        edifactUnparser.setParameter("schemaUri", "/d03b/EDIFACT-Messages.dfdl.xsd");
         edifactUnparser.setResourceType("dfdl");
         edifactUnparser.setParameter("dataProcessorFactory", "org.smooks.cartridges.edifact.EdifactDataProcessorFactory");
         edifactUnparser.setParameter("messageType", "INVOIC");

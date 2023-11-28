@@ -56,6 +56,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -76,7 +77,7 @@ public class MainTestCase {
     public void testFilterSourceGivenValidFile() throws IOException {
         File inputFile = new File("i_3001a.good.ntf");
         ByteResult byteResult = new ByteResult();
-        Main.filterSource(smooks, new FileInputStream(inputFile), byteResult);
+        Main.filterSource(smooks, Files.newInputStream(inputFile.toPath()), byteResult);
         assertArrayEquals(FileUtils.readFileToByteArray(inputFile), byteResult.getResult());
     }
 

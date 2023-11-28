@@ -5,7 +5,7 @@
                       xmlns:edifact="https://www.smooks.org/xsd/smooks/edifact-2.0.xsd"
                       xmlns:dfdl="https://www.smooks.org/xsd/smooks/dfdl-1.0.xsd">
 
-    <dfdl:parser schemaURI="/csv.dfdl.xsd"/>
+    <dfdl:parser schemaUri="/csv.dfdl.xsd"/>
     
     <core:smooks filterSourceOn="record" maxNodeDepth="0">
         <core:action>
@@ -61,7 +61,7 @@
                     </ftl:freemarker>
                 </core:delegate-reader>
 
-                <edifact:unparser schemaURI="/d96a/EDIFACT-Messages.dfdl.xsd" unparseOnNode="*">
+                <edifact:unparser schemaUri="/d96a/EDIFACT-Messages.dfdl.xsd" unparseOnNode="*">
                     <edifact:messageTypes>
                         <edifact:messageType>ORDERS</edifact:messageType>
                     </edifact:messageTypes>

@@ -49,7 +49,7 @@
     <!--
     Configure the EDI Reader to process the message stream into a stream of SAX events.
     -->
-    <edi:parser schemaURI="/edi-to-xml-order-mapping.dfdl.xsd" segmentTerminator="%NL;" dataElementSeparator="*"
+    <edi:parser schemaUri="/edi-to-xml-order-mapping.dfdl.xsd" segmentTerminator="%NL;" dataElementSeparator="*"
                 compositeDataElementSeparator="^"/>
 
 </smooks-resource-list>

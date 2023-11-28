@@ -49,7 +49,7 @@
       Configure the EDI reader to parse the UN/EDIFACT d03b message set.
       Reader configured with a URI of the bundled schema downloaded from Maven
       -->
-    <edifact:parser schemaURI="/d03b/EDIFACT-Messages.dfdl.xsd">
+    <edifact:parser schemaUri="/d03b/EDIFACT-Messages.dfdl.xsd">
         <edifact:messageTypes>
             <edifact:messageType>PAXLST</edifact:messageType>
         </edifact:messageTypes>

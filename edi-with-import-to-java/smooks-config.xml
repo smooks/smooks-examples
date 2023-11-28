@@ -50,7 +50,7 @@
     <!--
     Configure the EDI Reader to parse the message stream into a stream of SAX events.
     -->
-    <edi:parser schemaURI="/edi-to-xml-order-mapping.dfdl.xsd" segmentTerminator="%NL;" dataElementSeparator="*"
+    <edi:parser schemaUri="/edi-to-xml-order-mapping.dfdl.xsd" segmentTerminator="%NL;" dataElementSeparator="*"
                 compositeDataElementSeparator="^"/>
     <!--
     Create an "example.beans.Order" bean instance when we visit the start of the <order> element.

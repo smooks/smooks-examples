@@ -43,7 +43,7 @@ SOFTWARE.
         <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:defineVariable name="Delimiter" type="xs:string" external="true" defaultValue=","/>
 
-            <dfdl:format ref="ex:GeneralFormatPortable" separator="" initiator=""
+            <dfdl:format ref="ex:GeneralFormat" separator="" initiator=""
                          terminator="" textTrimKind="none" initiatedContent="no" ignoreCase="no"
                          separatorPosition="infix" occursCountKind="implicit"
                          emptyValueDelimiterPolicy="both" representation="text" textNumberRep="standard"

@@ -5,7 +5,7 @@
 	xmlns:edi="https://www.smooks.org/xsd/smooks/edi-2.0.xsd">
 
     <!-- Configure the EDI Reader to process the message stream into a stream of SAX events. -->
-    <edi:parser schemaUri="edi-to-xml-order-mapping.dfdl.xsd" segmentTerminator="%NL;" dataElementSeparator="*"
+    <edi:parser schemaUri="/edi-to-xml-order-mapping.dfdl.xsd" segmentTerminator="%NL;" dataElementSeparator="*"
                 compositeDataElementSeparator="^"/>
 
     <core:exports>

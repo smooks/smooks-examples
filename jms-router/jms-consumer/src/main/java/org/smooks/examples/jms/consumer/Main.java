@@ -47,12 +47,9 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 /**
- *
  * @author <a href="mailto:daniel.bevenius@gmail.com">Daniel Bevenius</a>
- *
  */
-public class Main implements MessageListener
-{
+public class Main implements MessageListener {
 
     private static final String LISTEN_QUEUE = "smooks.exampleQueue";
     private static int messageCounter;
@@ -77,52 +74,47 @@ public class Main implements MessageListener
 
     private void setupMessageListener() throws NamingException, JMSException {
         InitialContext context = null;
-    	try
-		{
-			context = new InitialContext();
-			ConnectionFactory connectionFactory = (ConnectionFactory) context.lookup("ConnectionFactory");
-	        connection = connectionFactory.createConnection();
-	        Session session = connection.createSession( false, Session.AUTO_ACKNOWLEDGE );
-	        Destination destination = (Destination)context.lookup(LISTEN_QUEUE);
-	        MessageConsumer consumer = session.createConsumer( destination );
-	        consumer.setMessageListener( this );
-	        connection.start();
-	        System.out.println("JMS Listener started");
-        }
-        catch (NamingException e) {
+        try {
+            context = new InitialContext();
+            ConnectionFactory connectionFactory = (ConnectionFactory) context.lookup("ConnectionFactory");
+            connection = connectionFactory.createConnection();
+            Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+            Destination destination = (Destination) context.lookup(LISTEN_QUEUE);
+            MessageConsumer consumer = session.createConsumer(destination);
+            consumer.setMessageListener(this);
+            connection.start();
+            System.out.println("JMS Listener started");
+        } catch (NamingException e) {
             e.printStackTrace();
             throw e;
         } catch (JMSException e) {
             e.printStackTrace();
             throw e;
-        } finally
-    	{
-    		try { context.close(); } catch (NamingException e) { e.printStackTrace(); }
-    	}
+        } finally {
+            try {
+                context.close();
+            } catch (NamingException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
-    public void onMessage( Message message )
-	{
-		messageCounter++;
+    public void onMessage(Message message) {
+        messageCounter++;
         System.out.println("\n[ Received Message[" + messageCounter + "]");
-        try
-		{
-			System.out.println("\t[JMSMessageID : " +  message.getJMSMessageID() + "]" );
-	        System.out.println("\t[JMSCorrelelationID : " +  message.getJMSCorrelationID() + "]" );
-	        if ( message instanceof ObjectMessage )
-	        {
-	            System.out.println("\t[MessageType : ObjectMessage]");
-	            System.out.println( "\t[Object : " +  ((ObjectMessage)message).getObject() + "]" );
-	        }
-	        else if ( message instanceof TextMessage )
-	        {
-	            System.out.println("\t[MessageType : TextMessage]");
-	            System.out.println( "\t[Text : \n" +  ((TextMessage)message).getText() + "]" );
-	        }
-		} catch (JMSException e)
-		{
-			e.printStackTrace();
-		}
+        try {
+            System.out.println("\t[JMSMessageID : " + message.getJMSMessageID() + "]");
+            System.out.println("\t[JMSCorrelelationID : " + message.getJMSCorrelationID() + "]");
+            if (message instanceof ObjectMessage) {
+                System.out.println("\t[MessageType : ObjectMessage]");
+                System.out.println("\t[Object : " + ((ObjectMessage) message).getObject() + "]");
+            } else if (message instanceof TextMessage) {
+                System.out.println("\t[MessageType : TextMessage]");
+                System.out.println("\t[Text : \n" + ((TextMessage) message).getText() + "]");
+            }
+        } catch (JMSException e) {
+            e.printStackTrace();
+        }
         System.out.println("]");
 
         // Slow the processing of the messages so as to force the High Water Mark...
@@ -133,16 +125,12 @@ public class Main implements MessageListener
         }
     }
 
-    private void closeConnection()
-    {
+    private void closeConnection() {
         System.out.println("Closing JMS Listener...");
-        try
-        {
-            if ( connection != null )
+        try {
+            if (connection != null)
                 connection.close();
-        }
-        catch (JMSException e)
-        {
+        } catch (JMSException e) {
             e.printStackTrace();
         }
     }

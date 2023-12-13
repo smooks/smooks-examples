@@ -17,7 +17,11 @@
 package org.smooks.examples.drools.events;
 
 import org.drools.core.common.InternalWorkingMemory;
-import org.drools.core.time.*;
+import org.drools.core.time.Job;
+import org.drools.core.time.JobContext;
+import org.drools.core.time.JobHandle;
+import org.drools.core.time.TimerService;
+import org.drools.core.time.Trigger;
 
 import java.util.Date;
 

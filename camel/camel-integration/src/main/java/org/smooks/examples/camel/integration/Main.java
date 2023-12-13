@@ -43,7 +43,9 @@
 package org.smooks.examples.camel.integration;
 
 import org.apache.camel.CamelContext;
+import org.apache.camel.Endpoint;
 import org.apache.camel.impl.DefaultCamelContext;
+import org.smooks.SmooksFactory;
 import org.smooks.support.StreamUtils;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -105,10 +107,11 @@ public class Main {
     private static CamelContext configureAndStartCamel(String type) throws Exception {
         CamelContext camelContext;
         if ("SpringDSL".equals(type)) {
-            ApplicationContext springContext = new ClassPathXmlApplicationContext("camel-context-test.xml");
+            ApplicationContext springContext = new ClassPathXmlApplicationContext("META-INF/spring/camel-context.xml");
             camelContext = (CamelContext) springContext.getBean("camelContext");
         } else {
             camelContext = new DefaultCamelContext();
+            camelContext.getRegistry().bind(SmooksFactory.class.getName(), new CamelSmooksFactory());
             camelContext.addComponent("jms", camelContext.getComponent("mock"));
             camelContext.addRoutes(new ExampleRouteBuilder());
             camelContext.start();

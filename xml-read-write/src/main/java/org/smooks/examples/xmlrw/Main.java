@@ -42,8 +42,10 @@
  */
 package org.smooks.examples.xmlrw;
 
+import org.smooks.Smooks;
 import org.smooks.api.SmooksException;
 import org.smooks.cartridges.javabean.binding.xml.XMLBinding;
+import org.smooks.engine.DefaultApplicationContextBuilder;
 import org.smooks.examples.xmlrw.model.Order;
 import org.smooks.examples.xmlrw.model.OrderItem;
 import org.smooks.support.StreamUtils;
@@ -67,7 +69,9 @@ public class Main {
     public static void main(String[] args) throws IOException, SAXException, SmooksException {
 
         // Create and initilise the XMLBinding instance...
-        XMLBinding xmlBinding = new XMLBinding().add("smooks-config.xml");
+        Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(Main.class.getClassLoader()).build());
+        smooks.addConfigurations("smooks-config.xml");
+        XMLBinding xmlBinding = new XMLBinding(smooks);
         xmlBinding.initialise();
 
         // Read the order XML into the Order Object model...

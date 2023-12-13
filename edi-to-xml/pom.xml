@@ -13,7 +13,6 @@
 
     <name>EDI-to-XML</name>
     <artifactId>smooks-example-edi-to-xml</artifactId>
-    <packaging>bundle</packaging>
 
     <build>
         <plugins>
@@ -26,6 +25,13 @@
                         <exclude>test/resources/actual.xml</exclude>
                         <exclude>test/resources/expected.xml</exclude>
                     </excludes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>org.smooks.examples.edi2xml.Main</mainClass>
                 </configuration>
             </plugin>
         </plugins>

@@ -46,6 +46,8 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
 
+	<bean class="org.smooks.examples.camel.csv2xml.StartStopEventNotifier"/>
+
 	<camelContext id="camelContext" xmlns="http://camel.apache.org/schema/spring">
 		<route>
 			<from uri="file://${input.dir}?fileName=input-message.csv"/>

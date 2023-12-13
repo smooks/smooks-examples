@@ -12,7 +12,6 @@
 
     <name>Basic Model Driven</name>
     <artifactId>smooks-example-model-driven-basic</artifactId>
-    <packaging>bundle</packaging>
 
     <build>
         <plugins>
@@ -24,6 +23,13 @@
                     <excludes>
                         <exclude>test/resources/expected.xml</exclude>
                     </excludes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>org.smooks.examples.modeldrivenbasic.Main</mainClass>
                 </configuration>
             </plugin>
         </plugins>

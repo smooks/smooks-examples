@@ -12,7 +12,6 @@
 
     <name>CSV-to-Java-Programmatic</name>
     <artifactId>smooks-example-csv-to-java-progmatic</artifactId>
-    <packaging>bundle</packaging>
 
     <build>
         <plugins>
@@ -21,6 +20,13 @@
                 <artifactId>license-maven-plugin</artifactId>
                 <configuration>
                     <licenseResolver>${project.baseUri}../license</licenseResolver>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>org.smooks.examples.csv2java.Main</mainClass>
                 </configuration>
             </plugin>
         </plugins>

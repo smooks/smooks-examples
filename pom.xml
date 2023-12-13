@@ -14,6 +14,8 @@
         <smooks.version>2.0.0-RC3-SNAPSHOT</smooks.version>
         <smooks.edifact.cartridge.version>2.0.0-RC3-SNAPSHOT</smooks.edifact.cartridge.version>
         <spring.version>5.3.16</spring.version>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
     </properties>
 
     <profiles>
@@ -89,9 +91,9 @@
                 <version>2.9.1</version>
             </dependency>
             <dependency>
-                <groupId>hsqldb</groupId>
+                <groupId>org.hsqldb</groupId>
                 <artifactId>hsqldb</artifactId>
-                <version>1.8.0.10</version>
+                <version>2.7.2</version>
             </dependency>
             <dependency>
                 <groupId>xalan</groupId>
@@ -143,6 +145,18 @@
                         </execution>
                     </executions>
                 </plugin>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>3.2.0</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>repackage</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
             </plugins>
         </pluginManagement>
         <plugins>
@@ -159,6 +173,14 @@
                                     <onlyWhenRelease>true</onlyWhenRelease>
                                     <message>No Snapshots Allowed!</message>
                                 </requireReleaseDeps>
+                                <bannedDependencies>
+                                    <excludes>
+                                        <exclude>org.slf4j:slf4j-api:[1,2]</exclude>
+                                    </excludes>
+                                </bannedDependencies>
+                                <requireJavaVersion>
+                                    <version>17</version>
+                                </requireJavaVersion>
                             </rules>
                         </configuration>
                         <goals>
@@ -222,11 +244,12 @@
         </plugins>
     </build>
 
+
     <dependencies>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-slf4j-impl</artifactId>
-            <version>2.22.0</version>
+            <artifactId>log4j-slf4j2-impl</artifactId>
+            <version>2.21.1</version>
         </dependency>
     </dependencies>
 

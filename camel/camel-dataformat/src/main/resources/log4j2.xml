@@ -49,18 +49,8 @@
         </Console>
     </Appenders>
     <Loggers>
-        <Logger name="org.smooks" level="error"/>
-        <Logger name="org.smooks.javabean" level="error"/>
-<!--        <Logger name="org.smooks.cdr.xpath" level="debug"/>-->
-        <Logger name="freemarker" level="error"/>
-        <Logger name="org.apache.activemq" level="info"/>
-<!--        <Logger name="org.hsqldb" level="debug"/>-->
-        <Logger name="org.apache.camel" level="info"/>
-        <Logger name="org.smooks.examples.camel.dataformat" level="info"/>
-        <Logger name="org.springframework" level="error"/>
-        <Logger name="org.apache.camel" level="error"/>
-
-        <Root>
+        <Logger name="org.smooks.classpath.Scanner" level="error"/>
+        <Root level="info">
             <AppenderRef ref="Console"/>
         </Root>
     </Loggers>

@@ -45,6 +45,7 @@ package org.smooks.examples.xml2javavirtual;
 import org.smooks.Smooks;
 import org.smooks.api.ExecutionContext;
 import org.smooks.api.SmooksException;
+import org.smooks.engine.DefaultApplicationContextBuilder;
 import org.smooks.engine.report.HtmlReportGenerator;
 import org.smooks.support.StreamUtils;
 import org.smooks.io.payload.JavaResult;
@@ -69,10 +70,11 @@ public class Main {
     protected static Map runSmooks() throws IOException, SAXException, SmooksException {
 
         // Instantiate Smooks with the config...
-        Smooks smooks = new Smooks("smooks-config.xml");
+        Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(Main.class.getClassLoader()).build());
+        smooks.addConfigurations("smooks-config.xml");
 
         try {
-             // Create an exec context - no profiles....
+            // Create an exec context - no profiles....
             ExecutionContext executionContext = smooks.createExecutionContext();
             // The result of this transform is a set of Java objects...
             JavaResult result = new JavaResult();
@@ -98,13 +100,13 @@ public class Main {
         Map order = Main.runSmooks();
 
         System.out.println("============Order Javabeans===========");
-        System.out.println("Header - Customer Name: " + ((Map)order.get("header")).get("customerName"));
-        System.out.println("       - Customer Num:  " + ((Map)order.get("header")).get("customerNumber"));
-        System.out.println("       - Order Date:    " + ((Map)order.get("header")).get("date"));
+        System.out.println("Header - Customer Name: " + ((Map) order.get("header")).get("customerName"));
+        System.out.println("       - Customer Num:  " + ((Map) order.get("header")).get("customerNumber"));
+        System.out.println("       - Order Date:    " + ((Map) order.get("header")).get("date"));
         System.out.println("\n");
         System.out.println("Order Items:");
         List<Map> orderItems = (List<Map>) order.get("orderItems");
-        for(int i = 0; i < orderItems.size(); i++) {
+        for (int i = 0; i < orderItems.size(); i++) {
             Map orderItem = orderItems.get(i);
             System.out.println("       (" + (i + 1) + ") Product ID:  " + orderItem.get("productId"));
             System.out.println("       (" + (i + 1) + ") Quantity:    " + orderItem.get("quantity"));

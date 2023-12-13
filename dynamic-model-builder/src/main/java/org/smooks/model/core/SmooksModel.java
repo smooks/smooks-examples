@@ -56,7 +56,7 @@ import java.util.List;
 @DefaultNamespace(uri = "https://www.smooks.org/xsd/smooks-2.0.xsd")
 public class SmooksModel {
 
-    public static final String MODEL_DESCRIPTOR = "META-INF/org/smooks/model/descriptor.properties";
+    public static final String MODEL_DESCRIPTOR = "/descriptor.properties";
 
     private List<Reader> readers = new ArrayList<Reader>();
     private List<Bean> beans = new ArrayList<Bean>();

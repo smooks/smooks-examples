@@ -12,7 +12,6 @@
 
     <name>Fixed length records to Java</name>
     <artifactId>smooks-example-fixed-length-to-java</artifactId>
-    <packaging>bundle</packaging>
 
     <build>
         <plugins>
@@ -21,6 +20,13 @@
                 <artifactId>license-maven-plugin</artifactId>
                 <configuration>
                     <licenseResolver>${project.baseUri}../license</licenseResolver>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>org.smooks.examples.fixedlength2java.Main</mainClass>
                 </configuration>
             </plugin>
         </plugins>

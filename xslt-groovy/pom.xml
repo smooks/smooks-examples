@@ -12,7 +12,6 @@
 
     <name>XSLT-Groovy</name>
     <artifactId>smooks-example-xslt-groovy</artifactId>
-    <packaging>bundle</packaging>
 
     <build>
         <resources>
@@ -35,6 +34,13 @@
                     <excludes>
                         <exclude>test/resources/expected.xml</exclude>
                     </excludes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>org.smooks.examples.xsltgroovy.Main</mainClass>
                 </configuration>
             </plugin>
         </plugins>

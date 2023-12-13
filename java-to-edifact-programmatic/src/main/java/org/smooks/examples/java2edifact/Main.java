@@ -1,40 +1,40 @@
 /*-
  * ========================LICENSE_START=================================
- * Java-to-EDIFACT
+ * Java-to-EDIFACT-Programmatic
  * %%
- * Copyright (C) 2020 Smooks
+ * Copyright (C) 2020 - 2023 Smooks
  * %%
  * Licensed under the terms of the Apache License Version 2.0, or
  * the GNU Lesser General Public License version 3.0 or later.
- *
+ * 
  * SPDX-License-Identifier: Apache-2.0 OR LGPL-3.0-or-later
- *
+ * 
  * ======================================================================
- *
+ * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * 
  *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
+ * 
  * ======================================================================
- *
+ * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 3 of the License, or (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
- *
+ * 
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
@@ -47,26 +47,40 @@ import jakarta.xml.bind.JAXBElement;
 import jakarta.xml.bind.JAXBException;
 import org.smooks.Smooks;
 import org.smooks.api.resource.config.ResourceConfig;
-import org.smooks.api.resource.config.ResourceConfigSeq;
-import org.smooks.cartridges.dfdl.parser.DfdlParser;
-import org.smooks.cartridges.dfdl.unparser.DfdlUnparser;
-import org.smooks.edifact.binding.d03b.*;
-import org.smooks.edifact.binding.service.*;
+import org.smooks.edifact.binding.d03b.BGMBeginningOfMessage;
+import org.smooks.edifact.binding.d03b.C002DocumentMessageName;
+import org.smooks.edifact.binding.d03b.C106DocumentMessageIdentification;
+import org.smooks.edifact.binding.d03b.C507DateTimePeriod;
+import org.smooks.edifact.binding.d03b.C516MonetaryAmount;
+import org.smooks.edifact.binding.d03b.DTMDateTimePeriod;
+import org.smooks.edifact.binding.d03b.INVOIC;
+import org.smooks.edifact.binding.d03b.Interchange;
+import org.smooks.edifact.binding.d03b.MOAMonetaryAmount;
+import org.smooks.edifact.binding.d03b.Message;
+import org.smooks.edifact.binding.service.E0001SyntaxIdentifier;
+import org.smooks.edifact.binding.service.E0051ControllingAgencyCoded;
+import org.smooks.edifact.binding.service.E0065MessageType;
+import org.smooks.edifact.binding.service.E0081SectionIdentification;
+import org.smooks.edifact.binding.service.S001SyntaxIdentifier;
+import org.smooks.edifact.binding.service.S002InterchangeSender;
+import org.smooks.edifact.binding.service.S003InterchangeRecipient;
+import org.smooks.edifact.binding.service.S004DateAndTimeOfPreparation;
+import org.smooks.edifact.binding.service.S005RecipientReferencePasswordDetails;
+import org.smooks.edifact.binding.service.S009MessageIdentifier;
+import org.smooks.edifact.binding.service.UNA;
+import org.smooks.edifact.binding.service.UNBInterchangeHeader;
+import org.smooks.edifact.binding.service.UNHMessageHeader;
+import org.smooks.edifact.binding.service.UNSSectionControl;
+import org.smooks.edifact.binding.service.UNTMessageTrailer;
+import org.smooks.edifact.binding.service.UNZInterchangeTrailer;
 import org.smooks.engine.DefaultApplicationContextBuilder;
-import org.smooks.engine.lookup.ContentHandlerFactoryLookup;
 import org.smooks.engine.resource.config.DefaultResourceConfig;
-import org.smooks.engine.resource.config.DefaultResourceConfigSeq;
-import org.smooks.engine.resource.visitor.smooks.NestedSmooksVisitor;
 import org.smooks.io.payload.ByteSource;
 import org.smooks.io.payload.StringResult;
-import org.smooks.io.payload.StringSource;
-import org.xml.sax.SAXException;
 
 import javax.xml.namespace.QName;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.Properties;
 
 public class Main {
@@ -152,7 +166,7 @@ public class Main {
         pipeline.setParameter("action", "REPLACE");
         pipeline.setParameter("smooksResourceList", "<smooks-resource-list xmlns=\"https://www.smooks.org/xsd/smooks-2.0.xsd\">" + edifactUnparser.toXml() + "</smooks-resource-list>");
 
-        Smooks smooks = new Smooks();
+        Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(Main.class.getClassLoader()).build());
         smooks.addConfiguration(pipeline);
         StringResult stringResult = new StringResult();
         smooks.filterSource(new ByteSource(byteArrayOutputStream.toByteArray()), stringResult);

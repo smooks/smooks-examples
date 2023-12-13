@@ -69,22 +69,22 @@ public class CSVReader_1_7_Test {
 
     @Test
     public void test_01() throws IOException, SAXException {
-        test("v17/csv-config-01.xml");
+        test("/csv/csv-config-01.xml");
     }
 
     @Test
     public void test_02() throws IOException, SAXException {
-        test("v17/csv-config-02.xml");
+        test("/csv/csv-config-02.xml");
     }
 
     @Test
     public void test_03() throws IOException, SAXException {
-        test("v17/csv-config-03.xml");
+        test("/csv/csv-config-03.xml");
     }
 
     @Test
     public void test_04() throws IOException, SAXException {
-        test("v17/csv-config-04.xml");
+        test("/csv/csv-config-04.xml");
     }
 
     public void test(String messageFile) throws IOException, SAXException {
@@ -125,7 +125,7 @@ public class CSVReader_1_7_Test {
         StringWriter modelWriter = new StringWriter();
         model.writeModel(modelWriter);
 
-        assertFalse(DiffBuilder.compare(getClass().getResourceAsStream("v17/csv-config-03.xml")).
+        assertFalse(DiffBuilder.compare(getClass().getResourceAsStream("/csv/csv-config-03.xml")).
                 checkForSimilar().
                 withTest(modelWriter.toString()).build().hasDifferences());
     }

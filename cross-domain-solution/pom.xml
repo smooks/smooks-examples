@@ -22,12 +22,12 @@
                     <licenseResolver>${project.baseUri}../license</licenseResolver>
                     <excludes>
                         <exclude>test/resources/expected.xml</exclude>
-                    </excludes>
+                    </excludes>input-message
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <mainClass>org.smooks.examples.cds.Main</mainClass>
                 </configuration>

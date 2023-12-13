@@ -12,7 +12,6 @@
 
     <name>File Router (Consumer)</name>
     <artifactId>smooks-example-file-consumer</artifactId>
-    <packaging>bundle</packaging>
 
     <build>
         <plugins>
@@ -21,6 +20,13 @@
                 <artifactId>license-maven-plugin</artifactId>
                 <configuration>
                     <licenseResolver>${project.baseUri}../../license</licenseResolver>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>org.smooks.examples.filerouter.consumer.Main</mainClass>
                 </configuration>
             </plugin>
         </plugins>

@@ -48,6 +48,7 @@ import org.smooks.api.SmooksException;
 import org.smooks.cartridges.csv.CSVRecordParserConfigurator;
 import org.smooks.cartridges.flatfile.Binding;
 import org.smooks.cartridges.flatfile.BindingType;
+import org.smooks.engine.DefaultApplicationContextBuilder;
 import org.smooks.engine.report.HtmlReportGenerator;
 import org.smooks.support.StreamUtils;
 import org.smooks.io.payload.JavaResult;
@@ -68,7 +69,7 @@ public class Main {
 
     protected static List runSmooksTransform() throws IOException, SAXException, SmooksException {
 
-        Smooks smooks = new Smooks();
+        Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(Main.class.getClassLoader()).build());
 
         try {
             // ****

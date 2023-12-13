@@ -12,7 +12,6 @@
 
     <name>Smooks Camel Dataformat</name>
     <artifactId>smooks-example-camel-dataformat</artifactId>
-    <packaging>bundle</packaging>
 
     <properties>
         <input.dir>${basedir}/input-dir</input.dir>
@@ -38,6 +37,13 @@
                 <artifactId>license-maven-plugin</artifactId>
                 <configuration>
                     <licenseResolver>${project.baseUri}../../license</licenseResolver>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>org.smooks.examples.camel.dataformat.Main</mainClass>
                 </configuration>
             </plugin>
         </plugins>

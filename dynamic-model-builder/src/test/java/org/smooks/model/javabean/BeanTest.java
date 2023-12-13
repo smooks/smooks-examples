@@ -69,7 +69,7 @@ public class BeanTest {
     
     @Test
     public void test_v16_01() throws IOException, SAXException {
-        test("v16/config-01.xml");
+        test("/javabean/config-01.xml");
     }
 
     public void test(String messageFile) throws IOException, SAXException {

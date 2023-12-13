@@ -48,6 +48,7 @@ import jakarta.xml.bind.JAXBException;
 import org.smooks.Smooks;
 import org.smooks.edifact.binding.d03b.*;
 import org.smooks.edifact.binding.service.*;
+import org.smooks.engine.DefaultApplicationContextBuilder;
 import org.smooks.io.payload.ByteSource;
 import org.smooks.io.payload.StringResult;
 import org.xml.sax.SAXException;
@@ -127,7 +128,8 @@ public class Main {
         jaxbContext.createMarshaller().marshal(interchange, byteArrayOutputStream);
 
         // Turn XML into EDIFACT
-        final Smooks smooks = new Smooks("smooks-config.xml");
+        final Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(Main.class.getClassLoader()).build());
+        smooks.addConfigurations("smooks-config.xml");
         StringResult stringResult = new StringResult();
         smooks.filterSource(new ByteSource(byteArrayOutputStream.toByteArray()), stringResult);
 

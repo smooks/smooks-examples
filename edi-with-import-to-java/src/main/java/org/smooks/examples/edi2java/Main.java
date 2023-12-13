@@ -45,6 +45,7 @@ package org.smooks.examples.edi2java;
 import org.smooks.Smooks;
 import org.smooks.api.ExecutionContext;
 import org.smooks.api.SmooksException;
+import org.smooks.engine.DefaultApplicationContextBuilder;
 import org.smooks.engine.report.HtmlReportGenerator;
 import org.smooks.support.StreamUtils;
 import org.xml.sax.SAXException;
@@ -65,7 +66,8 @@ public class Main {
 
     protected Main() throws IOException, SAXException {
         // Instantiate Smooks with the config...
-        smooks = new Smooks("smooks-config.xml");
+        smooks = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(this.getClass().getClassLoader()).build());
+        smooks.addConfigurations("smooks-config.xml");
     }
 
     protected org.smooks.io.payload.JavaResult runSmooksTransform(ExecutionContext executionContext) throws IOException, SAXException, SmooksException {
@@ -93,7 +95,6 @@ public class Main {
         Main smooksMain = new Main();
         ExecutionContext executionContext = smooksMain.smooks.createExecutionContext();
         org.smooks.io.payload.JavaResult result = smooksMain.runSmooksTransform(executionContext);
-
 
         System.out.println("\n==============EDI as Java Object Graph=============");
         System.out.println(result.getBean("order"));

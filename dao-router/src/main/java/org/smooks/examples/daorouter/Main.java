@@ -45,11 +45,16 @@ package org.smooks.examples.daorouter;
 import com.ibatis.common.resources.Resources;
 import com.ibatis.sqlmap.client.SqlMapClient;
 import com.ibatis.sqlmap.client.SqlMapClientBuilder;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.Persistence;
 import org.smooks.Smooks;
 import org.smooks.api.ExecutionContext;
 import org.smooks.api.SmooksException;
 import org.smooks.cartridges.persistence.jdbc.StatementExec;
 import org.smooks.cartridges.persistence.util.PersistenceUtil;
+import org.smooks.engine.DefaultApplicationContextBuilder;
 import org.smooks.engine.report.HtmlReportGenerator;
 import org.smooks.examples.daorouter.dao.CustomerDao;
 import org.smooks.examples.daorouter.dao.OrderDao;
@@ -62,12 +67,14 @@ import org.smooks.scribe.register.MapDaoRegister;
 import org.smooks.tck.HsqlServer;
 import org.xml.sax.SAXException;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
 import javax.xml.transform.stream.StreamSource;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
@@ -172,7 +179,8 @@ public class Main {
 
     protected void runSmooksTransformWithDao() throws IOException, SAXException, SmooksException {
 
-    	Smooks smooks = new Smooks("./smooks-configs/smooks-dao-config.xml");
+        Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(this.getClass().getClassLoader()).build());
+        smooks.addConfigurations("./smooks-configs/smooks-dao-config.xml");
 
         try {
             ExecutionContext executionContext = smooks.createExecutionContext();
@@ -202,7 +210,8 @@ public class Main {
 
     protected void runSmooksTransformWithJpa() throws IOException, SAXException, SmooksException {
 
-    	Smooks smooks = new Smooks("./smooks-configs/smooks-jpa-config.xml");
+        Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(this.getClass().getClassLoader()).build());
+        smooks.addConfigurations("./smooks-configs/smooks-jpa-config.xml");
 
         try {
             ExecutionContext executionContext = smooks.createExecutionContext();
@@ -226,7 +235,8 @@ public class Main {
 
     protected void runSmooksTransformWithIbatis() throws IOException, SAXException, SmooksException, SQLException {
 
-    	Smooks smooks = new Smooks("./smooks-configs/smooks-ibatis-config.xml");
+    	Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(this.getClass().getClassLoader()).build());
+        smooks.addConfigurations("./smooks-configs/smooks-ibatis-config.xml");
 
         try {
             ExecutionContext executionContext = smooks.createExecutionContext();

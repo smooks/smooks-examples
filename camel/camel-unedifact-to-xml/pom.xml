@@ -12,7 +12,6 @@
 
     <name>Smooks Camel UNEDIFACT to String</name>
     <artifactId>smooks-example-camel-unedifact-to-xml</artifactId>
-    <packaging>bundle</packaging>
 
     <properties>
         <input.dir>${basedir}/input-dir</input.dir>
@@ -39,6 +38,26 @@
                     <licenseResolver>${project.baseUri}../../license</licenseResolver>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>org.smooks.examples.camel.unedifact2xml.Main</mainClass>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.smooks.cartridges.edi</groupId>
+            <artifactId>smooks-edifact-cartridge</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.smooks.cartridges.edi</groupId>
+            <artifactId>edifact-schemas</artifactId>
+            <version>${smooks.edifact.cartridge.version}</version>
+            <classifier>d96a</classifier>
+        </dependency>
+    </dependencies>
 </project>

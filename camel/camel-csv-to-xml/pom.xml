@@ -12,7 +12,6 @@
 
     <name>Smooks Camel CSV to XML</name>
     <artifactId>smooks-example-camel-csv-to-xml</artifactId>
-    <packaging>bundle</packaging>
 
     <properties>
         <input.dir>${basedir}/input-dir</input.dir>
@@ -37,6 +36,13 @@
                 <artifactId>license-maven-plugin</artifactId>
                 <configuration>
                     <licenseResolver>${project.baseUri}../../license</licenseResolver>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>org.smooks.examples.camel.csv2xml.Main</mainClass>
                 </configuration>
             </plugin>
         </plugins>

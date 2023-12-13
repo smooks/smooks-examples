@@ -50,10 +50,12 @@
        http://camel.apache.org/schema/spring 
        http://camel.apache.org/schema/spring/camel-spring.xsd">
 
-  <camelContext xmlns="http://camel.apache.org/schema/spring">
+  <bean class="org.smooks.examples.camel.integration.CamelContextInitializedEventNotifier"/>
+
+  <camelContext id="camelContext" xmlns="http://camel.apache.org/schema/spring">
     <route>
       <from uri="direct:input"/>
-      <to uri="smooks://file:./smooks-config.xml"/>
+      <to uri="smooks://smooks-config.xml"/>
     </route>
     
     <route>

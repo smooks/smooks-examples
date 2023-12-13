@@ -12,7 +12,6 @@
 
     <name>Flat File to XML (Using Regex)</name>
     <artifactId>smooks-example-flatfile-to-xml-regex</artifactId>
-    <packaging>bundle</packaging>
 
     <build>
         <plugins>
@@ -24,6 +23,13 @@
                     <excludes>
                         <exclude>test/resources/expected.xml</exclude>
                     </excludes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>org.smooks.examples.flatfile2xmlregex.Main</mainClass>
                 </configuration>
             </plugin>
         </plugins>

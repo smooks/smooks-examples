@@ -12,7 +12,6 @@
 
     <name>JMS Router (Provider)</name>
     <artifactId>smooks-example-jms-router-provider</artifactId>
-    <packaging>bundle</packaging>
 
     <build>
         <plugins>

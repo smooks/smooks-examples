@@ -45,6 +45,7 @@ package org.smooks.examples.xsltbasic;
 import org.smooks.Smooks;
 import org.smooks.api.ExecutionContext;
 import org.smooks.api.SmooksException;
+import org.smooks.engine.DefaultApplicationContextBuilder;
 import org.smooks.engine.report.HtmlReportGenerator;
 import org.smooks.support.StreamUtils;
 import org.xml.sax.SAXException;
@@ -67,7 +68,8 @@ public class Main {
     protected static String runSmooksTransform() throws IOException, SAXException, SmooksException {
 
         // Instantiate Smooks with the config...
-        Smooks smooks = new Smooks("smooks-config.xml");
+        Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(Main.class.getClassLoader()).build());
+        smooks.addConfigurations("smooks-config.xml");
 
         HtmlReportGenerator htmlReportGenerator = new HtmlReportGenerator("target/report/report.html");
         htmlReportGenerator.getReportConfiguration().setAutoCloseWriter(false);

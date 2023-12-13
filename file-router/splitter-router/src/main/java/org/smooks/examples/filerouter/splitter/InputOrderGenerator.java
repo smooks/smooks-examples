@@ -99,7 +99,7 @@ public class InputOrderGenerator
 		writer.write( "</header>" + LINE_SEP);
 		writer.flush();
 		writer.write( "<order-items>" + LINE_SEP );
-		System.out.print("Generating " + file.getName() + "...");
+		System.out.println("Generating " + file.getName() + "...");
 		for ( int i = 1 ; i <= nrOfOrderItems ; i ++ )
 		{
     		writer.write( "<order-item id='" + i + "'>" + LINE_SEP );

@@ -54,7 +54,7 @@ public class EventGenerator {
         StockTickPersister persister = new StockTickPersister();
         persister.openForSave( new FileWriter( DATA_FILE ) );
         
-        System.out.print("Generating data for 20 min...");
+        System.out.println("Generating data for 20 min...");
 
         // initializing starting prices
         for( Company company : companies ) {

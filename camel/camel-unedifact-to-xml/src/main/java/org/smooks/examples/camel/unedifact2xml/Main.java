@@ -60,7 +60,7 @@ public class Main {
 
     public static void main(String... args) throws Exception {
         CamelContext camelContext = configureAndStartCamel(camelConfig);
-        System.out.print("> Waiting for you to drop 'input-message.edi' into 'input-dir' directory...");
+        System.out.println("> Waiting for you to drop 'input-message.edi' into 'input-dir' directory...");
         camelContext.getRegistry().findSingleByType(StartStopEventNotifier.class).waitUntilFinish();
         printEndMessage();
         camelContext.stop();

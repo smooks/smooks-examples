@@ -241,6 +241,18 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.1.1</version>
+                <configuration>
+                    <executable>java</executable>
+                    <arguments>
+                        <argument>-jar</argument>
+                        <argument>${basedir}/target/${project.artifactId}-${project.version}.jar</argument>
+                    </arguments>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 

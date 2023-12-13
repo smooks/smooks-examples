@@ -45,6 +45,7 @@ package org.smooks.examples.java2xml;
 import org.smooks.Smooks;
 import org.smooks.api.ExecutionContext;
 import org.smooks.api.SmooksException;
+import org.smooks.engine.DefaultApplicationContextBuilder;
 import org.smooks.engine.report.HtmlReportGenerator;
 import org.smooks.examples.java2xml.model.Order;
 import org.smooks.io.payload.JavaSource;
@@ -68,7 +69,8 @@ public class Main {
      * @return The transformed Java Object XML.
      */
     protected String runSmooksTransform(Object inputJavaObject) throws IOException, SAXException {
-        Smooks smooks = new Smooks("smooks-config.xml");
+        Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(this.getClass().getClassLoader()).build());
+        smooks.addConfigurations("smooks-config.xml");
 
         try {
             ExecutionContext executionContext = smooks.createExecutionContext();

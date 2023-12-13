@@ -44,6 +44,7 @@ package org.smooks.examples.pipeline;
 
 import org.smooks.Smooks;
 import org.smooks.api.ExecutionContext;
+import org.smooks.engine.DefaultApplicationContextBuilder;
 import org.smooks.io.AbstractOutputStreamResource;
 import org.smooks.io.payload.StringResult;
 import org.smooks.support.FileUtils;
@@ -80,7 +81,9 @@ public class Main {
         };
         abstractOutputStreamResource.setResourceName("inventoryOutputStream");
 
-        Smooks smooks = new Smooks("smooks-config.xml");
+        Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().setRegisterSystemResources(true).setClassLoader(Main.class.getClassLoader()).build());
+        smooks.addConfigurations("smooks-config.xml");
+
         StringResult stringResult = new StringResult();
         try {
             smooks.addVisitor(abstractOutputStreamResource, "#document");

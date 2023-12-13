@@ -6,58 +6,79 @@
     <core:filterSettings defaultSerialization="false" />
 
     <!--
-    Create 2 NodeModels.  One high level model for the "order"
-    (header etc) and then one per "order-item".
-
-    These model are used in the FreeMarker templating resources
-    defined below.  You need to make sure you set the selector such
-    that the total memory footprint is as low as possible.  In this
-    example, the "order" model will contain everything accept the
-    <order-item> data (the main bulk of data in the message).  The
-    "order-item" model only contains the current <order-item> data
-    (i.e. there's max 1 order-item in memory at any one time).
+    Create a pipeline that replaces <order>...</order> with <salesorder>...</salesorder>. In this example, the total
+    memory footprint is kept as low as possible. An <order> event will hold only the order ID and not the main bulk of
+    data in the message (i.e., order-item elements). At any one time, Smooks will have just a single <order-item> in
+    main memory.
     -->
-    <resource-config selector="order,order-item">
-        <resource>org.smooks.delivery.DomModelCreator</resource>
-    </resource-config>
-
-    <!--
-    Apply the first part of the template when we reach the start
-    of the <order-items> element.  Apply the second part when we
-    reach the end.
-
-    Note the <?TEMPLATE-SPLIT-PI?> Processing Instruction in the
-    template.  This tells Smooks where to split the template,
-    resulting in the order-items being inserted at this point.
-    -->
-    <ftl:freemarker applyOnElement="order-items">
-        <ftl:template><!--<salesorder>
+    <core:smooks filterSourceOn="#document">
+        <core:action>
+            <core:inline>
+                <core:replace/>
+            </core:inline>
+        </core:action>
+        <core:config>
+            <smooks-resource-list>
+                <core:delegate-reader>
+                    <!--
+                    Apply the first part of the template when we reach the start
+                    of the <order> element.
+                    -->
+                    <ftl:freemarker applyOnElement="order" applyBefore="true">
+                        <ftl:template><!--
+<salesorder>
     <details>
-        <orderid>${order.@id}</orderid>
+        <orderid>${order.@id}</orderid>-->
+                        </ftl:template>
+                    </ftl:freemarker>
+                    <core:smooks filterSourceOn="header/customer" maxNodeDepth="0">
+                        <core:config>
+                            <smooks-resource-list>
+                                <ftl:freemarker applyOnElement="#document">
+                                    <ftl:template><!--
         <customer>
-            <id>${order.header.customer.@number}</id>
-            <name>${order.header.customer}</name>
-        </customer>
+            <id>${customer.@number}</id>
+            <name>${customer}</name>
+         </customer>
     </details>
-    <itemList>
-        <?TEMPLATE-SPLIT-PI?>
+    <itemList>-->
+                                    </ftl:template>
+                                </ftl:freemarker>
+                            </smooks-resource-list>
+                        </core:config>
+                    </core:smooks>
+                    <!--
+                    Output the <order-items> elements.
+                    -->
+                    <core:smooks filterSourceOn="order-item" maxNodeDepth="0">
+                        <core:config>
+                            <smooks-resource-list>
+                                <ftl:freemarker applyOnElement="#document">
+                                    <ftl:template><!--
+        <item>
+            <id>${.vars["order-item"].@id}</id>
+            <productId>${.vars["order-item"].product}</productId>
+            <quantity>${.vars["order-item"].quantity}</quantity>
+            <price>${.vars["order-item"].price}</price>
+        </item>--></ftl:template>
+                                </ftl:freemarker>
+                            </smooks-resource-list>
+                        </core:config>
+                    </core:smooks>
+                    <!--
+                    Apply the last part of the template when we reach the end
+                    of the <order> element.
+                    -->
+                    <ftl:freemarker applyOnElement="order">
+                        <ftl:template><!--
     </itemList>
-</salesorder>--></ftl:template>
-    </ftl:freemarker>
-
-    <!--
-    Output the <order-items> elements.  This will appear in the
-    output message where the <?TEMPLATE-SPLIT-PI?> token appears in the
-    order-items template.
-    -->
-<ftl:freemarker applyOnElement="order-item">
-    <ftl:template><!--        <item>
-        <id>${.vars["order-item"].@id}</id>
-        <productId>${.vars["order-item"].product}</productId>
-        <quantity>${.vars["order-item"].quantity}</quantity>
-        <price>${.vars["order-item"].price}</price>
-    </item>
-    --></ftl:template>
-</ftl:freemarker>
+</salesorder>-->
+                        </ftl:template>
+                    </ftl:freemarker>
+                </core:delegate-reader>
+                <core:echo/>
+            </smooks-resource-list>
+        </core:config>
+    </core:smooks>
 
 </smooks-resource-list>

@@ -45,6 +45,7 @@ package org.smooks.examples.jms.splitterouter;
 import org.smooks.Smooks;
 import org.smooks.api.ExecutionContext;
 import org.smooks.api.SmooksException;
+import org.smooks.engine.DefaultApplicationContextBuilder;
 import org.smooks.engine.report.HtmlReportGenerator;
 import org.smooks.support.StreamUtils;
 import org.smooks.io.payload.ByteSource;
@@ -60,20 +61,19 @@ import java.io.InputStreamReader;
  * @author <a href="mailto:daniel.bevenius@gmail.com">Daniel Bevenius</a>
  *
  */
-public class Main
-{
+public class Main {
     private static byte[] messageIn = readInputMessage();
 
-    public static void main(String[] args) throws IOException, SAXException, SmooksException, InterruptedException
-    {
+    public static void main(String[] args) throws IOException, SAXException, SmooksException {
         pause("Press 'enter' to display the input xml Order message...");
         System.out.println("\n");
-        System.out.println( new String( messageIn ) );
+        System.out.println(new String(messageIn));
         System.out.println("\n\n");
 
         pause("Press 'enter' to split the Order message and route the Order Items (plus header info) to the JMS Queue...");
 
-        Smooks smooks = new Smooks("smooks-config.xml");
+        Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(Main.class.getClassLoader()).build());
+        smooks.addConfigurations("smooks-config.xml");
         try {
             ExecutionContext execContext = smooks.createExecutionContext();
 
@@ -96,12 +96,10 @@ public class Main
         System.out.println("\n");
     }
 
-    private static byte[] readInputMessage()
-    {
+    private static byte[] readInputMessage() {
         try {
             return StreamUtils.readStream(new FileInputStream("input-message.xml"));
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
             return "<no-message/>".getBytes();
         }

@@ -46,6 +46,7 @@ import org.smooks.Smooks;
 import org.smooks.api.bean.lifecycle.BeanContextLifecycleEvent;
 import org.smooks.api.bean.lifecycle.BeanContextLifecycleObserver;
 import org.smooks.api.bean.lifecycle.BeanLifecycle;
+import org.smooks.engine.DefaultApplicationContextBuilder;
 import org.smooks.examples.drools.model.StockTick;
 import org.xml.sax.SAXException;
 
@@ -64,7 +65,8 @@ public class SmooksEventSource implements EventSource {
     private final BlockingQueue<StockTick> inQueue = new SynchronousQueue<StockTick>();
 
     public SmooksEventSource() throws IOException, SAXException {
-        smooks = new Smooks("./smooks-config.xml");
+        smooks = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(this.getClass().getClassLoader()).build());
+        smooks.addConfigurations("./smooks-config.xml");
         smooks.getApplicationContext().addBeanContextLifecycleObserver(new BeanContextObserver());
     }
 

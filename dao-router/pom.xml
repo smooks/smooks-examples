@@ -12,7 +12,6 @@
 
     <name>DAO Router</name>
     <artifactId>smooks-example-dao-router</artifactId>
-    <packaging>bundle</packaging>
 
     <build>
         <plugins>
@@ -21,6 +20,13 @@
                 <artifactId>license-maven-plugin</artifactId>
                 <configuration>
                     <licenseResolver>${project.baseUri}../license</licenseResolver>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>org.smooks.examples.daorouter.Main</mainClass>
                 </configuration>
             </plugin>
         </plugins>
@@ -48,23 +54,18 @@
             <artifactId>smooks-tck</artifactId>
         </dependency>
         <dependency>
-            <groupId>hsqldb</groupId>
+            <groupId>org.hsqldb</groupId>
             <artifactId>hsqldb</artifactId>
         </dependency>
         <dependency>
-            <groupId>javax.persistence</groupId>
-            <artifactId>persistence-api</artifactId>
-            <version>1.0.2</version>
+            <groupId>jakarta.persistence</groupId>
+            <artifactId>jakarta.persistence-api</artifactId>
+            <version>3.1.0</version>
         </dependency>
         <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-entitymanager</artifactId>
-            <version>5.6.5.Final</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.transaction</groupId>
-            <artifactId>jta</artifactId>
-            <version>1.1</version>
+            <groupId>org.hibernate.orm</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>6.4.0.Final</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>

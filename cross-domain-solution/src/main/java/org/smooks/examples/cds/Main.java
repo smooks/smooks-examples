@@ -44,8 +44,10 @@ package org.smooks.examples.cds;
 
 import org.smooks.Smooks;
 import org.smooks.api.ExecutionContext;
+import org.smooks.engine.DefaultApplicationContextBuilder;
 import org.smooks.engine.report.HtmlReportGenerator;
 import org.smooks.io.AbstractOutputStreamResource;
+import org.smooks.io.payload.StringResult;
 import org.xml.sax.SAXException;
 
 import javax.xml.transform.Result;
@@ -73,7 +75,7 @@ public class Main {
 
         System.out.println("============== Filtering 'i_3001a.bad.ntf' ==============");
         try (InputStream inputStream = new FileInputStream("i_3001a.bad.ntf")) {
-            filterSource(smooks, inputStream, new StreamResult(new FileOutputStream(result)));
+            filterSource(smooks, inputStream, new StringResult());
         }
         System.out.println("============== Saved invalid result to 'bad-result.xml' ==============\n");
 
@@ -93,7 +95,8 @@ public class Main {
         };
         deadLetterOutputStreamResource.setResourceName("deadLetterStream");
 
-        Smooks smooks = new Smooks("smooks-config.xml");
+        Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(Main.class.getClassLoader()).build());
+        smooks.addConfigurations("smooks-config.xml");
         smooks.addVisitor(deadLetterOutputStreamResource, "#document");
 
         return smooks;

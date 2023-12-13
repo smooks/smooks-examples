@@ -12,7 +12,6 @@
 
     <name>validation-basic</name>
     <artifactId>smooks-example-validation-basic</artifactId>
-    <packaging>bundle</packaging>
 
     <build>
         <plugins>
@@ -21,6 +20,13 @@
                 <artifactId>license-maven-plugin</artifactId>
                 <configuration>
                     <licenseResolver>${project.baseUri}../license</licenseResolver>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>org.smooks.examples.validation.Main</mainClass>
                 </configuration>
             </plugin>
         </plugins>

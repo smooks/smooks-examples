@@ -12,7 +12,6 @@
 
     <name>Smooks Camel Integration</name>
     <artifactId>smooks-example-camel-integration</artifactId>
-    <packaging>bundle</packaging>
 
     <build>
         <plugins>
@@ -23,13 +22,13 @@
                     <licenseResolver>${project.baseUri}../../license</licenseResolver>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>org.smooks.examples.camel.integration.Main</mainClass>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
-    
-    <dependencies>
-        <dependency>
-            <groupId>org.smooks</groupId>
-            <artifactId>smooks-commons</artifactId>
-        </dependency>
-    </dependencies>
 </project>

@@ -12,7 +12,6 @@
 
     <name>EDI-to-DB ETL</name>
     <artifactId>smooks-example-db-extract-transform-load</artifactId>
-    <packaging>bundle</packaging>
 
     <build>
         <plugins>
@@ -21,6 +20,13 @@
                 <artifactId>license-maven-plugin</artifactId>
                 <configuration>
                     <licenseResolver>${project.baseUri}../license</licenseResolver>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>org.smooks.examples.etl.Main</mainClass>
                 </configuration>
             </plugin>
         </plugins>
@@ -42,10 +48,6 @@
         <dependency>
             <groupId>org.smooks</groupId>
             <artifactId>smooks-tck</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>hsqldb</groupId>
-            <artifactId>hsqldb</artifactId>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>

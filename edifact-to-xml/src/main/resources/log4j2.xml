@@ -49,6 +49,8 @@
         </Console>
     </Appenders>
     <Loggers>
+        <Logger name="org.smooks.classpath.Scanner" level="error"/>
+
         <Root level="info">
             <AppenderRef ref="Console"/>
         </Root>

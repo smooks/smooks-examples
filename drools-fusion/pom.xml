@@ -20,23 +20,31 @@
 
     <properties>
         <project.mainClass>org.drools.benchmark.waltz.WaltzBenchmark</project.mainClass>
-        <drools.version>7.69.0.Final</drools.version>
     </properties>
 
-    <dependencies>
-        <!-- Internal dependencies -->
-        <dependency>
-            <groupId>org.drools</groupId>
-            <artifactId>drools-core</artifactId>
-            <version>${drools.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.drools</groupId>
-            <artifactId>drools-compiler</artifactId>
-            <version>${drools.version}</version>
-        </dependency>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.jbpm</groupId>
+                <artifactId>jbpm-bom</artifactId>
+                <version>7.74.1.Final</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
-        <!-- External dependencies -->
+    <dependencies>
+        <dependency>
+            <groupId>org.jbpm</groupId>
+            <artifactId>jbpm-bpmn2</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
         <dependency>
             <groupId>com.jgoodies</groupId>
             <artifactId>looks</artifactId>
@@ -87,16 +95,6 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-eclipse-plugin</artifactId>
-                <version>2.10</version>
-                <configuration>
-                    <additionalBuildcommands>
-                        <buildcommand>org.drools.eclipse.droolsbuilder</buildcommand>
-                    </additionalBuildcommands>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>3.3.0</version>
                 <configuration>
@@ -106,6 +104,13 @@
                             <addClasspath>true</addClasspath>
                         </manifest>
                     </archive>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>org.smooks.examples.drools.Main</mainClass>
                 </configuration>
             </plugin>
         </plugins>

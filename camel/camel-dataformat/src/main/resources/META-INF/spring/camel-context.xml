@@ -46,6 +46,8 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
 
+	<bean class="org.smooks.examples.camel.dataformat.StartStopEventNotifier"/>
+
 	<bean id="smooks" class="org.smooks.cartridges.camel.dataformat.SmooksDataFormat">
 	  	<constructor-arg><value>smooks-config.xml</value></constructor-arg>
 	</bean>
@@ -54,7 +56,9 @@
 		<route>
 			<from uri="file://${input.dir}?fileName=input-message.edi"/>
 			<log message="Before unmarshal  ${body}"/>
-			<unmarshal ref="smooks"/>
+		    <unmarshal>
+				<custom ref="smooks"/>
+			</unmarshal>
 			<log message="After unmarshal  ${body}"/>
 		</route>
 	</camelContext>

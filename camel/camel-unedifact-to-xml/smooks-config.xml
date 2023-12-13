@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <smooks-resource-list 
     xmlns="https://www.smooks.org/xsd/smooks-2.0.xsd"
-    xmlns:unedifact="https://www.smooks.org/xsd/smooks/unedifact-1.6.xsd"
+    xmlns:edifact="https://www.smooks.org/xsd/smooks/edifact-2.0.xsd"
     xmlns:core="https://www.smooks.org/xsd/smooks/smooks-core-1.6.xsd">
 
-    <unedifact:reader mappingModel="urn:org.smooks.edi.unedifact:d96a-mapping:1.4" ignoreNewLines="true" />
+    <edifact:parser schemaUri="/d96a/EDIFACT-Messages.dfdl.xsd"/>
 
     <core:exports>
         <core:result type="org.smooks.io.payload.StringResult"/>

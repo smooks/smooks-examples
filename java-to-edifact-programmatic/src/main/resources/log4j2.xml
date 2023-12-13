@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   ========================LICENSE_START=================================
-  EDIFACT to XML
+  Java-to-EDIFACT-Programmatic
   %%
-  Copyright (C) 2020 - 2021 Smooks
+  Copyright (C) 2020 - 2023 Smooks
   %%
   Licensed under the terms of the Apache License Version 2.0, or
   the GNU Lesser General Public License version 3.0 or later.
@@ -49,6 +49,8 @@
         </Console>
     </Appenders>
     <Loggers>
+        <Logger name="org.smooks.classpath.Scanner" level="error"/>
+
         <Root level="info">
             <AppenderRef ref="Console"/>
         </Root>

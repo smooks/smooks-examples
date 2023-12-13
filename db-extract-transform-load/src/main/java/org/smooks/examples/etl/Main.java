@@ -46,6 +46,7 @@ import org.smooks.Smooks;
 import org.smooks.api.ExecutionContext;
 import org.smooks.api.SmooksException;
 import org.smooks.cartridges.persistence.jdbc.StatementExec;
+import org.smooks.engine.DefaultApplicationContextBuilder;
 import org.smooks.engine.report.HtmlReportGenerator;
 import org.smooks.support.StreamUtils;
 import org.smooks.tck.HsqlServer;
@@ -97,7 +98,8 @@ public class Main {
     }
 
     protected void runSmooksTransform() throws IOException, SAXException, SmooksException {
-    	Smooks smooks = new Smooks("./smooks-configs/smooks-config.xml");
+    	Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(this.getClass().getClassLoader()).build());
+        smooks.addConfigurations("./smooks-configs/smooks-config.xml");
 
         try {
             ExecutionContext executionContext = smooks.createExecutionContext();

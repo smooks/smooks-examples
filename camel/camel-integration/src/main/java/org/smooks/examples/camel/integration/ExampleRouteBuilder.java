@@ -47,7 +47,7 @@ import org.apache.camel.builder.RouteBuilder;
 import java.io.File;
 
 public class ExampleRouteBuilder extends RouteBuilder {
-    public ExampleRouteBuilder() {
+    public  ExampleRouteBuilder() {
     }
 
     @Override

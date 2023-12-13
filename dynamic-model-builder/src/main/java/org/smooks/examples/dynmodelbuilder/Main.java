@@ -62,7 +62,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException, SAXException {
 
-        ModelBuilder modelBuilder = new ModelBuilder("META-INF/org/smooks/model/descriptor.properties", false);
+        ModelBuilder modelBuilder = new ModelBuilder("/descriptor.properties", false);
         Model<SmooksModel> model;
         SmooksModel smooksModel;
 

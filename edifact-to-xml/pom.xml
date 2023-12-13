@@ -10,10 +10,6 @@
     <name>EDIFACT to XML</name>
     <artifactId>smooks-example-unedifact-to-xml</artifactId>
 
-    <properties>
-        <mainClass>org.smooks.examples.edifact2xml.Main</mainClass>
-    </properties>
-
     <build>
         <plugins>
             <plugin>
@@ -24,6 +20,13 @@
                     <excludes>
                         <exclude>test/resources/expected.xml</exclude>
                     </excludes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>org.smooks.examples.edifact2xml.Main</mainClass>
                 </configuration>
             </plugin>
         </plugins>

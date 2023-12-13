@@ -10,6 +10,9 @@
         <version>1.0.5-SNAPSHOT</version>
     </parent>
 
+    <name>JMS Consumer</name>
+    <artifactId>smooks-example-jms-consumer</artifactId>
+
     <build>
         <plugins>
             <plugin>
@@ -19,10 +22,13 @@
                     <licenseResolver>${project.baseUri}../../license</licenseResolver>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>org.smooks.examples.jms.consumer.Main</mainClass>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
-
-    <name>JMS Consumer</name>
-    <artifactId>smooks-example-jms-consumer</artifactId>
-    <packaging>bundle</packaging>
 </project>

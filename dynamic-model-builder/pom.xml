@@ -12,31 +12,8 @@
 
     <name>Dynamic Model Builder</name>
     <artifactId>smooks-example-dyna-model-builder</artifactId>
-    <packaging>bundle</packaging>
 
     <build>
-        <resources>
-            <resource>
-                <directory>src/main/java</directory>
-                <excludes>
-                    <exclude>**/*.java</exclude>
-                </excludes>
-            </resource>
-            <resource>
-                <directory>src/main/resources</directory>
-            </resource>
-        </resources>
-        <testResources>
-            <testResource>
-                <directory>src/test/java</directory>
-                <excludes>
-                    <exclude>**/*.java</exclude>
-                </excludes>
-            </testResource>
-            <testResource>
-                <directory>src/test/resources</directory>
-            </testResource>
-        </testResources>
         <plugins>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -44,13 +21,20 @@
                 <configuration>
                     <licenseResolver>${project.baseUri}../license</licenseResolver>
                     <excludes>
-                        <exclude>test/java/org/smooks/model/csv/v17/csv-config-01.xml</exclude>
-                        <exclude>test/java/org/smooks/model/csv/v17/csv-config-02.xml</exclude>
-                        <exclude>test/java/org/smooks/model/csv/v17/csv-config-03.xml</exclude>
-                        <exclude>test/java/org/smooks/model/csv/v17/csv-config-04.xml</exclude>
-                        <exclude>test/java/org/smooks/model/csv/v17/csv-config-05.xml</exclude>
-                        <exclude>test/java/org/smooks/model/javabean/v16/config-01.xml</exclude>
+                        <exclude>test/resources/csv/csv-config-01.xml</exclude>
+                        <exclude>test/resources/csv/csv-config-02.xml</exclude>
+                        <exclude>test/resources/csv/csv-config-03.xml</exclude>
+                        <exclude>test/resources/csv/csv-config-04.xml</exclude>
+                        <exclude>test/resources/csv/csv-config-05.xml</exclude>
+                        <exclude>test/resources/javabean/config-01.xml</exclude>
                     </excludes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>org.smooks.examples.dynmodelbuilder.Main</mainClass>
                 </configuration>
             </plugin>
         </plugins>

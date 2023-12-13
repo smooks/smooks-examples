@@ -43,8 +43,11 @@
 package org.smooks.examples.csv2java;
 
 import org.smooks.Smooks;
+import org.smooks.api.ApplicationContextBuilder;
 import org.smooks.api.ExecutionContext;
 import org.smooks.api.SmooksException;
+import org.smooks.engine.DefaultApplicationContext;
+import org.smooks.engine.DefaultApplicationContextBuilder;
 import org.smooks.engine.report.HtmlReportGenerator;
 import org.smooks.support.StreamUtils;
 import org.smooks.io.payload.JavaResult;
@@ -65,7 +68,8 @@ public class Main {
 
     protected static List runSmooksTransform() throws IOException, SAXException, SmooksException {
 
-        Smooks smooks = new Smooks("smooks-config.xml");
+        Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(Main.class.getClassLoader()).build());
+        smooks.addConfigurations("smooks-config.xml");
 
         try {
             ExecutionContext executionContext = smooks.createExecutionContext();

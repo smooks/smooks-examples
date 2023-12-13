@@ -42,12 +42,11 @@
  */
 package org.smooks.examples.daorouter.dao;
 
+import jakarta.persistence.EntityManager;
 import org.smooks.examples.daorouter.jpa.entity.Customer;
 import org.smooks.scribe.annotation.Dao;
 import org.smooks.scribe.annotation.Lookup;
 import org.smooks.scribe.annotation.Param;
-
-import javax.persistence.EntityManager;
 
 /**
  * @author <a href="mailto:maurice.zeijen@smies.com">maurice.zeijen@smies.com</a>

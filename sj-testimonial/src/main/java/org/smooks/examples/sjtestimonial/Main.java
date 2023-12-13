@@ -45,6 +45,7 @@ package org.smooks.examples.sjtestimonial;
 import org.smooks.Smooks;
 import org.smooks.api.ExecutionContext;
 import org.smooks.api.SmooksException;
+import org.smooks.engine.DefaultApplicationContextBuilder;
 import org.smooks.engine.report.HtmlReportGenerator;
 import org.smooks.support.StreamUtils;
 import org.smooks.io.payload.JavaResult;
@@ -68,7 +69,8 @@ public class Main {
 
     protected static Map runSmooksTransform(String config) throws IOException, SAXException, SmooksException {
         // Instantiate Smooks with the config...
-        Smooks smooks = new Smooks(config);
+        Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(Main.class.getClassLoader()).build());
+        smooks.addConfigurations(config);
 
         try {
              // Create an exec context - no profiles....

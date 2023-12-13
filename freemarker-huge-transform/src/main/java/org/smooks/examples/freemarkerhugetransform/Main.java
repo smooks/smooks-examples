@@ -44,6 +44,7 @@ package org.smooks.examples.freemarkerhugetransform;
 
 import org.smooks.Smooks;
 import org.smooks.api.SmooksException;
+import org.smooks.engine.DefaultApplicationContextBuilder;
 import org.xml.sax.SAXException;
 
 import javax.xml.transform.stream.StreamResult;
@@ -58,13 +59,12 @@ import java.io.InputStreamReader;
  * @author <a href="mailto:tom.fennelly@jboss.com">tom.fennelly@jboss.com</a>
  *
  */
-public class Main
-{
-    public static void main(String[] args) throws IOException, SAXException, SmooksException, InterruptedException
-    {
+public class Main {
+    public static void main(String[] args) throws IOException, SAXException, SmooksException, InterruptedException {
         pause("Press 'enter' to process the contents of the 'input-message.xml' file.  The result wil be output to the console...");
 
-        Smooks smooks = new Smooks("smooks-config.xml");
+        Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(Main.class.getClassLoader()).build());
+        smooks.addConfigurations("smooks-config.xml");
         try {
             smooks.filterSource(new StreamSource(new FileInputStream("input-message.xml")), new StreamResult(System.out));
         } finally {

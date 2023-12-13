@@ -47,6 +47,7 @@ import jakarta.xml.bind.JAXBException;
 import org.smooks.Smooks;
 import org.smooks.api.SmooksException;
 import org.smooks.edifact.binding.d03b.Interchange;
+import org.smooks.engine.DefaultApplicationContextBuilder;
 import org.smooks.io.payload.StringSource;
 import org.smooks.support.StreamUtils;
 import org.xml.sax.SAXException;
@@ -66,7 +67,8 @@ public class Main {
 
     protected static Interchange runSmooksTransform() throws IOException, SAXException, SmooksException, JAXBException {
         // Configure Smooks using a Smooks config...
-        Smooks smooks = new Smooks("smooks-config.xml");
+        Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(Main.class.getClassLoader()).build());
+        smooks.addConfigurations("smooks-config.xml");
 
         try {
             final StringWriter writer = new StringWriter();

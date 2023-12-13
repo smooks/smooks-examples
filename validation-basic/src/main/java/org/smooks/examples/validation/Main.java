@@ -48,6 +48,7 @@ import org.smooks.api.SmooksException;
 import org.smooks.cartridges.rules.RuleEvalResult;
 import org.smooks.cartridges.validation.OnFailResult;
 import org.smooks.cartridges.validation.ValidationResult;
+import org.smooks.engine.DefaultApplicationContextBuilder;
 import org.smooks.engine.report.HtmlReportGenerator;
 import org.smooks.support.StreamUtils;
 import org.smooks.io.payload.StringSource;
@@ -96,7 +97,8 @@ public class Main {
 
     protected static ValidationResult runSmooks(final String messageIn) throws IOException, SAXException, SmooksException {
         // Instantiate Smooks with the config...
-        final Smooks smooks = new Smooks("smooks-config.xml");
+        final Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(Main.class.getClassLoader()).build());
+        smooks.addConfigurations("smooks-config.xml");
 
         try {
             // Create an exec context - no profiles....

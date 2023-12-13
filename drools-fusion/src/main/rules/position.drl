@@ -1,5 +1,5 @@
-/**
- * Copyright 2010 JBoss Inc
+/*
+ * Copyright 2010 Red Hat, Inc. and/or its affiliates.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,36 +16,38 @@
 
 package org.drools.examples.broker
 
-import SuddenDropEvent
-import PortfolioAction
-import Action
+import org.smooks.examples.drools.model.SuddenDropEvent
+import org.smooks.examples.drools.model.PortfolioAction
+import org.smooks.examples.drools.model.Action
 import java.util.Map
 import java.util.HashMap
 
-import function Utils.selectAction
+import function org.smooks.examples.drools.misc.Utils.selectAction
+
+global org.kie.api.runtime.KieSession kSession;
 
 dialect "mvel"
 
-# an event declaration to represent situations
-# where a suddent drop happens. In this case we are not
-# defining any explicit expiration policy. 
+// an event declaration to represent situations
+// where a sudden drop happens. In this case we are not
+// defining any explicit expiration policy.
 declare SuddenDropEvent
     @role( event )
 end
 
-# here we have an example of a rule that controls a process
+// here we have an example of a rule that controls a process
 rule "Start adjust position process"
 when
     $sde : SuddenDropEvent( ) from entry-point "Analysis Events"
 then
     variables = [ "symbol" : $sde.symbol ];
-    drools.getKnowledgeRuntime().startProcess( "adjust position", variables );
+    kSession.startProcess( "adjustposition", variables );
 end
 
 
-# bellow we have rules controlled by the process,
-# i.e., the process will fire these rules when necessary
-# to re-evaluate the position
+// below we have rules controlled by the process,
+// i.e., the process will fire these rules when necessary
+// to re-evaluate the position
 rule "If the drop is between 6% and 8%, buy more shares"
     ruleflow-group "evaluate position"
 when
@@ -57,7 +59,7 @@ then
         quant = 100
     }
     insert( pa );
-end    
+end
 
 rule "If the drop is on more than 8%, sell shares"
     ruleflow-group "evaluate position"
@@ -70,7 +72,7 @@ then
         quant = 100
     }
     insert( pa );
-end    
+end
 
 
 rule "If the drop is between 5% and 6%, do nothing"

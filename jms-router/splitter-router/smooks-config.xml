@@ -6,24 +6,30 @@
 
     <!-- Capture the message data 2 seperate DOM model, for "order" and "order-item" fragments... -->
     <resource-config selector="order,order-item">
-        <resource>org.smooks.delivery.DomModelCreator</resource>
+        <resource>org.smooks.engine.resource.visitor.dom.DomModelCreator</resource>
     </resource-config>
 
-    <!-- At each "order-iteam", apply a template to the "order" and "order-item" DOM model... -->
-    <ftl:freemarker applyOnElement="order-item">
-        <!--
-            Note in the template that we need to use the special FreeMarker variable ".vars"
-            because of the hyphenated variable names ("order-item"). See http://freemarker.org/docs/ref_specvar.html.
-        -->
-        <ftl:template>/orderitem-split.ftl</ftl:template>
-        <ftl:use>
-            <!-- Bind the templating result into the bean context, from where
-                 it can be accessed by the JMSRouter (configured above). -->
-            <ftl:bindTo id="orderItem_xml"/>
-        </ftl:use>
-    </ftl:freemarker>
+    <core:smooks filterSourceOn="order-item">
+        <!-- Bind the templating result into the bean context, from where
+             it can be accessed by the JMSRouter (configured above). -->
+        <core:action>
+            <core:bindTo id="orderItem_xml"/>
+        </core:action>
+        <core:config>
+            <smooks-resource-list>
+                <!-- At each "order-item", apply a template to the "order" and "order-item" DOM model... -->
+                <ftl:freemarker applyOnElement="#document">
+                    <!--
+                        Note in the template that we need to use the special FreeMarker variable ".vars"
+                        because of the hyphenated variable names ("order-item"). See http://freemarker.org/docs/ref_specvar.html.
+                    -->
+                    <ftl:template>/orderitem-split.ftl</ftl:template>
+                </ftl:freemarker>
+            </smooks-resource-list>
+        </core:config>
+    </core:smooks>
 
-    <!-- At each "order-iteam", route the "orderItem_xml" to the ActiveMQ JMS Queue... -->
+    <!-- At each "order-item", route the "orderItem_xml" to the ActiveMQ JMS Queue... -->
     <jms:router routeOnElement="order-item" beanId="orderItem_xml" destination="smooks.exampleQueue">
         <jms:message>
             <!-- Need to use special FreeMarker variable ".vars" -->

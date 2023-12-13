@@ -45,6 +45,7 @@ package org.smooks.examples.xsltgroovy;
 import org.smooks.Smooks;
 import org.smooks.api.ExecutionContext;
 import org.smooks.api.SmooksException;
+import org.smooks.engine.DefaultApplicationContextBuilder;
 import org.smooks.engine.report.HtmlReportGenerator;
 import org.smooks.support.StreamUtils;
 import org.smooks.io.payload.StringResult;
@@ -67,11 +68,12 @@ public class Main {
 
     protected static String runSmooksTransform() throws IOException, SAXException, SmooksException {
         // Instantiate Smooks with the config...
-        Smooks smooks = new Smooks("smooks-config.xml");
+        Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(Main.class.getClassLoader()).build());
+        smooks.addConfigurations("smooks-config.xml");
         HtmlReportGenerator htmlReportGenerator = new HtmlReportGenerator("target/report/report.html");
         htmlReportGenerator.getReportConfiguration().setAutoCloseWriter(false);
         try {
-             // Create an exec context - no profiles....
+            // Create an exec context - no profiles....
             ExecutionContext executionContext = smooks.createExecutionContext();
 
             StringResult result = new StringResult();

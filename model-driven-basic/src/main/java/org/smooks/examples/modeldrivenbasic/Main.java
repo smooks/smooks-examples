@@ -45,6 +45,7 @@ package org.smooks.examples.modeldrivenbasic;
 import org.smooks.Smooks;
 import org.smooks.api.ExecutionContext;
 import org.smooks.api.SmooksException;
+import org.smooks.engine.DefaultApplicationContextBuilder;
 import org.smooks.engine.report.HtmlReportGenerator;
 import org.smooks.support.StreamUtils;
 import org.xml.sax.SAXException;
@@ -63,7 +64,8 @@ public class Main {
     private Smooks smooks;
 
     protected Main() throws IOException, SAXException {
-        smooks = new Smooks("smooks-config.xml");
+        smooks = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(this.getClass().getClassLoader()).build());
+        smooks.addConfigurations("smooks-config.xml");
     }
 
     /**

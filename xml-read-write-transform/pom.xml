@@ -12,7 +12,6 @@
 
     <name>XML Read/Write Transform</name>
     <artifactId>smooks-example-xml-rw-transform</artifactId>
-    <packaging>bundle</packaging>
 
     <build>
         <plugins>
@@ -23,9 +22,9 @@
                     <licenseResolver>${project.baseUri}../license</licenseResolver>
                 </configuration>
             </plugin>
-             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <mainClass>org.smooks.examples.xmlrwtransform.Main</mainClass>
                 </configuration>

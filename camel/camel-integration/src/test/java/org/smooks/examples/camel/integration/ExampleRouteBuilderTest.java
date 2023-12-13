@@ -48,18 +48,15 @@ import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.Test;
 
-public class ExampleRouteBuilderTest extends CamelTestSupport
-{
+public class ExampleRouteBuilderTest extends CamelTestSupport {
 
     @Override
-    public RouteBuilder createRouteBuilder()
-    {
+    public RouteBuilder createRouteBuilder() {
         return new ExampleRouteBuilder();
     }
 
     @Test
-    public void route() throws Exception
-    {
+    public void route() throws Exception {
         MockEndpoint irelandMockQueue = getMockEndpoint("jms:queue:ireland");
         irelandMockQueue.setExpectedMessageCount(1);
 
@@ -69,8 +66,7 @@ public class ExampleRouteBuilderTest extends CamelTestSupport
     }
 
     @Override
-    protected CamelContext createCamelContext() throws Exception
-    {
+    protected CamelContext createCamelContext() throws Exception {
         CamelContext context = super.createCamelContext();
         context.addComponent("jms", context.getComponent("mock"));
         return context;

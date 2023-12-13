@@ -45,6 +45,7 @@ package org.smooks.examples.xml2java;
 import org.smooks.Smooks;
 import org.smooks.api.ExecutionContext;
 import org.smooks.api.SmooksException;
+import org.smooks.engine.DefaultApplicationContextBuilder;
 import org.smooks.engine.report.HtmlReportGenerator;
 import org.smooks.examples.xml2java.model.Order;
 import org.smooks.examples.xml2java.model.OrderItem;
@@ -68,10 +69,11 @@ public class Main {
     protected static Order runSmooks() throws IOException, SAXException, SmooksException {
 
         // Instantiate Smooks with the config...
-        Smooks smooks = new Smooks("smooks-config.xml");
+        Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(Main.class.getClassLoader()).build());
+        smooks.addConfigurations("smooks-config.xml");
 
         try {
-             // Create an exec context - no profiles....
+            // Create an exec context - no profiles....
             ExecutionContext executionContext = smooks.createExecutionContext();
             // The result of this transform is a set of Java objects...
             JavaResult result = new JavaResult();
@@ -102,7 +104,7 @@ public class Main {
         System.out.println("       - Order Date:    " + order.getHeader().getDate());
         System.out.println("\n");
         System.out.println("Order Items:");
-        for(int i = 0; i < order.getOrderItems().size(); i++) {
+        for (int i = 0; i < order.getOrderItems().size(); i++) {
             OrderItem orderItem = order.getOrderItems().get(i);
             System.out.println("       (" + (i + 1) + ") Product ID:  " + orderItem.getProductId());
             System.out.println("       (" + (i + 1) + ") Quantity:    " + orderItem.getQuantity());

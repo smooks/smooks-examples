@@ -42,29 +42,36 @@
  */
 package org.smooks.examples.daorouter.jpa.entity;
 
-import javax.persistence.*;
+import jakarta.persistence.Basic;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 /**
  * @author <a href="mailto:maurice.zeijen@smies.com">maurice.zeijen@smies.com</a>
  *
  */
 @Entity
-@Table(name="orderlines")
+@Table(name = "orderlines")
 public class OrderLine extends AbstractEntity {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	@ManyToOne
-	@JoinColumn(name="orderid")
+	@JoinColumn(name = "orderid")
 	private Order order;
 
 	@Basic
 	private Integer quantity;
 
 	@ManyToOne
-	@JoinColumn(name="productid")
+	@JoinColumn(name = "productid")
 	private Product product;
 
 	/**
@@ -122,7 +129,5 @@ public class OrderLine extends AbstractEntity {
 	public void setProduct(Product product) {
 		this.product = product;
 	}
-
-
 
 }

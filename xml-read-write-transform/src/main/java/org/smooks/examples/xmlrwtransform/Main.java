@@ -42,8 +42,10 @@
  */
 package org.smooks.examples.xmlrwtransform;
 
+import org.smooks.Smooks;
 import org.smooks.api.SmooksException;
 import org.smooks.cartridges.javabean.binding.xml.XMLBinding;
+import org.smooks.engine.DefaultApplicationContextBuilder;
 import org.smooks.examples.xmlrwtransform.model.Order;
 import org.smooks.examples.xmlrwtransform.model.OrderItem;
 import org.smooks.support.StreamUtils;
@@ -68,8 +70,14 @@ public class Main {
     public static void main(String[] args) throws IOException, SAXException, SmooksException {
 
         // Create and initilise the XMLBinding instances for v1 and v2 of the XMLs...
-        XMLBinding xmlBindingV1 = new XMLBinding().add("v1-binding-config.xml");
-        XMLBinding xmlBindingV2 = new XMLBinding().add("v2-binding-config.xml");
+        Smooks smooksXmlBindingV1 = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(Main.class.getClassLoader()).build());
+        smooksXmlBindingV1.addConfigurations("v1-binding-config.xml");
+        XMLBinding xmlBindingV1 = new XMLBinding(smooksXmlBindingV1);
+
+        Smooks smooksXmlBindingV2 = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(Main.class.getClassLoader()).build());
+        smooksXmlBindingV2.addConfigurations("v2-binding-config.xml");
+        XMLBinding xmlBindingV2 = new XMLBinding(smooksXmlBindingV2);
+
         xmlBindingV1.initialise();
         xmlBindingV2.initialise();
 

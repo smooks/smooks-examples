@@ -64,4 +64,4 @@ The following table briefly describes each example within this project. More inf
 
 ## Smooks Execution Report
 
-Most of the examples generate a Smooks Execution Report in the "target/report" folder of the example.  This can be a useful tool for comprehending the processing performed by Smooks.
+Most of the examples generate a Smooks Execution Report in the `target/report` directory of the example.  This can be a useful tool for comprehending the processing performed by Smooks.

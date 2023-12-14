@@ -1,44 +1,56 @@
-About this example
-==================
- 	This is an example that illustrates the usage of SmooksComponent
+About
+=====
 
-    See:
-        1. The "Main" class in src/main/java/example/Main.java.
-        2. The input message in input-message.csv.
-        3. smooks-config.xml.
+This is an example illustrating the use of the [Smooks Camel cartridge](https://github.com/smooks/smooks-camel-cartridge/). Apache Camel is configured in `src/main/resources/META-INF/spring/camel-context.xml` to poll a directory for `input-message.csv`. Once Camel reads the CSV file, it prints the file contents and sends it to Smooks so that the CSV is translated into XML. `<csv:reader .../>` in `smooks-config.xml` ingests the CSV stream and turns it into an XML stream . `<core:result .../>` reads the XML stream into a string and exports the string as a Smooks result which then allows Camel to print the XML output from the [`log`](https://camel.apache.org/components/3.21.x/log-component.html).
 
-How to Run?
-===========
-    Requirements:
-        1. JDK 1.5
-        2. Maven 2.x (http://maven.apache.org/download.html)
+#### How to run?
 
-    Running:
-        1. "mvn clean install"
-        2. "mvn exec:java"
+1. `mvn clean install`
+2. `mvn exec:exec`
+3. `cp input-message.csv input-dir/`
 
-Run in Servicemix 4.2
-=====================
+#### UML sequence diagram
 
-Install and configure Servicemix 4.x
---------------------------------------
-1. Install Servicemix 4.x (http://servicemix.apache.org/servicemix-420.html)
-2. Start Servicemix:
-    ${SERVICEMIX_HOME}/bin/servicemix
-3. tail -f ${SERVICEMIX_HOME}/data/log/servicemix.log
+```
+     ┌──────────┐               ┌────────────┐             ┌──────┐
+     │Filesystem│               │Apache Camel│             │Smooks│
+     └────┬─────┘               └─────┬──────┘             └──┬───┘
+          │ 𝟏 Poll "input-message.csv"│                       │    
+          │ <──────────────────────────                       │    
+          │                           │                       │    
+          │    𝟐 input-message.csv    │                       │    
+          │  ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─>                       │    
+          │                           │                       │    
+          │                           │────┐                       
+          │                           │    │ 𝟑 Log message body    
+          │                           │<───┘                       
+          │                           │                       │    
+          │                           │         𝟒 CSV         │    
+          │                           │ ──────────────────────>    
+          │                           │                       │    
+          │                           │         𝟓 XML         │    
+          │                           │ <─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─     
+          │                           │                       │    
+          │                           │────┐                       
+          │                           │    │ 𝟔 Log message body    
+          │                           │<───┘                       
+     ┌────┴─────┐               ┌─────┴──────┐             ┌──┴───┐
+     │Filesystem│               │Apache Camel│             │Smooks│
+     └──────────┘               └────────────┘             └──────┘
 
+```
 
-Deploy Smooks OSGi Bundle
--------------------------
-1. Deploy Smooks OSGi bundle
-    karaf@root> features:addUrl  file:///path/to/smooks/smooks-all/target/classes/features.xml
-    karaf@root> features:install smooks
+#### PlantUML
 
-2. Deploy the example
-    osgi:install -s mvn:org.smooks/milyn-smooks-example-camel-csv-to-xml/1.6-SNAPSHOT
+```plantuml
+@startuml
+autonumber
 
-Run the example
----------------
-1. cp input-message.csv input-dir
-2. check ${SERVICEMIX_HOME}/data/log/servicemix.log for the log messages
-
+Filesystem <- "Apache Camel": Poll "input-message.csv"
+Filesystem --> "Apache Camel": input-message.csv
+"Apache Camel" -> "Apache Camel": Log message body
+"Apache Camel" -> Smooks: CSV
+Smooks --> "Apache Camel": XML
+"Apache Camel" -> "Apache Camel": Log message body
+@enduml
+```

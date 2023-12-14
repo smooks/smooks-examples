@@ -6,7 +6,7 @@ This is an example illustrating the use of the [Smooks Camel cartridge](https://
 #### How to run?
 
 1. `mvn clean install`
-2. `mvn exec:java`
+2. `mvn exec:exec`
 3. `cp input-message.csv input-dir/`
 
 #### UML sequence diagram

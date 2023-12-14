@@ -97,7 +97,7 @@ public class Main {
 
         pause("The EDI input stream can be seen above.  Press 'enter' to see this stream transformed into the Java Object model...");
 
-        Map beans = Main.runSmooksTransform("smooks-config-sax.xml");
+        Map beans = Main.runSmooksTransform("smooks-config.xml");
 
         System.out.println("==============Message Out=============");
         

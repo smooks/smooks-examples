@@ -47,18 +47,15 @@ import org.apache.camel.Processor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class LogProcessor implements Processor
-{
+public class LogProcessor implements Processor {
     private static final Logger LOGGER = LoggerFactory.getLogger(LogProcessor.class);
     private final String string;
 
-    public LogProcessor(String string)
-    {
+    public LogProcessor(String string) {
         this.string = string;
     }
 
-    public void process(Exchange exchange) throws Exception
-    {
+    public void process(Exchange exchange) throws Exception {
         LogEvent logEvent = (LogEvent) exchange.getIn().getBody();
         LOGGER.info("Logging event [" + string + "]" + logEvent);
     }

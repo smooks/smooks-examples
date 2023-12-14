@@ -69,10 +69,11 @@ public class Main {
     }
 
     private static String getDSLType(String... args) {
-        if (args.length > 0)
+        if (args.length > 0) {
             return args[0];
-        else
+        } else {
             return "JavaDSL";
+        }
     }
 
     private static String readInputMessage() {

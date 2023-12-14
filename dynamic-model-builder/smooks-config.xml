@@ -46,11 +46,7 @@
                       xmlns:jb16="https://www.smooks.org/xsd/smooks/javabean-1.6.xsd"
                       xmlns:csv17="https://www.smooks.org/xsd/smooks/csv-1.7.xsd">
 
-    <!-- Reader from v1.2 -->
-    <csv17:reader fields="name,address" rootElementName="people" recordElementName="person" indent="true"/>
-
-    <!-- Reader from v1.3 -->
-    <csv17:reader fields="name,address,age" rootElementName="people" recordElementName="person" indent="true" strict="true"/>
+    <csv17:reader fields="name,address,age" rootElementName="people" recordElementName="person" indent="true"/>
 
     <!--
     Create an "example.beans.Order" bean instance ...

@@ -1,8 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
   ========================LICENSE_START=================================
-  Smooks Example :: EDI-with-import-to-Java
+  EDI-with-import-to-Java
   %%
-  Copyright (C) 2020 Smooks
+  Copyright (C) 2020 - 2023 Smooks
   %%
   Licensed under the terms of the Apache License Version 2.0, or
   the GNU Lesser General Public License version 3.0 or later.
@@ -40,21 +41,18 @@
   Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
   =========================LICENSE_END==================================
   -->
-<assembly>
-    <id>src</id>
-    <formats>
-        <format>zip</format>
-    </formats>
-    <fileSets>
-        <fileSet>
-            <includes>
-                <include>README.TXT</include>
-                <include>*.xml</include>
-                <include>input-message.*</include>
-            </includes>
-        </fileSet>
-        <fileSet>
-            <directory>src</directory>
-        </fileSet>
-    </fileSets>
-</assembly>
+
+<Configuration>
+    <Appenders>
+        <Console name="Console">
+            <PatternLayout pattern="%-5p %d [%t] %c: %m%n"/>
+        </Console>
+    </Appenders>
+    <Loggers>
+        <Logger name="org.smooks.classpath.Scanner" level="error"/>
+
+        <Root level="info">
+            <AppenderRef ref="Console"/>
+        </Root>
+    </Loggers>
+</Configuration>

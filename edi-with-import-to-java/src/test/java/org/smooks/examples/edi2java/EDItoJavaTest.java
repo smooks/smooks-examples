@@ -42,10 +42,14 @@
  */
 package org.smooks.examples.edi2java;
 
+import com.thoughtworks.xstream.XStream;
 import org.junit.jupiter.api.Test;
+import org.smooks.io.payload.JavaResult;
+import org.smooks.support.StreamUtils;
 import org.xml.sax.SAXException;
 
 import java.io.IOException;
+import java.io.StringReader;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -56,17 +60,17 @@ public class EDItoJavaTest {
 
     @Test
     public void test() throws IOException, SAXException {
-        String expected = org.smooks.support.StreamUtils.readStreamAsString(getClass().getResourceAsStream("/expected.xml"), "UTF-8");
+        String expected = StreamUtils.readStreamAsString(getClass().getResourceAsStream("/expected.xml"), "UTF-8");
         Main smooksMain = new Main();
 
-        org.smooks.io.payload.JavaResult result = smooksMain.runSmooksTransform();
+        JavaResult result = smooksMain.runSmooksTransform();
 
-        com.thoughtworks.xstream.XStream xstream = new com.thoughtworks.xstream.XStream();
+        XStream xstream = new XStream();
         String actual = xstream.toXML(result.getBean("order"));
 
         actual = actual.replaceFirst("<date>.*</date>", "<date/>");
 
-        boolean matchesExpected = org.smooks.support.StreamUtils.compareCharStreams(new java.io.StringReader(expected), new java.io.StringReader(actual));
+        boolean matchesExpected = StreamUtils.compareCharStreams(new StringReader(expected), new java.io.StringReader(actual));
         if (!matchesExpected) {
             assertEquals(expected, actual, "Actual does not match expected.");
         }

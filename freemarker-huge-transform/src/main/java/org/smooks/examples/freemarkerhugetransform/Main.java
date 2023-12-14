@@ -60,7 +60,7 @@ import java.io.InputStreamReader;
  *
  */
 public class Main {
-    public static void main(String[] args) throws IOException, SAXException, SmooksException, InterruptedException {
+    public static void main(String[] args) throws IOException, SAXException, SmooksException {
         pause("Press 'enter' to process the contents of the 'input-message.xml' file.  The result wil be output to the console...");
 
         Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(Main.class.getClassLoader()).build());

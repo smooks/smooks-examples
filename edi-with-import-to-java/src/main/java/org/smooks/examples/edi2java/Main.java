@@ -48,14 +48,19 @@ import org.smooks.api.SmooksException;
 import org.smooks.engine.DefaultApplicationContextBuilder;
 import org.smooks.engine.report.HtmlReportGenerator;
 import org.smooks.support.StreamUtils;
+import org.smooks.io.payload.JavaResult;
 import org.xml.sax.SAXException;
 
 import javax.xml.transform.stream.StreamSource;
-import java.io.*;
-import java.util.Locale;
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 /**
  * Simple example main class.
+ *
  * @author <a href="mailto:tom.fennelly@gmail.com">tom.fennelly@gmail.com</a>
  */
 public class Main {
@@ -70,15 +75,16 @@ public class Main {
         smooks.addConfigurations("smooks-config.xml");
     }
 
-    protected org.smooks.io.payload.JavaResult runSmooksTransform(ExecutionContext executionContext) throws IOException, SAXException, SmooksException {
-    	try {
-            org.smooks.io.payload.JavaResult javaResult = new org.smooks.io.payload.JavaResult();
+    protected JavaResult runSmooksTransform(ExecutionContext executionContext) throws IOException, SmooksException {
+        try {
+            JavaResult javaResult = new JavaResult();
 
             // Configure the execution context to generate a report...
             executionContext.getContentDeliveryRuntime().addExecutionEventListener(new HtmlReportGenerator("target/report/report.html"));
 
             // Filter the input message to the outputWriter, using the execution context...
             smooks.filterSource(executionContext, new StreamSource(new ByteArrayInputStream(messageIn)), javaResult);
+
             return javaResult;
         } finally {
             smooks.close();
@@ -90,7 +96,7 @@ public class Main {
         System.out.println(new String(messageIn));
         System.out.println("======================================\n");
 
-        pause("The EDI input stream can be seen above.  Press 'enter' to see how this stream is transformed the Order Object graph...");
+        pause("The EDI input stream can be seen above.  Press 'enter' to see how this stream is transformed into an Order Object graph...");
 
         Main smooksMain = new Main();
         ExecutionContext executionContext = smooksMain.smooks.createExecutionContext();
@@ -122,7 +128,7 @@ public class Main {
         System.out.println("\n");
     }
 
-    public org.smooks.io.payload.JavaResult runSmooksTransform() throws IOException, SAXException {
+    public JavaResult runSmooksTransform() throws IOException, SAXException {
         ExecutionContext executionContext = smooks.createExecutionContext();
         return runSmooksTransform(executionContext);
     }

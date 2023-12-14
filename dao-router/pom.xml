@@ -46,10 +46,6 @@
             <artifactId>smooks-persistence-cartridge</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.smooks.cartridges</groupId>
-            <artifactId>smooks-routing-cartridge</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.smooks</groupId>
             <artifactId>smooks-tck</artifactId>
         </dependency>

@@ -57,13 +57,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class SJTestimonialTest {
 
 	@Test
-    public void test_dom() throws IOException, SAXException {
+    public void test() throws IOException, SAXException {
         test("smooks-config.xml");
-    }
-
-	@Test
-    public void test_sax() throws IOException, SAXException {
-        test("smooks-config-sax.xml");
     }
 
     private void test(String config) throws IOException, SAXException {

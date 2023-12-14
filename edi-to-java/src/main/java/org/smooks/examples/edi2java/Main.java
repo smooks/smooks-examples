@@ -52,7 +52,11 @@ import org.smooks.io.payload.JavaResult;
 import org.xml.sax.SAXException;
 
 import javax.xml.transform.stream.StreamSource;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 /**
  * Simple example main class.
@@ -97,7 +101,6 @@ public class Main {
         Main smooksMain = new Main();
         ExecutionContext executionContext = smooksMain.smooks.createExecutionContext();
         org.smooks.io.payload.JavaResult result = smooksMain.runSmooksTransform(executionContext);
-
 
         System.out.println("\n==============EDI as Java Object Graph=============");
         System.out.println(result.getBean("order"));

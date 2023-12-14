@@ -1,41 +1,55 @@
-About this example
-==================
- 	This is an example that illustrates the usage of SmooksDataFormat. A DataFormat
- 	is a class that implements Camel's org.apache.camel.spi.DataFormat.
+About
+=====
 
-	The following features are demonstrated:
-	   * using SmooksDataFormat in a Camel unmarshall call using Java DSL
-	   * using SmooksDataFormat in a Camel unmarshall call using Spring DSL
-	   
-	See smooks-config.xml for inline comments.
+This example closely matches the [`camel-csv-to-xml`](/camel/camel-csv-to-xml/README.md) example but with a few notable differences. The input is CSV in `camel-csv-to-xml` while here the input is EDI. Additionally, in this example, Camel invokes Smooks using the [unmarshal EIP](https://camel.apache.org/components/3.21.x/eips/marshal-eip.html) instead of the [to EIP](https://camel.apache.org/components/3.21.x/eips/to-eip.html).
 
-    See:
-        1. The "Main" class in src/main/java/example/Main.java.
-        2. The input message in input-message.edi.
-        3. smooks-config.xml.
+#### How to run?
 
-How to Run?
-===========
-    Requirements:
-        1. JDK 1.5
-        2. Maven 2.x (http://maven.apache.org/download.html)
+1. `mvn clean install`
+2. `mvn exec:exec`
+3. `cp input-message.edi input-dir/`
 
-    Running:
-        1. "mvn clean install"
-        2. "mvn exec:java"
+#### UML sequence diagram
 
-Run in Servicemix 4.2
-=====================
+```
+     ┌──────────┐                 ┌────────────┐             ┌──────┐
+     │Filesystem│                 │Apache Camel│             │Smooks│
+     └────┬─────┘                 └─────┬──────┘             └──┬───┘
+          │ 𝟏 Poll ""input-message.edi""│                       │    
+          │ <────────────────────────────                       │    
+          │                             │                       │    
+          │   𝟐 ""input-message.edi""   │                       │    
+          │  ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─>                       │    
+          │                             │                       │    
+          │                             │────┐                       
+          │                             │    │ 𝟑 Log message body    
+          │                             │<───┘                       
+          │                             │                       │    
+          │                             │         𝟒 EDI         │    
+          │                             │ ──────────────────────>    
+          │                             │                       │    
+          │                             │         𝟓 XML         │    
+          │                             │ <─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─     
+          │                             │                       │    
+          │                             │────┐                       
+          │                             │    │ 𝟔 Log message body    
+          │                             │<───┘                       
+     ┌────┴─────┐                 ┌─────┴──────┐             ┌──┴───┐
+     │Filesystem│                 │Apache Camel│             │Smooks│
+     └──────────┘                 └────────────┘             └──────┘
+```
 
-Deploy Smooks OSGi Bundle
--------------------------
-1. Deploy Smooks OSGi bundle
-    
-2. Deploy the example
-    karaf@root> osgi:install -s mvn:org.smooks/milyn-smooks-example-camel-dataformat/1.0
+#### PlantUML
 
-Run the example
----------------
-1. cp input-message.xml input-dir
-2. check ${SERVICEMIX_HOME}/data/log/servicemix.log for the log messages
+```plantuml
+@startuml
+autonumber
 
+Filesystem <- "Apache Camel": Poll ""input-message.edi""
+Filesystem --> "Apache Camel": ""input-message.edi""
+"Apache Camel" -> "Apache Camel": Log message body
+"Apache Camel" -> Smooks: EDI
+Smooks --> "Apache Camel": XML
+"Apache Camel" -> "Apache Camel": Log message body
+@enduml
+```

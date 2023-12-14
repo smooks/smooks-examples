@@ -3,12 +3,12 @@ Smooks Examples
 
 ![Build Status](https://github.com/smooks/smooks-examples/workflows/CI/badge.svg)
 
-Examples are essential for helping newcomers in getting started with Smooks. This project is a catalogue of code examples illustrating the many uses of Smooks. Most of the examples are accompanied by a README file that describes the example and instructions on how to run it. [Maven 3](https://maven.apache.org/) and JDK 17 need to be installed in order to build any of the examples. All the examples are built and run in the same way:
+Examples are essential in helping newcomers get started with Smooks. This project is a catalogue of code examples illustrating the many uses of Smooks. Most of the examples are accompanied by a README file that describes the example and instructions on how to run it. [Maven 3](https://maven.apache.org/) and JDK 17 need to be installed in order to build any of the examples. All the examples are built and run in the same way:
 
 1. Build all the examples with `mvn clean package`
 2. Run an example by changing to the directory containing the example and running `mvn exec:exec`
 
-Read the [Smooks User Guide](https://www.smooks.org/v2/documentation/) to learn more about Smooks. Example contributions in the form of [pull requests](https://github.com/smooks/smooks-examples/pulls) are more than welcome, and in fact, such contributions are encouraged since they will help the Smooks community grow.
+Read the [Smooks User Guide](https://www.smooks.org/v2/documentation/) to learn more about Smooks. Example contributions in the form of [pull requests](https://github.com/smooks/smooks-examples/pulls) are more than welcome, and in fact, such contributions are encouraged since they help the Smooks community to grow.
 
 ## Catalogue
 

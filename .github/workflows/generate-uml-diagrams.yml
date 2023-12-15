@@ -20,3 +20,4 @@ jobs:
           commit_message: 'docs: generate UML diagrams'
           push_options: --force
           file_pattern: '**/docs/images/*.png'
+          disable_globbing: true

@@ -32,7 +32,7 @@ jobs:
       - run: java -jar plantuml.jar -v -tpng -r **/**.puml -o docs/images
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: 'docs: generate UML diagrams'
+          commit_message: 'docs: generate UML diagrams [skip ci]'
           push_options: --force
           file_pattern: '**/docs/images/*.png'
           disable_globbing: true

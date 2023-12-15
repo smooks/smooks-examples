@@ -5,14 +5,17 @@ on:
     branches: [ master ]
 
 jobs:
-  generate_plantuml:
+  generate_uml_diagrams:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.PAT }}
       - uses: ts-graphviz/setup-graphviz@v1
       - run: curl -LJ https://github.com/plantuml/plantuml/releases/download/v1.2023.13/plantuml-1.2023.13.jar -o plantuml.jar
       - run: java -jar plantuml.jar -v -tpng -r **/**.puml -o doc/images
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: 'docs: generate UML diagrams'
+          push_options: --force
           file_pattern: '**/doc/images/*.png'

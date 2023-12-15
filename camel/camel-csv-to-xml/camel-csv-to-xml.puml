@@ -8,3 +8,4 @@ Filesystem --> "Apache Camel": ""input-message.csv""
 Smooks --> "Apache Camel": XML
 "Apache Camel" -> "Apache Camel": Log message body
 @enduml
+

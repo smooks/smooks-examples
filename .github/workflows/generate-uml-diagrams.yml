@@ -4,7 +4,7 @@ on:
   push:
     branches: [ master ]
     paths:
-      - '/**/*.puml'
+      - '**.puml'
 jobs:
   generate_uml_diagrams:
     runs-on: ubuntu-latest

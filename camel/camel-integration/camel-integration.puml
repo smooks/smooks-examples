@@ -1,0 +1,21 @@
+@startuml
+queue JMS
+autonumber
+
+Filesystem <- "Apache Camel": Poll ""input-message.xml""
+Filesystem --> "Apache Camel": ""input-message.xml""
+"Apache Camel" -> Smooks: XML
+loop ""activity/event""
+    Smooks -> Smooks: Bind ""event"" to ""logEvent"" bean
+    alt logEvent.nationality == 'IE'
+        Smooks -> "Apache Camel": Send ""logEvent"" to ""direct:ireland""
+        "Apache Camel" -> "Apache Camel": Print ""logEvent""
+        "Apache Camel" -> JMS: Dispatch to ""jms:queue:ireland""
+    end
+    alt logEvent.nationality == 'GB'
+        Smooks -> "Apache Camel": Send ""logEvent"" to ""direct:greatbritain""
+        "Apache Camel" -> "Apache Camel": Print ""logEvent""
+        "Apache Camel" -> JMS: Dispatch to ""jms:queue:greatbritian""
+    end
+end
+@enduml

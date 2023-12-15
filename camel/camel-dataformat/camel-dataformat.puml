@@ -1,0 +1,10 @@
+@startuml
+autonumber
+
+Filesystem <- "Apache Camel": Poll ""input-message.edi""
+Filesystem --> "Apache Camel": ""input-message.edi""
+"Apache Camel" -> "Apache Camel": Log message body
+"Apache Camel" -> Smooks: EDI
+Smooks --> "Apache Camel": XML
+"Apache Camel" -> "Apache Camel": Log message body
+@enduml

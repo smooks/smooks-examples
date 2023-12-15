@@ -1,0 +1,18 @@
+name: Generate UML diagrams
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  generate_plantuml:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ts-graphviz/setup-graphviz@v1
+      - run: curl -LJ https://github.com/plantuml/plantuml/releases/download/v1.2023.13/plantuml-1.2023.13.jar -o plantuml.jar
+      - run: java -jar plantuml.jar -v -tpng -r **/**.puml -o doc/images
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: 'docs: generate UML diagrams'
+          file_pattern: '**/doc/images/*.png'

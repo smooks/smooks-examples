@@ -3,8 +3,16 @@ name: CI
 on:
   push:
     branches: [ master ]
+    paths-ignore:
+      - '/**/*.md'
+      - '/**/*.puml'
+      - '/**/*.png'
   pull_request:
     branches: [ master ]
+    paths-ignore:
+      - '/**/*.md'
+      - '/**/*.puml'
+      - '/**/*.png'
   schedule:
     - cron:  '0 0 * * *'
 

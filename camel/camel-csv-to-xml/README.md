@@ -18,53 +18,12 @@ It is worth highlighting the following code in `src/main/resources/META-INF/spri
 
 `StartStopEventNotifier` listens for the Camel initialisation event in order to create and customise the Smooks instance such that the right class loader is used when executing the fat JAR. It also listens for completed exchanges in order to control the user prompts. 
 
-#### How to run?
+### How to run?
 
-1. `mvn clean install`
+1. `mvn clean package`
 2. `mvn exec:exec`
 3. `cp input-message.csv input-dir/`
 
-#### UML sequence diagram
+### UML Sequence Diagram
 
-```
-     ┌──────────┐                 ┌────────────┐             ┌──────┐
-     │Filesystem│                 │Apache Camel│             │Smooks│
-     └────┬─────┘                 └─────┬──────┘             └──┬───┘
-          │ 𝟏 Poll ""input-message.csv""│                       │    
-          │ <────────────────────────────                       │    
-          │                             │                       │    
-          │   𝟐 ""input-message.csv""   │                       │    
-          │  ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─>                       │    
-          │                             │                       │    
-          │                             │────┐                       
-          │                             │    │ 𝟑 Log message body    
-          │                             │<───┘                       
-          │                             │                       │    
-          │                             │         𝟒 CSV         │    
-          │                             │ ──────────────────────>    
-          │                             │                       │    
-          │                             │         𝟓 XML         │    
-          │                             │ <─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─     
-          │                             │                       │    
-          │                             │────┐                       
-          │                             │    │ 𝟔 Log message body    
-          │                             │<───┘                       
-     ┌────┴─────┐                 ┌─────┴──────┐             ┌──┴───┐
-     │Filesystem│                 │Apache Camel│             │Smooks│
-     └──────────┘                 └────────────┘             └──────┘
-```
-
-#### PlantUML
-
-```plantuml
-@startuml
-autonumber
-
-Filesystem <- "Apache Camel": Poll ""input-message.csv""
-Filesystem --> "Apache Camel": ""input-message.csv""
-"Apache Camel" -> "Apache Camel": Log message body
-"Apache Camel" -> Smooks: CSV
-Smooks --> "Apache Camel": XML
-"Apache Camel" -> "Apache Camel": Log message body
-@enduml
-```
+![UML sequence diagram](docs/images/camel-csv-to-xml.png)

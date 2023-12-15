@@ -1,0 +1,10 @@
+@startuml
+autonumber
+
+Filesystem <- "Apache Camel": Poll ""input-message.csv""
+Filesystem --> "Apache Camel": ""input-message.csv""
+"Apache Camel" -> "Apache Camel": Log message body
+"Apache Camel" -> Smooks: CSV
+Smooks --> "Apache Camel": XML
+"Apache Camel" -> "Apache Camel": Log message body
+@enduml

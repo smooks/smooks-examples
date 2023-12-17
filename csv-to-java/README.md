@@ -15,7 +15,7 @@ This is an example illustrating the XML configuration of Smooks for binding CSV 
 </smooks-resource-list>
 ```
 
-`csv:reader` parses each field in `input-message.csv`, to go on and bind the field to a property in `org.smooks.examples.csv2java.Customer` where the field name matches the property name. `beanId="customerList"` configures one of the bean visitors to create a list named `customerList` so that the `Customer` beans can be added to it.
+`csv:reader` parses each field in [`input-message.csv`](input-message.csv), to go on and bind the field to a property in `org.smooks.examples.csv2java.Customer` where the field name matches the property name. `beanId="customerList"` configures one of the bean visitors to create a list named `customerList` so that the `Customer` beans can be added to it.
 
 Under the covers, `csv:reader` dynamically creates bean visitors to instantiate `Customer` beans and bind CSV records to these beans. The process of binding is transparent when the target is of primitive or predefined type like a `String`. However, for user-defined types, a `TypeConverterFactory` needs to be defined and registered. The `Ǵender` property in `Customer` is one such user-defined type because it is an `Enum`. Therefore, the example defines `TypeConverterFactory` for `Gender` in `org.smooks.examples.csv2java.GenderTypeConverterFactory` and registered as such in `src/main/resources/META-INF/services/org.smooks.api.converter.TypeConverterFactory` 
 

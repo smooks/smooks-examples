@@ -3,7 +3,7 @@ About
 
 This is an example illustrating the XML configuration of Smooks for binding CSV records to Java beans with the help of the [CSV](https://github.com/smooks/smooks-csv-cartridge) and [JavaBean cartridges](https://github.com/smooks/smooks-javabean-cartridge). Attention should be given to the `smook-config.xml` file:
 
-```
+```xml
 <?xml version="1.0"?>
 <smooks-resource-list xmlns="https://www.smooks.org/xsd/smooks-2.0.xsd"
                       xmlns:csv="https://www.smooks.org/xsd/smooks/csv-1.7.xsd">

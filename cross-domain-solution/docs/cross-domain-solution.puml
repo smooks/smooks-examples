@@ -1,0 +1,31 @@
+@startuml
+participant Main
+box Smooks Framework
+participant Smooks
+participant "dfdl:parser"
+participant "dfdl:unparser"
+participant Result
+end box
+actor "Security team" order 1
+autonumber
+
+Main -> Smooks : ""filterSource(...)""
+Smooks -> "dfdl:parser": Input source
+loop NITF stream
+    Smooks <- "dfdl:parser": XML event
+    alt ""/NITF"" event or its descendants
+        alt ""//*[not(self::InvalidData)]""
+            Smooks -> "dfdl:unparser": XML event
+            "dfdl:unparser" --> Smooks: Serialize to NITF
+            Smooks -> Result: Write NITF
+            Result -> Filesytem
+        end
+    end
+    alt ""/NITF/InvalidData"" event or its descendants
+        Smooks -> "Dead letter channel": Write XML event
+    end
+end
+Smooks --> Main
+"Security team" -> "Dead letter channel": Inspect
+"Security team" <-- "Dead letter channel": XML document
+@enduml

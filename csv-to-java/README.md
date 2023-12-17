@@ -21,7 +21,7 @@ Under the covers, `csv:reader` dynamically creates bean visitors to instantiate 
 
 `org.smooks.examples.csv2java.Main` expects the result from the Smooks execution to be a Java bean since it passes a `org.smooks.io.payload.JavaResult` to `filterSource(...)`. After the Smooks execution, `Main` prints the list of customers by getting the `customerList` bean from `JavaResult`.  
 
-You can see how to solve the same use-case, but programmatically (i.e., non-XML config), in the [`csv-to-java-programmatic`](csv-to-java-programmatic/README.md) example.
+You can see how to solve the same use-case, but programmatically (i.e., non-XML config), in the [`csv-to-java-programmatic`](../csv-to-java-programmatic/README.md) example.
 
 ### How to run?
 

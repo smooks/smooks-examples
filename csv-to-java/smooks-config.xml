@@ -3,8 +3,7 @@
                       xmlns:csv="https://www.smooks.org/xsd/smooks/csv-1.7.xsd">
 
     <!--
-        Smooks v1.2 makes binding of CSV records very easy. Here
-        we create a List of Customer objects...
+        Here create a list of Customer objects...
     -->
     <csv:reader fields="firstName,lastName,gender,age,country">
         <csv:listBinding beanId="customerList" class="org.smooks.examples.csv2java.Customer"/>

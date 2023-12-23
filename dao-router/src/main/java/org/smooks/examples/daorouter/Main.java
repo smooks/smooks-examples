@@ -42,13 +42,13 @@
  */
 package org.smooks.examples.daorouter;
 
-import com.ibatis.common.resources.Resources;
-import com.ibatis.sqlmap.client.SqlMapClient;
-import com.ibatis.sqlmap.client.SqlMapClientBuilder;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.smooks.Smooks;
 import org.smooks.api.ExecutionContext;
 import org.smooks.api.SmooksException;
@@ -59,11 +59,11 @@ import org.smooks.engine.report.HtmlReportGenerator;
 import org.smooks.examples.daorouter.dao.CustomerDao;
 import org.smooks.examples.daorouter.dao.OrderDao;
 import org.smooks.examples.daorouter.dao.ProductDao;
-import org.smooks.support.StreamUtils;
-import org.smooks.scribe.adapter.ibatis.SqlMapClientRegister;
+import org.smooks.scribe.adapter.mybatis.SqlSessionRegister;
 import org.smooks.scribe.adapter.jpa.EntityManagerRegister;
 import org.smooks.scribe.register.DaoRegister;
 import org.smooks.scribe.register.MapDaoRegister;
+import org.smooks.support.StreamUtils;
 import org.smooks.tck.HsqlServer;
 import org.xml.sax.SAXException;
 
@@ -74,7 +74,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Reader;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
@@ -92,13 +91,13 @@ public class Main {
 
     private EntityManager em;
 
-	private SqlMapClient sqlMapClient;
+	private SqlSession sqlSession;
 
     public static byte[] messageInDao = readInputMessage("dao");
 
     public static byte[] messageInJpa = readInputMessage("jpa");
 
-    public static byte[] messageInIbatis = readInputMessage("ibatis");
+    public static byte[] messageInMyBatis = readInputMessage("mybatis");
 
     public static void main(String[] args) throws Exception {
         Main main = new Main();
@@ -156,16 +155,16 @@ public class Main {
 
             main.printOrders();
 
-            System.out.println("\n\nThis third run Smooks will use iBatis to persist and lookup entities.");
+            System.out.println("\n\nThis third run Smooks will use MyBatis to persist and lookup entities.");
 
             Main.pause("Press return to see the sample message for the second run..");
 
-            System.out.println("\n" + new String(messageInIbatis) + "\n");
+            System.out.println("\n" + new String(messageInMyBatis) + "\n");
             System.out.println();
 
             Main.pause("Now press return to execute Smooks.");
 
-            main.runSmooksTransformWithIbatis();
+            main.runSmooksTransformWithMyBatis();
 
             Main.pause("Smooks has processed the message.  Now press return to view the contents of the database again.  There should be new orders and orderlines...");
 
@@ -233,26 +232,22 @@ public class Main {
         }
     }
 
-    protected void runSmooksTransformWithIbatis() throws IOException, SAXException, SmooksException, SQLException {
+    protected void runSmooksTransformWithMyBatis() throws IOException, SAXException, SmooksException {
 
     	Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(this.getClass().getClassLoader()).build());
-        smooks.addConfigurations("./smooks-configs/smooks-ibatis-config.xml");
+        smooks.addConfigurations("./smooks-configs/smooks-mybatis-config.xml");
 
         try {
             ExecutionContext executionContext = smooks.createExecutionContext();
 
             // Configure the execution context to generate a report...
-            executionContext.getContentDeliveryRuntime().addExecutionEventListener(new HtmlReportGenerator("target/report/report-ibatis.html"));
+            executionContext.getContentDeliveryRuntime().addExecutionEventListener(new HtmlReportGenerator("target/report/report-mybatis.html"));
 
-            PersistenceUtil.setDAORegister(executionContext, new SqlMapClientRegister(sqlMapClient));
-
-            sqlMapClient.startTransaction();
-
-            smooks.filterSource(executionContext, new StreamSource(new ByteArrayInputStream(messageInIbatis)));
-
-            sqlMapClient.commitTransaction();
+            PersistenceUtil.setDAORegister(executionContext, new SqlSessionRegister(sqlSession));
+            smooks.filterSource(executionContext, new StreamSource(new ByteArrayInputStream(messageInMyBatis)));
+            sqlSession.commit();
         } finally {
-        	sqlMapClient.endTransaction();
+        	sqlSession.close();
 
             smooks.close();
         }
@@ -351,10 +346,9 @@ public class Main {
     private void createSqlMapInstance() {
 
 		try {
-			String resource = "ibatis/sql-map-config.xml";
-			Reader reader = Resources.getResourceAsReader(resource);
-
-			sqlMapClient =  SqlMapClientBuilder.buildSqlMapClient(reader);
+			String resource = "/mybatis/mybatis-config.xml";
+            SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(new InputStreamReader(this.getClass().getResourceAsStream(resource)));
+			sqlSession =  sqlSessionFactory.openSession();
 
 		} catch (Exception e) {
 			throw new RuntimeException("Error initializing SqlMapConfig class. Cause: " + e);

@@ -39,7 +39,7 @@
         </dependency>
         <dependency>
             <groupId>org.smooks.cartridges.persistence</groupId>
-            <artifactId>smooks-scribe-ibatis</artifactId>
+            <artifactId>smooks-scribe-mybatis</artifactId>
         </dependency>
         <dependency>
             <groupId>org.smooks.cartridges.persistence</groupId>

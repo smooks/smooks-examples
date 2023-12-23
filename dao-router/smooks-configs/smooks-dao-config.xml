@@ -9,13 +9,13 @@
 	    Customer entity will not be created but looked up by a locator.
 	 -->
     <jb:bean beanId="order" class="org.smooks.examples.daorouter.jpa.entity.Order" createOnElement="order">
-        <jb:value property="ordernumber"   data="ordernumber" decoder="Integer" />
+        <jb:value property="ordernumber"   data="ordernumber" decoder="Integer"/>
         <jb:value property="orderDate"     data="date"        decoder="Date">
             <jb:decodeParam name="format">yyyy-MM-dd HH:mm:ss</jb:decodeParam>
         </jb:value>
 
-        <jb:wiring property="customer"  beanIdRef="customer" />
-        <jb:wiring setterMethod="addOrderLine"  beanIdRef="orderLine" />
+        <jb:wiring property="customer" beanIdRef="customer"/>
+        <jb:wiring setterMethod="addOrderLine"  beanIdRef="orderLine"/>
     </jb:bean>
 
 	<!--
@@ -44,7 +44,7 @@
 
 	<!--
 		This locator calls the ProductDao#findById() method and expects a result. The result
-		will be added to the bean repository under the bean id "customer".
+		will be added to the bean repository under the bean id "product".
 	-->
     <dao:locator beanId="product" dao="product" lookup="id" lookupOnElement="order-item" onNoResult="EXCEPTION">
     	<dao:params>

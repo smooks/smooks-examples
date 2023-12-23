@@ -42,37 +42,38 @@
   =========================LICENSE_END==================================
   -->
 
-<!DOCTYPE sqlMap
-PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
-"http://ibatis.apache.org/dtd/sql-map-2.dtd">
-<sqlMap>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-	<insert id="insertOrder" parameterClass="org.smooks.examples.daorouter.ibatis.entity.Order" >
+<mapper namespace="org.smooks.examples.daorouter">
+
+	<insert id="insertOrder" parameterType="org.smooks.examples.daorouter.mybatis.entity.Order" >
 		INSERT INTO orders
 			   (ordernumber, orderdate, customerid)
-		VALUES (#ordernumber#, #orderDate#, #customer.id#)
+		VALUES (#{ordernumber}, #{orderDate}, #{customer.id})
 	</insert>
 
-	<insert id="insertOrderLine" parameterClass="org.smooks.examples.daorouter.ibatis.entity.OrderLine" >
+	<insert id="insertOrderLine" parameterType="org.smooks.examples.daorouter.mybatis.entity.OrderLine" >
 		INSERT INTO orderlines
 			   (orderid, quantity, productid)
-		VALUES (#order.ordernumber#, #quantity#, #product.id#)
+		VALUES (#{order.ordernumber}, #{quantity}, #{product.id})
 	</insert>
 
-	<select id="customerById" parameterClass="map"  resultClass="org.smooks.examples.daorouter.ibatis.entity.Customer" >
+	<select id="customerById" parameterType="map" resultType="org.smooks.examples.daorouter.mybatis.entity.Customer" >
 		SELECT
 			id as id,
 			name as name
 		FROM customers
-		WHERE id = #id#
+		WHERE id = #{id}
 	</select>
 
-	<select id="productById" parameterClass="map"  resultClass="org.smooks.examples.daorouter.ibatis.entity.Product" >
+	<select id="productById" parameterType="map" resultType="org.smooks.examples.daorouter.mybatis.entity.Product" >
 		SELECT
 			id as id,
 			name as name
 		FROM products
-		WHERE id = #id#
+		WHERE id = #{id}
 	</select>
 
-</sqlMap>
+</mapper>

@@ -8,7 +8,7 @@
 		This is the normal Javabean binding. Notice that we have a wiring on customer. The
 	    Customer entity will not be created but looked up by a locator.
 	 -->
-    <jb:bean beanId="order" class="org.smooks.examples.daorouter.ibatis.entity.Order" createOnElement="order">
+    <jb:bean beanId="order" class="org.smooks.examples.daorouter.mybatis.entity.Order" createOnElement="order">
         <jb:value property="ordernumber"   data="ordernumber" decoder="Integer" />
         <jb:value property="orderDate"     data="date"        decoder="Date">
             <jb:decodeParam name="format">yyyy-MM-dd HH:mm:ss</jb:decodeParam>
@@ -18,22 +18,22 @@
     </jb:bean>
 
 	<!--
-		This is the normal Javabean binding. Notice that we have a wiring on product. The
+		This is the normal Java bean binding. Notice that we have a wiring on product. The
 	    Product entity will not be created but looked up by a locator.
 	 -->
-    <jb:bean beanId="orderLine" class="org.smooks.examples.daorouter.ibatis.entity.OrderLine" createOnElement="order-item">
+    <jb:bean beanId="orderLine" class="org.smooks.examples.daorouter.mybatis.entity.OrderLine" createOnElement="order-item">
 		<jb:value property="quantity" data="quantity" decoder="Integer"/>
 		<jb:wiring property="order" beanIdRef="order"/>
 		<jb:wiring property="product" beanIdRef="product"/>
     </jb:bean>
 
 	<!--
-		The locator calls the SqlMapClient#queryForList("customerById", {id="id"}) method and expects a result. The locator wants
-		a unique result but the queryForList() method returns a list. The locator will check that there is only
+		The locator calls the SqlSession#selectList("customerById", {id="id"}) method and expects a result. The locator wants
+		a unique result but the selectList() method returns a list. The locator will check that there is only
 		one row and extract that row from the list. That entity is inserted into bean repository under
 		the bean id customer.
 
-		The lookup parameter contains the ibatis query id that will be executed.
+		The lookup parameter contains the MyBatis query id that will be executed.
 	-->
     <dao:locator beanId="customer" lookup="customerById" lookupOnElement="customer" onNoResult="EXCEPTION" uniqueResult="true">
     	<dao:params>
@@ -51,7 +51,7 @@
     </dao:locator>
 
 	<!--
-		The inserter calls the SqlMapClient#insert() method on the beginning of the order-items element. This
+		The inserter calls the SqlSession#insert() method on the beginning of the order-items element. This
 		ensures that the order-items element is in the database before the order lines are added.
 	-->
 	<dao:inserter beanId="order" name="insertOrder" insertOnElement="order-items" insertBefore="true" />

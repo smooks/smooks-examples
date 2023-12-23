@@ -40,61 +40,23 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * =========================LICENSE_END==================================
  */
-package org.smooks.examples.daorouter.ibatis.entity;
+package org.smooks.examples.daorouter.mybatis.entity;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
  * @author <a href="mailto:maurice.zeijen@smies.com">maurice.zeijen@smies.com</a>
  *
  */
-public class OrderLine extends AbstractEntity {
+public class AbstractEntity {
 
-	private Order order;
-
-	private Integer quantity;
-
-	private Product product;
-
-	/**
-	 * @return the order
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
 	 */
-	public Order getOrder() {
-		return order;
-	}
-
-	/**
-	 * @param order the order to set
-	 */
-	public void setOrder(Order order) {
-		this.order = order;
-	}
-
-	/**
-	 * @return the amount
-	 */
-	public Integer getQuantity() {
-		return quantity;
-	}
-
-	/**
-	 * @param amount the amount to set
-	 */
-	public void setQuantity(Integer quantity) {
-		this.quantity = quantity;
-	}
-
-	/**
-	 * @return the product
-	 */
-	public Product getProduct() {
-		return product;
-	}
-
-	/**
-	 * @param product the product to set
-	 */
-	public void setProduct(Product product) {
-		this.product = product;
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
 	}
 
 }

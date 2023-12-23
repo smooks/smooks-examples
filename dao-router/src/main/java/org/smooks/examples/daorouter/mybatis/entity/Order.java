@@ -40,43 +40,62 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * =========================LICENSE_END==================================
  */
-package org.smooks.examples.daorouter.ibatis.entity;
+package org.smooks.examples.daorouter.mybatis.entity;
+
+import java.util.Date;
 
 /**
  * @author <a href="mailto:maurice.zeijen@smies.com">maurice.zeijen@smies.com</a>
  *
  */
-public class Customer extends AbstractEntity {
+public class Order extends AbstractEntity {
 
-	private Integer id;
+	private Integer ordernumber;
 
-	private String name;
+	private Date orderDate;
+
+	private Customer customer;
 
 	/**
-	 * @return the id
+	 * @return the ordernumber
 	 */
-	public Integer getId() {
-		return id;
+	public Integer getOrdernumber() {
+		return ordernumber;
 	}
 
 	/**
-	 * @param id the id to set
+	 * @param ordernumber the ordernumber to set
 	 */
-	public void setId(Integer id) {
-		this.id = id;
+	public void setOrdernumber(Integer ordernumber) {
+		this.ordernumber = ordernumber;
 	}
 
 	/**
-	 * @return the name
+	 * @return the orderDate
 	 */
-	public String getName() {
-		return name;
+	public Date getOrderDate() {
+		return orderDate;
 	}
 
 	/**
-	 * @param name the name to set
+	 * @param orderDate the orderDate to set
 	 */
-	public void setName(String name) {
-		this.name = name;
+	public void setOrderDate(Date orderDate) {
+		this.orderDate = orderDate;
 	}
+
+	/**
+	 * @return the customer
+	 */
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	/**
+	 * @param customer the customer to set
+	 */
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+
 }

@@ -40,44 +40,61 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * =========================LICENSE_END==================================
  */
-package org.smooks.examples.daorouter.ibatis.entity;
+package org.smooks.examples.daorouter.mybatis.entity;
+
 
 /**
  * @author <a href="mailto:maurice.zeijen@smies.com">maurice.zeijen@smies.com</a>
  *
  */
-public class Product extends AbstractEntity {
+public class OrderLine extends AbstractEntity {
 
-	private Integer id;
+	private Order order;
 
-	private String name;
+	private Integer quantity;
+
+	private Product product;
 
 	/**
-	 * @return the id
+	 * @return the order
 	 */
-	public Integer getId() {
-		return id;
+	public Order getOrder() {
+		return order;
 	}
 
 	/**
-	 * @param id the id to set
+	 * @param order the order to set
 	 */
-	public void setId(Integer id) {
-		this.id = id;
+	public void setOrder(Order order) {
+		this.order = order;
 	}
 
 	/**
-	 * @return the name
+	 * @return the amount
 	 */
-	public String getName() {
-		return name;
+	public Integer getQuantity() {
+		return quantity;
 	}
 
 	/**
-	 * @param name the name to set
+	 * @param amount the amount to set
 	 */
-	public void setName(String name) {
-		this.name = name;
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
+	}
+
+	/**
+	 * @return the product
+	 */
+	public Product getProduct() {
+		return product;
+	}
+
+	/**
+	 * @param product the product to set
+	 */
+	public void setProduct(Product product) {
+		this.product = product;
 	}
 
 }

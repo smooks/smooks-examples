@@ -1,0 +1,32 @@
+@startuml
+participant Main
+box Smooks Framework
+participant Smooks
+participant CSVRecordParser
+collections "Bean visitors"
+participant "Bean Context"
+participant Result
+end box
+autonumber
+
+Main -> Smooks : ""createExecutionContext()""
+Smooks -> CSVRecordParser
+create "Bean visitors"
+CSVRecordParser -> "Bean visitors": Create
+Main -> Smooks : ""filterSource(...)""
+Smooks -> CSVRecordParser: Input source
+loop CSV stream
+    Smooks <- CSVRecordParser: XML event
+    alt path(event) == #document && event is start element
+        Smooks -> "Bean visitors": XML event
+        "Bean visitors" -> "Bean Context": Create ""customerList"" bean
+    else
+        "Bean visitors" -> "Bean Context": Create ""Customer"" & add to ""customerList""
+    end
+end
+Smooks --> Main
+Main -> Result: Get ""customerList""
+Result -> "Bean Context": Get ""customerList""
+"Bean Context" --> Result: ""customerList""
+Result --> Main: ""customerList""
+@enduml

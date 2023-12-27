@@ -111,7 +111,7 @@ public class Main {
     private static void readCommandPrompt(String targetProfile) {
         try {
             BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-            System.out.print("> Press 'enter' to see the transform for target profile '" + targetProfile + "':");
+            System.out.println("> Press 'enter' to see the transform for target profile '" + targetProfile + "':");
             in.readLine();
         } catch (IOException e) {
         }

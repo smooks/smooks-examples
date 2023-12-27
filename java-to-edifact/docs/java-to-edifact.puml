@@ -1,0 +1,9 @@
+@startuml
+autonumber
+
+Main -> Main : Construct org.smooks.edifact.binding.d03b.Interchange
+Main -> "JAXB Provider": org.smooks.edifact.binding.d03b.Interchange
+Main <-- "JAXB Provider": XML
+Main -> Smooks: XML
+Main <-- Smooks: EDIFACT
+@enduml

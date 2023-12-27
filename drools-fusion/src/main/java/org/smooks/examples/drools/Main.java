@@ -40,14 +40,14 @@ public class Main {
      */
     public static void main(String[] args) throws Exception {
         // set up and show main window
-        UIManager.setLookAndFeel( new Plastic3DLookAndFeel() );
-        Locale.setDefault( Locale.US );
+        UIManager.setLookAndFeel(new Plastic3DLookAndFeel());
+        Locale.setDefault(Locale.US);
         CompanyRegistry registry = new CompanyRegistry();
-        BrokerWindow window = new BrokerWindow( registry.getCompanies() );
+        BrokerWindow window = new BrokerWindow(registry.getCompanies());
         window.show();
         //Thread.sleep( 10000 );
-        Broker broker = new Broker( window, registry );
-        
+        Broker broker = new Broker(window, registry);
+
         TimerService clock = new JDKTimerService(1);
 
 //        StockTickPersister source = new StockTickPersister();
@@ -55,9 +55,9 @@ public class Main {
 //                            System.currentTimeMillis() );
 
         SmooksEventSource source = new SmooksEventSource();
-        source.processFeed(Main.class.getResourceAsStream( "/stocktickstream.dat" ));
+        source.processFeed(Main.class.getResourceAsStream("/stocktickstream.dat"));
 
-        EventFeeder feeder = new EventFeeder(clock, source, broker );
+        EventFeeder feeder = new EventFeeder(clock, source, broker);
         feeder.feed();
 
     }

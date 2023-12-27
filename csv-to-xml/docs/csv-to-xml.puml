@@ -1,0 +1,19 @@
+@startuml
+participant Main
+box Smooks Framework
+participant Smooks
+participant "csv:reader"
+participant Result
+end box
+autonumber
+
+Main -> Smooks : ""filterSource(...)""
+Smooks -> "csv:reader": Input source
+loop CSV stream
+    Smooks <- "csv:reader": XML event
+    Smooks -> Result: Write XML event
+end
+Smooks --> Main
+Main -> Result: Read
+Result --> Main: XML
+@enduml

@@ -13,16 +13,14 @@ Main -> Smooks : ""filterSource(...)""
 Smooks -> "dfdl:parser": Input source
 loop NITF stream
     Smooks <- "dfdl:parser": XML event
-    alt ""/NITF"" event or its descendants
-        alt ""//*[not(self::InvalidData)]""
-            Smooks -> "dfdl:unparser": XML event
-            "dfdl:unparser" --> Smooks: Serialize to NITF
-            Smooks -> Result: Write NITF
-            Result -> Filesytem
-        end
+    alt path(event) == (""/NITF"" || descendant) && path(event) == ""//*[not(self::InvalidData)]""
+        Smooks -> "dfdl:unparser": XML event
+        "dfdl:unparser" --> Smooks: Serialize to NITF
+        Smooks -> Result: Write NITF
+        Result -> Filesytem
     end
-    alt ""/NITF/InvalidData"" event or its descendants
-        Smooks -> "Dead letter channel": Write XML event
+    alt path(event) == (""/NITF/InvalidData"" || descendant)
+        Smooks -> "Dead letter channel": Serialize XML event
     end
 end
 Smooks --> Main

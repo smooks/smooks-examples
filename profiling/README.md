@@ -1,23 +1,19 @@
-About this example
-==================
-    This is an example that illustrates how Smooks can be
-    used to apply "profile" based transformations on a message.
+About
+=====
 
-    Using profiles, you can share common transformation configurations
-    across all messages that share the same profiles.
+This is an example that illustrates how Smooks can be used to apply "profile" based transformations on a message.
 
-    See:
-        1. The "Main" class in src/main/java/example/Main.java.
-        2. The input message in input-message.xml.
-        3. smooks-config.xml.  Pay specific attention to the "profile"
-           info in the config.
+Using profiles, you can share common transformation configurations across all messages that share the same profiles.
 
-How to Run?
-===========
-    Requirements:
-        1. JDK 1.5
-        2. Maven 2.x (http://maven.apache.org/download.html)
+See:
 
-    Running:
-        1. "mvn clean install"
-        2. "mvn exec:java"
+1. The "Main" class in src/main/java/example/Main.java.
+2. The input message in input-message.xml.
+3. smooks-config.xml.  Pay specific attention to the "profile"
+   info in the config.
+
+### How to run?
+
+1. `mvn clean package`
+2. `mvn exec:exec`
+3. Follow the command prompts

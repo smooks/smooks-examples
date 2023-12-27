@@ -62,7 +62,7 @@ import java.util.concurrent.SynchronousQueue;
 public class SmooksEventSource implements EventSource {
 
     private final Smooks smooks;
-    private final BlockingQueue<StockTick> inQueue = new SynchronousQueue<StockTick>();
+    private final BlockingQueue<StockTick> inQueue = new SynchronousQueue<>();
 
     public SmooksEventSource() throws IOException, SAXException {
         smooks = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(this.getClass().getClassLoader()).build());
@@ -71,12 +71,7 @@ public class SmooksEventSource implements EventSource {
     }
 
     public void processFeed(final InputStream tickerFeed) {
-        new Thread() {
-            @Override
-            public void run() {
-                smooks.filterSource(new StreamSource(tickerFeed));
-            }
-        }.start();
+        new Thread(() -> smooks.filterSource(new StreamSource(tickerFeed))).start();
     }
 
     public boolean hasNext() {
@@ -87,7 +82,7 @@ public class SmooksEventSource implements EventSource {
     public Event<?> getNext() {
         try {
             StockTick stockTick = inQueue.take();
-            return new EventImpl<StockTick>(stockTick.getTimestamp(), stockTick);
+            return new EventImpl<>(stockTick.getTimestamp(), stockTick);
         } catch (InterruptedException e) {
             e.printStackTrace();
             return null;
@@ -101,8 +96,8 @@ public class SmooksEventSource implements EventSource {
     private class BeanContextObserver implements BeanContextLifecycleObserver {
 
         public void onBeanLifecycleEvent(BeanContextLifecycleEvent event) {
-            if(event.getLifecycle() == BeanLifecycle.END_FRAGMENT) {
-                if(event.getBeanId().getName().equals("stockTick")) {
+            if (event.getLifecycle() == BeanLifecycle.END_FRAGMENT) {
+                if (event.getBeanId().getName().equals("stockTick")) {
                     try {
                         inQueue.put((StockTick) event.getBean());
                     } catch (InterruptedException e) {

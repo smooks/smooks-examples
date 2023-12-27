@@ -5,7 +5,7 @@
 	xmlns:dao="https://www.smooks.org/xsd/smooks/persistence-2.0.xsd">
 
 	<!--
-		This is the normal Javabean binding. Notice that we have a wiring on customer. The
+		This is the normal Java bean binding. Notice that we have a wiring on customer. The
 	    Customer entity will not be created but looked up by a locator.
 	 -->
     <jb:bean beanId="order" class="org.smooks.examples.daorouter.jpa.entity.Order" createOnElement="order">

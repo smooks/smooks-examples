@@ -1,0 +1,10 @@
+@startuml
+autonumber
+
+Main -> Filesystem: Read PAXLST.edi
+Filesystem --> Main: PAXLST.edi
+Main -> Smooks: EDIFACT
+Smooks --> Main: XML
+Main -> "JAXB Provider": XML
+Main <-- "JAXB Provider": org.smooks.edifact.binding.d03b.Interchange
+@enduml

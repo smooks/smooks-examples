@@ -137,7 +137,7 @@ public class Main {
     private static void userMessage(String message) {
         try {
             BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-            System.out.print("> " + message);
+            System.out.println("> " + message);
             in.readLine();
         } catch (IOException e) {
         }

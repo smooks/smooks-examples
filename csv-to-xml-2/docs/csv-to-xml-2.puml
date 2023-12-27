@@ -1,0 +1,53 @@
+@startuml
+participant Main
+box Smooks Framework
+participant Smooks
+participant "csv:reader"
+collections "Bean visitors"
+participant "Bean Context"
+participant "ftl:freemarker"
+participant Result
+end box
+autonumber
+
+Main -> Smooks : ""createExecutionContext()""
+Smooks -> "csv:reader"
+create "Bean visitors"
+"csv:reader" -> "Bean visitors": Create
+Main -> Smooks : ""filterSource(...)""
+Smooks -> "csv:reader": Input source
+loop CSV stream
+    Smooks <- "csv:reader": XML event
+    alt path(event) == ""person"" && event is start element
+        Smooks -> "Bean visitors": XML event
+        "Bean visitors" -> "Bean Context": Create ""java.util.Map"" named ""person""
+    else path(event) == ""person/firstname"" && event is end element
+        Smooks -> "Bean visitors": XML event
+        "Bean visitors" -> "Bean Context": Bind event to new entry in ""person""
+    else path(event) == ""person/lastname"" && event is end element
+        Smooks -> "Bean visitors": XML event
+        "Bean visitors" -> "Bean Context": Bind event to new entry in ""person""
+    else path(event) == ""person/gender"" && event is end element
+        Smooks -> "Bean visitors": XML event
+        "Bean visitors" -> "Bean Context": Bind event to new entry in ""person""
+    else path(event) == ""person/age"" && event is end element
+        Smooks -> "Bean visitors": XML event
+        "Bean visitors" -> "Bean Context": Bind event to new entry in ""person""
+    else path(event) == ""person/country"" && event is end element
+        Smooks -> "Bean visitors": XML event
+        "Bean visitors" -> "Bean Context": Bind event to new entry in ""person""
+    end
+    alt path(event) == ""person"" or descendant
+        Smooks -> "ftl:freemarker": XML event
+        alt ""person.gender"" == "male"
+            "ftl:freemarker" --> Smooks: <male...>...</male>
+        else
+            "ftl:freemarker" --> Smooks: <female...>...</female>
+        end
+    end
+   Smooks -> Result: Serialize XML event
+end
+Smooks --> Main
+Main -> Result: Read
+Result --> Main: XML
+@enduml

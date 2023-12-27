@@ -1,0 +1,71 @@
+@startuml
+participant Main
+box Smooks Framework
+participant Smooks
+participant "edi:parser"
+participant "ds:direct"
+participant "jb:bean"
+participant "jb:value"
+participant "jdbc:executor"
+participant "Bean Context"
+end box
+database Database
+autonumber
+
+Main -> Smooks : ""filterSource(...)""
+Smooks -> "edi:parser": Input source
+loop EDI stream
+    Smooks <- "edi:parser": XML event
+    alt path(event) == ""#document""
+        Smooks -> "ds:direct": XML event
+        alt event is start element
+            "ds:direct" -> Database: Create connection
+        else event is end element
+            "ds:direct" -> Database: Commit
+        end
+    else path(event) == ""message-header"" && event is start element
+        Smooks -> "jb:bean": XML event
+        "jb:bean" -> "Bean Context": Create ""java.util.HashMap"" bean named ""message""
+    else path(event) == ""message-header/date"" && event is end element
+        Smooks -> "jb:value": XML event
+        "jb:value" -> "Bean Context": Bind event to new entry in ""message""
+    else path(event) == ""order"" && event is end element
+        Smooks -> "jb:bean": XML event
+        "jb:bean" -> "Bean Context": Create ""java.util.HashMap"" bean named ""order""
+    else path(event) == ""order/order-id"" && event is end element
+        Smooks -> "jb:value": XML event
+        "jb:value" -> "Bean Context": Bind event to new entry in ""order""
+    else path(event) == ""order/customer-details/username"" && event is end element
+        Smooks -> "jb:value": XML event
+        "jb:value" -> "Bean Context": Bind event to new entry in ""order""
+    else path(event) == ""order/status-code"" && event is end element
+         Smooks -> "jb:value": XML event
+         "jb:value" -> "Bean Context": Bind event to new entry in ""order""
+    else path(event) == ""order/net-amount"" && event is end element
+         Smooks -> "jb:value": XML event
+         "jb:value" -> "Bean Context": Bind event to new entry in ""order""
+    else path(event) == ""order/total-amount"" && event is end element
+         Smooks -> "jb:value": XML event
+         "jb:value" -> "Bean Context": Bind event to new entry in ""order""
+    else path(event) == ""order-item"" && event is start element
+         Smooks -> "jb:bean": XML event
+         "jb:bean" -> "Bean Context": Create ""java.util.HashMap"" bean named ""orderItem""
+    else path(event) == ""order-item/*"" && event is end element
+         Smooks -> "jb:value": XML event
+         "jb:value" -> "Bean Context": Bind event to new entry in ""orderItem""
+    else path(event) == ""customer-details""
+        Smooks -> "jdbc:executor": XML event
+        alt event is start element
+            "jdbc:executor" -> Database: ""select ORDERNUMBER from ORDERS where ORDERNUMBER = ${order.orderNum}""
+            Database --> "jdbc:executor"
+            "jdbc:executor" -> "Bean Context":  Save result set to bean named ""orderExistsRS""
+        else event is end element && ""orderExistsRS.isEmpty()""
+            "jdbc:executor" -> Database: ""INSERT INTO ORDERS VALUES(${order.orderNum}, ${order.customerUname}, ${order.status}, ${order.net}, ${order.total}, ${message.date})""
+        end
+    else path(event) == ""order-item"" && event is end element && ""orderExistsRS.isEmpty()""
+        Smooks -> "jdbc:executor": XML event
+        "jdbc:executor" -> Database: ""INSERT INTO ORDERITEMS VALUES (${order.orderNum}, ${orderItem.quantity}, ${orderItem.productId}, ${orderItem.title}, ${orderItem.price})""
+    end
+end
+Smooks --> Main
+@enduml

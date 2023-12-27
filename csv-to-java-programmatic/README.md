@@ -1,23 +1,13 @@
-About this example
-==================
-    This is an example that illustrates how to
-    configure Smooks to process CSV records into Java objects.
+About
+=====
 
-    See:
-        1. The "Main" class in src/main/java/example/Main.java. Note the
-           programmatic configuration of the Smooks instance in the
-           runSmooksTransform method.
-        2. The Customer and Gender Types.
-        3. The input message in input-message.csv.
-        5. See how to solve the same use case using an XML
-           Smooks configuration in the "csv-to-java" example.
+This example closely mirrors the [csv-to-java](../csv-to-java/README.md) example. The only notable difference is that this application configures Smooks programmatically in [`org.smooks.examples.csv2java.Main`](src/main/java/org/smooks/examples/csv2java/Main.java). This means that no `smook-config.xml` file exists.
 
-How to Run?
-===========
-    Requirements:
-        1. JDK 1.5
-        2. Maven 2.x (http://maven.apache.org/download.html)
+### How to run?
 
-    Running:
-        1. "mvn clean install"
-        2. "mvn exec:java"
+1. `mvn clean package`
+2. `mvn exec:exec`
+
+### UML Sequence Diagram
+
+![UML sequence diagram](docs/images/csv-to-java-programmatic.png)

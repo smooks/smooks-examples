@@ -2,7 +2,7 @@
 participant Main
 box Smooks Framework
 participant Smooks
-participant "csv:reader"
+participant CSVRecordParser
 collections "Bean visitors"
 participant "Bean Context"
 participant Result
@@ -10,13 +10,13 @@ end box
 autonumber
 
 Main -> Smooks : ""createExecutionContext()""
-Smooks -> "csv:reader"
+Smooks -> CSVRecordParser
 create "Bean visitors"
-"csv:reader" -> "Bean visitors": Create
+CSVRecordParser -> "Bean visitors": Create
 Main -> Smooks : ""filterSource(...)""
-Smooks -> "csv:reader": Input source
+Smooks -> CSVRecordParser: Input source
 loop CSV stream
-    Smooks <- "csv:reader": XML event
+    Smooks <- CSVRecordParser: XML event
     alt path(event) == #document && event is start element
         Smooks -> "Bean visitors": XML event
         "Bean visitors" -> "Bean Context": Create ""customerList"" bean

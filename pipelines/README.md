@@ -1,5 +1,5 @@
-About this example
-------------------
+About
+=====
 
 This example illustrates the power of pipelines in a real-world use case. Consider this classic data integration problem:
 
@@ -571,3 +571,9 @@ The final piece of the solution is the `edifact:unparser`:
 ```
 
 As per the `unparseOnElement` wildcard selector, the pipeline delivers all events generated from the `core:delegate-reader` visitors to `edifact:unparser` to be serialised into EDIFACT before the pipeline merges the serialised events with the result stream.
+
+
+### How to run?
+
+1. `mvn clean package`
+2. `mvn exec:exec`

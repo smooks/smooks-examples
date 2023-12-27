@@ -1,26 +1,23 @@
-About this example
-==================
- 	This is an example that illustrates the use
- 	of the YAML reader within Smooks
+About
+=====
 
-	The following features are demonstrated:
-	  - Whitespace replacement
-	  - Element name replacement
-	  - Anchor and alias resolving (by default an anchor is referred to instead of resolved)
+This is an example that illustrates the use of the YAML reader within Smooks
 
-	See the smooks-config.xml for inline comments.
+The following features are demonstrated:
+  - Whitespace replacement
+  - Element name replacement
+  - Anchor and alias resolving (by default an anchor is referred to instead of resolved)
 
-    See:
-        1. The "Main" class in src/main/java/example/Main.java.
-        2. The input message in input-message.jsn.
-        3. smooks-config.xml.
+See the smooks-config.xml for inline comments.
 
-How to Run?
-===========
-    Requirements:
-        1. JDK 1.5
-        2. Maven 2.x (http://maven.apache.org/download.html)
+See:
 
-    Running:
-        1. "mvn clean install"
-        2. "mvn exec:java"
+1. The "Main" class in src/main/java/example/Main.java.
+2. The input message in input-message.jsn.
+3. smooks-config.xml.
+
+### How to run?
+
+1. `mvn clean package`
+2. `mvn exec:exec`
+3. Follow the command prompts

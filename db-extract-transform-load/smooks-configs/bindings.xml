@@ -32,7 +32,7 @@
     </jb:bean>
 
     <jb:bean beanId="orderItem" class="java.util.HashMap" createOnElement="order-item">
-        <!-- Just bind in all elements of the orderItem into the orderItem map.  Property name is
+        <!-- Just bind in all elements of the orderItem into the orderItem map. Property name is
              taken from the element name... -->
         <jb:value data="order-item/*" />
     </jb:bean>

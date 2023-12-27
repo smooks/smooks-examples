@@ -5,7 +5,7 @@ autonumber
 Filesystem <- "Apache Camel": Poll ""input-message.xml""
 Filesystem --> "Apache Camel": ""input-message.xml""
 "Apache Camel" -> Smooks: XML
-loop ""activity/event""
+loop event == ""activity/event""
     Smooks -> Smooks: Bind ""event"" to ""logEvent"" bean
     alt logEvent.nationality == 'IE'
         Smooks -> "Apache Camel": Send ""logEvent"" to ""direct:ireland""

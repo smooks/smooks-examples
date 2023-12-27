@@ -1,20 +1,16 @@
-About this example
-==================
-    This is an example that illustrates how Smooks can be
-    used to apply a Java based transform on a message fragment. 
+About
+=====
 
-    See:
-        1. The "Main" class in src/main/java/example/Main.java.
-        2. The input message in input-message.xml.
-        3. The code in the src/main/java folder tree (.java).
-        4. smooks-config.xml.
+This is an example that illustrates how Smooks can be used to apply a Java based transform on a message fragment. 
 
-How to Run?
-===========
-    Requirements:
-        1. JDK 1.5
-        2. Maven 2.x (http://maven.apache.org/download.html)
+See:
 
-    Running:
-        1. "mvn clean install"
-        2. "mvn exec:java"
+1. The "Main" class in src/main/java/example/Main.java.
+2. The input message in input-message.xml.
+3. The code in the src/main/java folder tree (.java).
+4. smooks-config.xml.
+
+### How to run?
+
+1. `mvn clean package`
+2. `mvn exec:exec`

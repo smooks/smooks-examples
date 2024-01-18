@@ -68,6 +68,7 @@
         <module>xml-read-write-transform</module>
         <module>xml-to-java</module>
         <module>xml-to-java-virtual</module>
+        <module>xml-to-edifact-override</module>
         <module>xslt-basic</module>
         <module>xslt-groovy</module>
         <module>xslt-namespaces</module>

@@ -27,7 +27,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           token: ${{ secrets.PAT }}
-      - uses: ts-graphviz/setup-graphviz@v1
+      - uses: ts-graphviz/setup-graphviz@v2
       - run: curl -LJ https://github.com/plantuml/plantuml/releases/download/v1.2023.13/plantuml-1.2023.13.jar -o plantuml.jar
       - run: java -jar plantuml.jar -v -tpng -r **/docs/*.puml -o images
       - uses: stefanzweifel/git-auto-commit-action@v5

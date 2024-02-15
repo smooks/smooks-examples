@@ -1,8 +1,8 @@
 /*-
  * ========================LICENSE_START=================================
- * Smooks Example :: EDI-to-XML
+ * XML-to-EDI
  * %%
- * Copyright (C) 2020 Smooks
+ * Copyright (C) 2020 - 2024 Smooks
  * %%
  * Licensed under the terms of the Apache License Version 2.0, or
  * the GNU Lesser General Public License version 3.0 or later.
@@ -40,15 +40,15 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * =========================LICENSE_END==================================
  */
-package org.smooks.examples.edi2xml;
+package org.smooks.examples.xml2edi;
 
 import org.smooks.Smooks;
 import org.smooks.api.ExecutionContext;
 import org.smooks.api.SmooksException;
 import org.smooks.engine.DefaultApplicationContextBuilder;
 import org.smooks.engine.report.HtmlReportGenerator;
-import org.smooks.support.StreamUtils;
 import org.smooks.io.payload.StringResult;
+import org.smooks.support.StreamUtils;
 import org.xml.sax.SAXException;
 
 import javax.xml.transform.stream.StreamSource;
@@ -58,10 +58,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-/**
- * Simple example main class.
- * @author <a href="mailto:tom.fennelly@gmail.com">tom.fennelly@gmail.com</a>
- */
 public class Main {
 
     private static byte[] messageIn = readInputMessage();
@@ -71,7 +67,7 @@ public class Main {
         Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(Main.class.getClassLoader()).build());
         smooks.addConfigurations("smooks-config.xml");
         try {
-             // Create an exec context - no profiles....
+            // Create an exec context - no profiles....
             ExecutionContext executionContext = smooks.createExecutionContext();
 
             StringResult result = new StringResult();
@@ -93,7 +89,7 @@ public class Main {
         System.out.println(new String(messageIn));
         System.out.println("======================================\n");
 
-        pause("The EDI input stream can be seen above.  Press 'enter' to see this stream transformed into XML...");
+        pause("The XML input stream can be seen above.  Press 'enter' to see this stream transformed into EDI...");
 
         String messageOut = Main.runSmooksTransform();
 
@@ -106,7 +102,7 @@ public class Main {
 
     private static byte[] readInputMessage() {
         try {
-            return StreamUtils.readStream(new FileInputStream("input-message.edi"));
+            return StreamUtils.readStream(new FileInputStream("input-message.xml"));
         } catch (IOException e) {
             e.printStackTrace();
             return "<no-message/>".getBytes();

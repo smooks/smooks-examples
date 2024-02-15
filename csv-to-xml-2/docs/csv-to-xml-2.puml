@@ -17,35 +17,35 @@ create "Bean visitors"
 Main -> Smooks : ""filterSource(...)""
 Smooks -> "csv:reader": Input source
 loop CSV stream
-    Smooks <- "csv:reader": XML event
+    Smooks <- "csv:reader": SAX event
     alt path(event) == ""person"" && event is start element
-        Smooks -> "Bean visitors": XML event
+        Smooks -> "Bean visitors": SAX event
         "Bean visitors" -> "Bean Context": Create ""java.util.Map"" named ""person""
     else path(event) == ""person/firstname"" && event is end element
-        Smooks -> "Bean visitors": XML event
+        Smooks -> "Bean visitors": SAX event
         "Bean visitors" -> "Bean Context": Bind event to new entry in ""person""
     else path(event) == ""person/lastname"" && event is end element
-        Smooks -> "Bean visitors": XML event
+        Smooks -> "Bean visitors": SAX event
         "Bean visitors" -> "Bean Context": Bind event to new entry in ""person""
     else path(event) == ""person/gender"" && event is end element
-        Smooks -> "Bean visitors": XML event
+        Smooks -> "Bean visitors": SAX event
         "Bean visitors" -> "Bean Context": Bind event to new entry in ""person""
     else path(event) == ""person/age"" && event is end element
-        Smooks -> "Bean visitors": XML event
+        Smooks -> "Bean visitors": SAX event
         "Bean visitors" -> "Bean Context": Bind event to new entry in ""person""
     else path(event) == ""person/country"" && event is end element
-        Smooks -> "Bean visitors": XML event
+        Smooks -> "Bean visitors": SAX event
         "Bean visitors" -> "Bean Context": Bind event to new entry in ""person""
     end
     alt path(event) == ""person"" or descendant
-        Smooks -> "ftl:freemarker": XML event
+        Smooks -> "ftl:freemarker": SAX event
         alt ""person.gender"" == "male"
             "ftl:freemarker" --> Smooks: <male...>...</male>
         else
             "ftl:freemarker" --> Smooks: <female...>...</female>
         end
     end
-   Smooks -> Result: Serialize XML event
+    Smooks -> Result: Write event as XML
 end
 Smooks --> Main
 Main -> Result: Read

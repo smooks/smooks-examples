@@ -12,15 +12,15 @@ autonumber
 Main -> Smooks : ""filterSource(...)""
 Smooks -> "dfdl:parser": Input source
 loop NITF stream
-    Smooks <- "dfdl:parser": XML event
+    Smooks <- "dfdl:parser": SAX event
     alt path(event) == (""/NITF"" || descendant) && path(event) == ""//*[not(self::InvalidData)]""
-        Smooks -> "dfdl:unparser": XML event
+        Smooks -> "dfdl:unparser": SAX event
         "dfdl:unparser" --> Smooks: Serialize to NITF
         Smooks -> Result: Write NITF
         Result -> Filesytem
     end
     alt path(event) == (""/NITF/InvalidData"" || descendant)
-        Smooks -> "Dead letter channel": Serialize XML event
+        Smooks -> "Dead letter channel": Write event as XML
     end
 end
 Smooks --> Main

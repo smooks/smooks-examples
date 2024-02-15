@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
@@ -11,8 +10,8 @@
         <version>2-SNAPSHOT</version>
     </parent>
 
-    <name>EDI-to-XML</name>
-    <artifactId>smooks-example-edi-to-xml</artifactId>
+    <name>XML-to-EDI</name>
+    <artifactId>smooks-example-xml-to-edi</artifactId>
 
     <build>
         <plugins>
@@ -21,16 +20,13 @@
                 <artifactId>license-maven-plugin</artifactId>
                 <configuration>
                     <licenseResolver>${project.baseUri}../license</licenseResolver>
-                    <excludes>
-                        <exclude>test/resources/expected.xml</exclude>
-                    </excludes>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>org.smooks.examples.edi2xml.Main</mainClass>
+                    <mainClass>org.smooks.examples.xml2edi.Main</mainClass>
                 </configuration>
             </plugin>
         </plugins>
@@ -44,11 +40,6 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.xmlunit</groupId>
-            <artifactId>xmlunit-core</artifactId>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 </project>

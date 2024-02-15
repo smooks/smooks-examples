@@ -10,8 +10,8 @@ autonumber
 Main -> Smooks : ""filterSource(...)""
 Smooks -> "csv:reader": Input source
 loop CSV stream
-    Smooks <- "csv:reader": XML event
-    Smooks -> Result: Serialize XML event
+    Smooks <- "csv:reader": SAX event
+    Smooks -> Result: Write event as XML
 end
 Smooks --> Main
 Main -> Result: Read

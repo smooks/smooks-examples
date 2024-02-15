@@ -66,6 +66,7 @@
         <module>validation-basic</module>
         <module>xml-read-write</module>
         <module>xml-read-write-transform</module>
+        <module>xml-to-edi</module>
         <module>xml-to-java</module>
         <module>xml-to-java-virtual</module>
         <module>xslt-basic</module>

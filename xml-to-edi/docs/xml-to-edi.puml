@@ -2,16 +2,16 @@
 participant Main
 box Smooks Framework
 participant Smooks
-participant "csv:reader"
+participant "edi:unparser"
 participant Result
 end box
 autonumber
 
 Main -> Smooks : ""filterSource(...)""
-Smooks -> "csv:reader": Input source
-loop CSV stream
-    Smooks <- "csv:reader": SAX event
-    Smooks -> Result: Write event as XML
+loop XML stream
+    Smooks -> "edi:unparser": SAX event
+    Smooks <-- "edi:unparser": Serialize to EDI
+    Smooks -> Result: Write EDI
 end
 Smooks --> Main
 Main -> Result: Read

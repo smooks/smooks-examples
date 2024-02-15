@@ -15,46 +15,46 @@ autonumber
 Main -> Smooks : ""filterSource(...)""
 Smooks -> "edi:parser": Input source
 loop EDI stream
-    Smooks <- "edi:parser": XML event
+    Smooks <- "edi:parser": SAX event
     alt path(event) == ""#document""
-        Smooks -> "ds:direct": XML event
+        Smooks -> "ds:direct": SAX event
         alt event is start element
             "ds:direct" -> Database: Create connection
         else event is end element
             "ds:direct" -> Database: Commit
         end
     else path(event) == ""message-header"" && event is start element
-        Smooks -> "jb:bean": XML event
+        Smooks -> "jb:bean": SAX event
         "jb:bean" -> "Bean Context": Create ""java.util.HashMap"" bean named ""message""
     else path(event) == ""message-header/date"" && event is end element
-        Smooks -> "jb:value": XML event
+        Smooks -> "jb:value": SAX event
         "jb:value" -> "Bean Context": Bind event to new entry in ""message""
     else path(event) == ""order"" && event is end element
-        Smooks -> "jb:bean": XML event
+        Smooks -> "jb:bean": SAX event
         "jb:bean" -> "Bean Context": Create ""java.util.HashMap"" bean named ""order""
     else path(event) == ""order/order-id"" && event is end element
-        Smooks -> "jb:value": XML event
+        Smooks -> "jb:value": SAX event
         "jb:value" -> "Bean Context": Bind event to new entry in ""order""
     else path(event) == ""order/customer-details/username"" && event is end element
-        Smooks -> "jb:value": XML event
+        Smooks -> "jb:value": SAX event
         "jb:value" -> "Bean Context": Bind event to new entry in ""order""
     else path(event) == ""order/status-code"" && event is end element
-         Smooks -> "jb:value": XML event
+         Smooks -> "jb:value": SAX event
          "jb:value" -> "Bean Context": Bind event to new entry in ""order""
     else path(event) == ""order/net-amount"" && event is end element
-         Smooks -> "jb:value": XML event
+         Smooks -> "jb:value": SAX event
          "jb:value" -> "Bean Context": Bind event to new entry in ""order""
     else path(event) == ""order/total-amount"" && event is end element
-         Smooks -> "jb:value": XML event
+         Smooks -> "jb:value": SAX event
          "jb:value" -> "Bean Context": Bind event to new entry in ""order""
     else path(event) == ""order-item"" && event is start element
-         Smooks -> "jb:bean": XML event
+         Smooks -> "jb:bean": SAX event
          "jb:bean" -> "Bean Context": Create ""java.util.HashMap"" bean named ""orderItem""
     else path(event) == ""order-item/*"" && event is end element
-         Smooks -> "jb:value": XML event
+         Smooks -> "jb:value": SAX event
          "jb:value" -> "Bean Context": Bind event to new entry in ""orderItem""
     else path(event) == ""customer-details""
-        Smooks -> "jdbc:executor": XML event
+        Smooks -> "jdbc:executor": SAX event
         alt event is start element
             "jdbc:executor" -> Database: ""select ORDERNUMBER from ORDERS where ORDERNUMBER = ${order.orderNum}""
             Database --> "jdbc:executor"
@@ -63,7 +63,7 @@ loop EDI stream
             "jdbc:executor" -> Database: ""INSERT INTO ORDERS VALUES(${order.orderNum}, ${order.customerUname}, ${order.status}, ${order.net}, ${order.total}, ${message.date})""
         end
     else path(event) == ""order-item"" && event is end element && ""orderExistsRS.isEmpty()""
-        Smooks -> "jdbc:executor": XML event
+        Smooks -> "jdbc:executor": SAX event
         "jdbc:executor" -> Database: ""INSERT INTO ORDERITEMS VALUES (${order.orderNum}, ${orderItem.quantity}, ${orderItem.productId}, ${orderItem.title}, ${orderItem.price})""
     end
 end

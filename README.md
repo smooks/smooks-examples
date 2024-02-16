@@ -9,7 +9,7 @@ Examples are essential in helping newcomers get started with Smooks. This projec
 2. Change directory to `smooks-examples` and build all the examples with `mvn clean package`
 3. Run an example by changing to the directory containing the example and running `mvn exec:exec`
 
-Read the [Smooks User Guide](https://www.smooks.org/v2/documentation/) to learn more about Smooks. Example contributions in the form of [pull requests](https://github.com/smooks/smooks-examples/pulls) are more than welcome, and in fact, such contributions are encouraged since they help the Smooks community to grow.
+Read the [Smooks User Guide](https://www.smooks.org/documentation/) to learn more about Smooks. Example contributions in the form of [pull requests](https://github.com/smooks/smooks-examples/pulls) are more than welcome, and in fact, such contributions are encouraged since they help the Smooks community to grow.
 
 ## Catalogue
 

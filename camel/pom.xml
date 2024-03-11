@@ -15,7 +15,7 @@
     <packaging>pom</packaging>
 
     <properties>
-        <camel.version>3.21.1</camel.version>
+        <camel.version>4.4.0</camel.version>
     </properties>
 
     <build>
@@ -75,7 +75,7 @@
         </dependency>
         <dependency>
             <groupId>org.apache.camel</groupId>
-            <artifactId>camel-test</artifactId>
+            <artifactId>camel-test-junit5</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>

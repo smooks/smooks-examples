@@ -69,8 +69,8 @@ public class Main {
     public static void main(String[] args) throws IOException, SAXException, SmooksException {
 
         // Create and initilise the XMLBinding instance...
-        Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(Main.class.getClassLoader()).build());
-        smooks.addConfigurations("smooks-config.xml");
+        Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().withClassLoader(Main.class.getClassLoader()).build());
+        smooks.addResourceConfigs("smooks-config.xml");
         XMLBinding xmlBinding = new XMLBinding(smooks);
         xmlBinding.initialise();
 

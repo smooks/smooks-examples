@@ -64,8 +64,8 @@ public class Main {
 
     protected static String runSmooksTransform() throws IOException, SAXException, SmooksException {
         // Configure Smooks using a Smooks config...
-        Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(Main.class.getClassLoader()).build());
-        smooks.addConfigurations("smooks-config.xml");
+        Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().withClassLoader(Main.class.getClassLoader()).build());
+        smooks.addResourceConfigs("smooks-config.xml");
 
         // Or, configure Smooks programmatically...
         // final Smooks smooks = new Smooks();

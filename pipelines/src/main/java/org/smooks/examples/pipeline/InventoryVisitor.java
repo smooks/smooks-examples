@@ -49,7 +49,7 @@ import org.smooks.api.ExecutionContext;
 import org.smooks.api.SmooksException;
 import org.smooks.api.resource.visitor.sax.ng.AfterVisitor;
 import org.smooks.io.Stream;
-import org.smooks.support.XmlUtil;
+import org.smooks.support.XmlUtils;
 import org.w3c.dom.Element;
 
 import java.io.IOException;
@@ -61,7 +61,7 @@ public class InventoryVisitor implements AfterVisitor {
     @Override
     public void visitAfter(Element element, ExecutionContext executionContext) {
         try {
-            JsonNode jsonNode = XML_MAPPER.readTree(XmlUtil.serialize(element));
+            JsonNode jsonNode = XML_MAPPER.readTree(XmlUtils.serialize(element));
             Stream.out(executionContext).write(OBJECT_MAPPER.writeValueAsString(jsonNode));
         } catch (IOException e) {
             throw new SmooksException(e);

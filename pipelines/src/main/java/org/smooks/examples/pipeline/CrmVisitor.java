@@ -50,7 +50,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.smooks.api.ExecutionContext;
 import org.smooks.api.resource.visitor.sax.ng.AfterVisitor;
-import org.smooks.support.XmlUtil;
+import org.smooks.support.XmlUtils;
 import org.w3c.dom.Element;
 
 import jakarta.annotation.PostConstruct;
@@ -74,7 +74,7 @@ public class CrmVisitor implements AfterVisitor {
 
     @Override
     public void visitAfter(Element element, ExecutionContext executionContext) {
-        Request request = post("https://httpbin.org/anything").setHeader("Content-Type", "application/xml").setBody(XmlUtil.serialize(element)).build();
+        Request request = post("https://httpbin.org/anything").setHeader("Content-Type", "application/xml").setBody(XmlUtils.serialize(element)).build();
         asyncHttpClient.executeRequest(request, new AsyncCompletionHandler<Response>() {
             @Override
             public Response onCompleted(Response response) {

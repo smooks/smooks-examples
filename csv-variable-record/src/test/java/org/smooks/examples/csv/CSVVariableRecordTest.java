@@ -44,6 +44,7 @@ package org.smooks.examples.csv;
 
 import org.junit.jupiter.api.Test;
 import org.smooks.support.StreamUtils;
+import org.smooks.tck.TextUtils;
 import org.xml.sax.SAXException;
 
 import java.io.ByteArrayInputStream;
@@ -61,8 +62,8 @@ public class CSVVariableRecordTest {
         byte[] expected = StreamUtils.readStream(getClass().getResourceAsStream("/expected.xml"));
         String result = Main.runSmooksTransform();
 
-        StringBuffer s1 = StreamUtils.trimLines(new ByteArrayInputStream(expected));
-        StringBuffer s2 = StreamUtils.trimLines(new ByteArrayInputStream(result.getBytes()));
+        StringBuffer s1 = TextUtils.trimLines(new ByteArrayInputStream(expected));
+        StringBuffer s2 = TextUtils.trimLines(new ByteArrayInputStream(result.getBytes()));
 
         assertEquals(s1.toString(), s2.toString(), "Expected:\n" + s1 + "\nActual:\n" + s2);
     }

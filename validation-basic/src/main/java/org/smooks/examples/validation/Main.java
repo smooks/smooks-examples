@@ -97,8 +97,8 @@ public class Main {
 
     protected static ValidationResult runSmooks(final String messageIn) throws IOException, SAXException, SmooksException {
         // Instantiate Smooks with the config...
-        final Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(Main.class.getClassLoader()).build());
-        smooks.addConfigurations("smooks-config.xml");
+        final Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().withClassLoader(Main.class.getClassLoader()).build());
+        smooks.addResourceConfigs("smooks-config.xml");
 
         try {
             // Create an exec context - no profiles....
@@ -106,7 +106,7 @@ public class Main {
             final ValidationResult validationResult = new ValidationResult();
 
             // Configure the execution context to generate a report...
-            executionContext.getContentDeliveryRuntime().addExecutionEventListener(new HtmlReportGenerator("target/report/report.html"));
+            executionContext.getContentDeliveryRuntime().addExecutionEventListener(new HtmlReportGenerator("target/report/report.html", executionContext.getApplicationContext()));
 
             // Filter the input message...
             smooks.filterSource(executionContext, new StringSource(messageIn), validationResult);

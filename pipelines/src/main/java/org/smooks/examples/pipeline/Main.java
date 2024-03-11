@@ -81,8 +81,8 @@ public class Main {
         };
         abstractOutputStreamResource.setResourceName("inventoryOutputStream");
 
-        Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().setRegisterSystemResources(true).setClassLoader(Main.class.getClassLoader()).build());
-        smooks.addConfigurations("smooks-config.xml");
+        Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().withClassLoader(Main.class.getClassLoader()).build());
+        smooks.addResourceConfigs("smooks-config.xml");
 
         StringResult stringResult = new StringResult();
         try {

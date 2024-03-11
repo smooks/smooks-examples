@@ -46,6 +46,7 @@ import org.smooks.Smooks;
 import org.smooks.api.ExecutionContext;
 import org.smooks.engine.DefaultApplicationContextBuilder;
 import org.smooks.engine.report.HtmlReportGenerator;
+import org.smooks.engine.report.ReportConfiguration;
 import org.smooks.io.AbstractOutputStreamResource;
 import org.smooks.io.payload.StringResult;
 import org.xml.sax.SAXException;
@@ -95,21 +96,19 @@ public class Main {
         };
         deadLetterOutputStreamResource.setResourceName("deadLetterStream");
 
-        Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(Main.class.getClassLoader()).build());
-        smooks.addConfigurations("smooks-config.xml");
+        Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().withClassLoader(Main.class.getClassLoader()).build());
+        smooks.addResourceConfigs("smooks-config.xml");
         smooks.addVisitor(deadLetterOutputStreamResource, "#document");
 
         return smooks;
     }
 
     protected static void filterSource(Smooks smooks, InputStream inputStream, Result result) throws IOException {
-        try {
-            ExecutionContext executionContext = smooks.createExecutionContext();
-            executionContext.getContentDeliveryRuntime().addExecutionEventListener(new HtmlReportGenerator("target/report/report.html"));
-            executionContext.setContentEncoding("ISO-8859-1");
-            smooks.filterSource(executionContext, new StreamSource(inputStream), result);
-        } finally {
-            smooks.close();
-        }
+        ExecutionContext executionContext = smooks.createExecutionContext();
+        HtmlReportGenerator htmlReportGenerator = new HtmlReportGenerator("target/report/report.html", executionContext.getApplicationContext());
+        htmlReportGenerator.getReportConfiguration().setAutoCloseWriter(false);
+        executionContext.getContentDeliveryRuntime().addExecutionEventListener(htmlReportGenerator);
+        executionContext.setContentEncoding("ISO-8859-1");
+        smooks.filterSource(executionContext, new StreamSource(inputStream), result);
     }
 }

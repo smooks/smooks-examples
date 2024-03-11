@@ -128,8 +128,8 @@ public class Main {
         jaxbContext.createMarshaller().marshal(interchange, byteArrayOutputStream);
 
         // Turn XML into EDIFACT
-        final Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(Main.class.getClassLoader()).build());
-        smooks.addConfigurations("smooks-config.xml");
+        final Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().withClassLoader(Main.class.getClassLoader()).build());
+        smooks.addResourceConfigs("smooks-config.xml");
         StringResult stringResult = new StringResult();
         smooks.filterSource(new ByteSource(byteArrayOutputStream.toByteArray()), stringResult);
 

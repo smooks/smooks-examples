@@ -68,8 +68,8 @@ public class Main {
 
     protected Main() throws IOException, SAXException {
         // Instantiate Smooks with the config...
-        smooks = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(this.getClass().getClassLoader()).build());
-        smooks.addConfigurations("smooks-config.xml");
+        smooks = new Smooks(new DefaultApplicationContextBuilder().withClassLoader(this.getClass().getClassLoader()).build());
+        smooks.addResourceConfigs("smooks-config.xml");
     }
 
     protected String runSmooksTransform(ExecutionContext executionContext) throws IOException, SmooksException {
@@ -77,7 +77,7 @@ public class Main {
             StringResult result = new StringResult();
 
             // Configure the execution context to generate a report...
-            executionContext.getContentDeliveryRuntime().addExecutionEventListener(new HtmlReportGenerator("target/report/report.html"));
+            executionContext.getContentDeliveryRuntime().addExecutionEventListener(new HtmlReportGenerator("target/report/report.html", executionContext.getApplicationContext()));
 
             // Filter the input message to the outputWriter, using the execution context...
             smooks.filterSource(executionContext, new StreamSource(new ByteArrayInputStream(messageIn)), result);

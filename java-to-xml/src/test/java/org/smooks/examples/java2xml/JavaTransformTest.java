@@ -51,6 +51,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.smooks.tck.Assertions.compareCharStreams;
 
 /**
  * @author <a href="mailto:tom.fennelly@gmail.com">tom.fennelly@gmail.com</a>
@@ -64,6 +65,6 @@ public class JavaTransformTest {
         String transRes;
 
         transRes = smooksMain.runSmooksTransform(new Order());
-        assertTrue(StreamUtils.compareCharStreams(new ByteArrayInputStream(expected_res), new ByteArrayInputStream(transRes.getBytes())), "Expected:\n" + new String(expected_res) + ". \nGot:\n" + transRes);
+        assertTrue(compareCharStreams(new ByteArrayInputStream(expected_res), new ByteArrayInputStream(transRes.getBytes())), "Expected:\n" + new String(expected_res) + ". \nGot:\n" + transRes);
     }
 }

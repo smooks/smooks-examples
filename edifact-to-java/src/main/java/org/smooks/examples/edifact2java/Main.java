@@ -67,8 +67,8 @@ public class Main {
 
     protected static Interchange runSmooksTransform() throws IOException, SAXException, SmooksException, JAXBException {
         // Configure Smooks using a Smooks config...
-        Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(Main.class.getClassLoader()).build());
-        smooks.addConfigurations("smooks-config.xml");
+        Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().withClassLoader(Main.class.getClassLoader()).build());
+        smooks.addResourceConfigs("smooks-config.xml");
 
         try {
             final StringWriter writer = new StringWriter();

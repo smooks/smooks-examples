@@ -64,8 +64,8 @@ public class Main {
     private Smooks smooks;
 
     protected Main() throws IOException, SAXException {
-        smooks = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(this.getClass().getClassLoader()).build());
-        smooks.addConfigurations("smooks-config.xml");
+        smooks = new Smooks(new DefaultApplicationContextBuilder().withClassLoader(this.getClass().getClassLoader()).build());
+        smooks.addResourceConfigs("smooks-config.xml");
     }
 
     /**
@@ -74,11 +74,12 @@ public class Main {
      * @return The transformed request/response.
      */
     protected String runSmooksTransform(byte[] message) throws IOException {
-        HtmlReportGenerator htmlReportGenerator = new HtmlReportGenerator("target/report/report.html");
-        htmlReportGenerator.getReportConfiguration().setAutoCloseWriter(false);
+        HtmlReportGenerator htmlReportGenerator = null;
         try {
             // Create an exec context for the target profile....
             ExecutionContext executionContext = smooks.createExecutionContext();
+            htmlReportGenerator = new HtmlReportGenerator("target/report/report.html", executionContext.getApplicationContext());
+            htmlReportGenerator.getReportConfiguration().setAutoCloseWriter(false);
             CharArrayWriter outputWriter = new CharArrayWriter();
 
             // Configure the execution context to generate a report...
@@ -89,7 +90,9 @@ public class Main {
 
             return outputWriter.toString();
         } finally {
-            htmlReportGenerator.getReportConfiguration().getOutputWriter().close();
+            if (htmlReportGenerator != null) {
+                htmlReportGenerator.getReportConfiguration().getOutputWriter().close();
+            }
             smooks.close();
         }
     }

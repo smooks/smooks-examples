@@ -65,8 +65,8 @@ public class SmooksEventSource implements EventSource {
     private final BlockingQueue<StockTick> inQueue = new SynchronousQueue<>();
 
     public SmooksEventSource() throws IOException, SAXException {
-        smooks = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(this.getClass().getClassLoader()).build());
-        smooks.addConfigurations("./smooks-config.xml");
+        smooks = new Smooks(new DefaultApplicationContextBuilder().withClassLoader(this.getClass().getClassLoader()).build());
+        smooks.addResourceConfigs("./smooks-config.xml");
         smooks.getApplicationContext().addBeanContextLifecycleObserver(new BeanContextObserver());
     }
 

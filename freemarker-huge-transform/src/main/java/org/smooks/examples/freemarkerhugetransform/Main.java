@@ -63,8 +63,8 @@ public class Main {
     public static void main(String[] args) throws IOException, SAXException, SmooksException {
         pause("Press 'enter' to process the contents of the 'input-message.xml' file.  The result wil be output to the console...");
 
-        Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(Main.class.getClassLoader()).build());
-        smooks.addConfigurations("smooks-config.xml");
+        Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().withClassLoader(Main.class.getClassLoader()).build());
+        smooks.addResourceConfigs("smooks-config.xml");
         try {
             smooks.filterSource(new StreamSource(new FileInputStream("input-message.xml")), new StreamResult(System.out));
         } finally {

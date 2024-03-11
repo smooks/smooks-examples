@@ -98,16 +98,16 @@ public class Main {
     }
 
     protected void runSmooksTransform() throws IOException, SAXException, SmooksException {
-    	Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(this.getClass().getClassLoader()).build());
-        smooks.addConfigurations("./smooks-configs/smooks-config.xml");
+    	Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().withClassLoader(this.getClass().getClassLoader()).build());
+        smooks.addResourceConfigs("./smooks-configs/smooks-config.xml");
 
         try {
             ExecutionContext executionContext = smooks.createExecutionContext();
 
             // Configure the execution context to generate a report...
-            executionContext.getContentDeliveryRuntime().addExecutionEventListener(new HtmlReportGenerator("target/report/report.html"));
+            executionContext.getContentDeliveryRuntime().addExecutionEventListener(new HtmlReportGenerator("target/report/report.html", executionContext.getApplicationContext()));
 
-            smooks.filterSource(executionContext, new StreamSource(new ByteArrayInputStream(messageIn)), null);
+            smooks.filterSource(executionContext, new StreamSource(new ByteArrayInputStream(messageIn)));
         } finally {
             smooks.close();
         }

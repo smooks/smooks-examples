@@ -43,6 +43,7 @@
 package org.smooks.examples.cds;
 
 import org.apache.commons.io.FileUtils;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.smooks.Smooks;
@@ -71,6 +72,11 @@ public class MainTestCase {
     public static void beforeAll() throws IOException, SAXException {
         deadLetterOutputStream = new ByteArrayOutputStream();
         smooks = Main.createSmooks(deadLetterOutputStream);
+    }
+
+    @AfterAll
+    public static void afterAll() {
+        smooks.close();
     }
 
 	@Test

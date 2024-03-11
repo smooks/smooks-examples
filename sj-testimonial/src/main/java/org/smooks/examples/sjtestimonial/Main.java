@@ -69,8 +69,8 @@ public class Main {
 
     protected static Map runSmooksTransform(String config) throws IOException, SAXException, SmooksException {
         // Instantiate Smooks with the config...
-        Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(Main.class.getClassLoader()).build());
-        smooks.addConfigurations(config);
+        Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().withClassLoader(Main.class.getClassLoader()).build());
+        smooks.addResourceConfigs(config);
 
         try {
              // Create an exec context - no profiles....
@@ -79,7 +79,7 @@ public class Main {
             JavaResult result = new JavaResult();
 
             // Configure the execution context to generate a report...
-            executionContext.getContentDeliveryRuntime().addExecutionEventListener(new HtmlReportGenerator("target/report/report.html"));
+            executionContext.getContentDeliveryRuntime().addExecutionEventListener(new HtmlReportGenerator("target/report/report.html", smooks.getApplicationContext()));
 
             // Filter the input message to the outputWriter, using the execution context...
             smooks.filterSource(executionContext, new StreamSource(new ByteArrayInputStream(messageIn)), result);

@@ -52,6 +52,7 @@ import java.io.IOException;
 import java.io.StringReader;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.smooks.tck.Assertions.compareCharStreams;
 
 /**
  * @author <a href="mailto:tom.fennelly@gmail.com">tom.fennelly@gmail.com</a>
@@ -70,7 +71,7 @@ public class EDItoJavaTest {
 
         actual = actual.replaceFirst("<date>.*</date>", "<date/>");
 
-        boolean matchesExpected = StreamUtils.compareCharStreams(new StringReader(expected), new java.io.StringReader(actual));
+        boolean matchesExpected = compareCharStreams(new StringReader(expected), new java.io.StringReader(actual));
         if (!matchesExpected) {
             assertEquals(expected, actual, "Actual does not match expected.");
         }

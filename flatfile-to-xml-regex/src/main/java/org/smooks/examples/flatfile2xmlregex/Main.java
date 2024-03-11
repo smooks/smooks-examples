@@ -53,6 +53,7 @@ import org.xml.sax.SAXException;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Simple example main class.
@@ -64,17 +65,17 @@ public class Main {
 
     protected static String runSmooksTransform() throws IOException, SAXException, SmooksException {
 
-        Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(Main.class.getClassLoader()).build());
-        smooks.addConfigurations("smooks-config.xml");
+        Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().withClassLoader(Main.class.getClassLoader()).build());
+        smooks.addResourceConfigs("smooks-config.xml");
 
         try {
             ExecutionContext executionContext = smooks.createExecutionContext();
             StringWriter writer = new StringWriter();
 
             // Configure the execution context to generate a report...
-            executionContext.getContentDeliveryRuntime().addExecutionEventListener(new HtmlReportGenerator("target/report/report.html"));
+            executionContext.getContentDeliveryRuntime().addExecutionEventListener(new HtmlReportGenerator("target/report/report.html", executionContext.getApplicationContext()));
 
-            smooks.filterSource(executionContext, new StreamSource(new InputStreamReader(new ByteArrayInputStream(messageIn), "UTF-8")), new StreamResult(writer));
+            smooks.filterSource(executionContext, new StreamSource(new InputStreamReader(new ByteArrayInputStream(messageIn), StandardCharsets.UTF_8)), new StreamResult(writer));
 
             return writer.toString();
         } finally {

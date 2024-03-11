@@ -50,6 +50,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.smooks.tck.Assertions.compareCharStreams;
 
 /**
  * @author <a href="mailto:tom.fennelly@gmail.com">tom.fennelly@gmail.com</a>
@@ -62,6 +63,6 @@ public class YamltoJavaTest {
         Main smooksMain = new Main();
         String result = smooksMain.runSmooksTransform();
 
-        assertTrue(StreamUtils.compareCharStreams(new ByteArrayInputStream(expected), new ByteArrayInputStream(result.getBytes())), "The result and the expected result are not the same.");
+        assertTrue(compareCharStreams(new ByteArrayInputStream(expected), new ByteArrayInputStream(result.getBytes())), "The result and the expected result are not the same.");
     }
 }

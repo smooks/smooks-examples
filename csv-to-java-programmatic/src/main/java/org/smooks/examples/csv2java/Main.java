@@ -69,7 +69,7 @@ public class Main {
 
     protected static List runSmooksTransform() throws IOException, SAXException, SmooksException {
 
-        Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(Main.class.getClassLoader()).build());
+        Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().withClassLoader(Main.class.getClassLoader()).build());
 
         try {
             // ****
@@ -81,7 +81,7 @@ public class Main {
 
             // Configure the execution context to generate a report...
             ExecutionContext executionContext = smooks.createExecutionContext();
-            executionContext.getContentDeliveryRuntime().addExecutionEventListener(new HtmlReportGenerator("target/report/report.html"));
+            executionContext.getContentDeliveryRuntime().addExecutionEventListener(new HtmlReportGenerator("target/report/report.html", executionContext.getApplicationContext()));
 
             JavaResult javaResult = new JavaResult();
             smooks.filterSource(executionContext, new StringSource(messageIn), javaResult);

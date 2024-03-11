@@ -68,8 +68,8 @@ public class Main {
     private static final String LINE_SEP = System.getProperty("line.separator");
 
     protected void runSmooksTransform() throws IOException, SAXException, ClassNotFoundException {
-        final Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(this.getClass().getClassLoader()).build());
-        smooks.addConfigurations("smooks-config.xml");
+        final Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().withClassLoader(this.getClass().getClassLoader()).build());
+        smooks.addResourceConfigs("smooks-config.xml");
 
         try {
             final ExecutionContext executionContext = smooks.createExecutionContext();

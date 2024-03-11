@@ -50,6 +50,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.smooks.tck.Assertions.compareCharStreams;
 
 /**
  * @author <a href="daniel.bevenius@redpill.se">Daniel Bevenius</a>
@@ -61,6 +62,6 @@ public class BasicXslTransformTest {
         byte[] expected = StreamUtils.readStream(getClass().getResourceAsStream("/expected.xml"));
         String result = Main.runSmooksTransform();
 
-        assertTrue(StreamUtils.compareCharStreams(new ByteArrayInputStream(expected), new ByteArrayInputStream(result.getBytes())));
+        assertTrue(compareCharStreams(new ByteArrayInputStream(expected), new ByteArrayInputStream(result.getBytes())));
     }
 }

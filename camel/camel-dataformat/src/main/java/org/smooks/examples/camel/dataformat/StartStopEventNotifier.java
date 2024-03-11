@@ -62,7 +62,7 @@ public class StartStopEventNotifier extends EventNotifierSupport {
             getCamelContext().getRegistry().bind(SmooksFactory.class.getName(), new SmooksFactory() {
                 @Override
                 public Smooks createInstance() {
-                    return new Smooks(new DefaultApplicationContextBuilder().setClassLoader(getClass().getClassLoader()).build());
+                    return new Smooks(new DefaultApplicationContextBuilder().withClassLoader(getClass().getClassLoader()).build());
                 }
 
                 @Override
@@ -72,8 +72,8 @@ public class StartStopEventNotifier extends EventNotifierSupport {
 
                 @Override
                 public Smooks createInstance(String config) throws IOException, SAXException {
-                    Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(getClass().getClassLoader()).build());
-                    smooks.addConfigurations(config);
+                    Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().withClassLoader(getClass().getClassLoader()).build());
+                    smooks.addResourceConfigs(config);
                     return smooks;
                 }
             });

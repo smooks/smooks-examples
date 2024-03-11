@@ -166,8 +166,8 @@ public class Main {
         pipeline.setParameter("action", "REPLACE");
         pipeline.setParameter("smooksResourceList", "<smooks-resource-list xmlns=\"https://www.smooks.org/xsd/smooks-2.0.xsd\">" + edifactUnparser.toXml() + "</smooks-resource-list>");
 
-        Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(Main.class.getClassLoader()).build());
-        smooks.addConfiguration(pipeline);
+        Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().withClassLoader(Main.class.getClassLoader()).build());
+        smooks.addResourceConfig(pipeline);
         StringResult stringResult = new StringResult();
         smooks.filterSource(new ByteSource(byteArrayOutputStream.toByteArray()), stringResult);
 

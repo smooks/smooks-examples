@@ -68,10 +68,10 @@ public class Main {
     protected static String runSmooksTransform() throws IOException, SAXException, SmooksException {
 
         // Instantiate Smooks with the config...
-        Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(Main.class.getClassLoader()).build());
-        smooks.addConfigurations("smooks-config.xml");
+        Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().withClassLoader(Main.class.getClassLoader()).build());
+        smooks.addResourceConfigs("smooks-config.xml");
 
-        HtmlReportGenerator htmlReportGenerator = new HtmlReportGenerator("target/report/report.html");
+        HtmlReportGenerator htmlReportGenerator = new HtmlReportGenerator("target/report/report.html", smooks.getApplicationContext());
         htmlReportGenerator.getReportConfiguration().setAutoCloseWriter(false);
         try {
              // Create an exec context - no profiles....

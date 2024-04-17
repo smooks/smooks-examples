@@ -64,7 +64,7 @@ import org.smooks.scribe.adapter.jpa.EntityManagerRegister;
 import org.smooks.scribe.register.DaoRegister;
 import org.smooks.scribe.register.MapDaoRegister;
 import org.smooks.support.StreamUtils;
-import org.smooks.tck.HsqlServer;
+import org.smooks.testkit.HsqlServer;
 import org.xml.sax.SAXException;
 
 import javax.xml.transform.stream.StreamSource;

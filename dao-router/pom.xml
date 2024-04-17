@@ -47,7 +47,7 @@
         </dependency>
         <dependency>
             <groupId>org.smooks</groupId>
-            <artifactId>smooks-tck</artifactId>
+            <artifactId>smooks-test-kit</artifactId>
         </dependency>
         <dependency>
             <groupId>org.hsqldb</groupId>

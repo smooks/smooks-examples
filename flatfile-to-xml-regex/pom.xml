@@ -42,7 +42,7 @@
         </dependency>
         <dependency>
             <groupId>org.smooks</groupId>
-            <artifactId>smooks-tck</artifactId>
+            <artifactId>smooks-test-kit</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>

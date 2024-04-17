@@ -49,7 +49,7 @@ import org.smooks.cartridges.persistence.jdbc.StatementExec;
 import org.smooks.engine.DefaultApplicationContextBuilder;
 import org.smooks.engine.report.HtmlReportGenerator;
 import org.smooks.support.StreamUtils;
-import org.smooks.tck.HsqlServer;
+import org.smooks.testkit.HsqlServer;
 import org.xml.sax.SAXException;
 
 import javax.xml.transform.stream.StreamSource;

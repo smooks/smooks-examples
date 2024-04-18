@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.smooks.examples</groupId>
         <artifactId>smooks-examples</artifactId>
-        <version>2-SNAPSHOT</version>
+        <version>2</version>
     </parent>
 
     <name>EDIFACT to Java</name>

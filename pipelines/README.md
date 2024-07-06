@@ -194,11 +194,11 @@ Like the inventory pipeline, the CRM pipeline visits each `record` event:
    <core:smooks filterSourceOn="record" maxNodeDepth="0">
        <core:config>
            <smooks-resource-list>
-               <core:delegate-reader>
+               <core:rewrite>
                    <ftl:freemarker applyOnElement="#document">
                        <ftl:template>purchaseOrder.xml.ftl</ftl:template>
                    </ftl:freemarker>
-               </core:delegate-reader>
+               </core:rewrite>
                <resource-config selector="purchaseOrder">
                    <resource>org.smooks.examples.pipeline.CrmVisitor</resource>
                </resource-config>
@@ -209,7 +209,7 @@ Like the inventory pipeline, the CRM pipeline visits each `record` event:
 </smooks-resource-list>
 ```
 
-This pipeline omits `core:action` because the `CrmVisitor` resource HTTP POSTs the result directly to the CRM service. Another notable difference from the CRM pipeline is the `core:delegate-reader`. `delegate-reader` delegates the pipeline event stream to an enclosed `ftl:freemarker` visitor which instantiates the underneath template with the selected `record` event as a parameter:
+This pipeline omits `core:action` because the `CrmVisitor` resource HTTP POSTs the result directly to the CRM service. Another notable difference from the CRM pipeline is the `core:rewrite`. `rewrite` rewrites the pipeline event stream using the enclosed `ftl:freemarker` visitor which instantiates the underneath template with the selected `record` event as a parameter:
 
 ```xml
 <!-- purchaseOrder.xml.ftl -->
@@ -223,7 +223,7 @@ This pipeline omits `core:action` because the `CrmVisitor` resource HTTP POSTs t
 </purchaseOrder>
 ```
 
-`core:delegate-reader` goes on to feed Freemarker’s instantiated template to `CrmVisitor`, in other words, `core:delegate-reader` converts the pipeline event stream into one `CrmVisitor` can visit:
+`core:rewrite` goes on to feed Freemarker’s instantiated template to `CrmVisitor`, in other words, `core:rewrite` converts the pipeline event stream into one `CrmVisitor` can visit:
 
 ```java
 // CrmVisitor.java
@@ -292,7 +292,7 @@ The EDI pipeline (a) aggregates the orders, (b) wraps a header and footer around
 
 The selector for this pipeline is set to `#document`; not `record`. `#document`, which denotes the opening root tag, leads to the pipeline firing only once, necessary for creating a single EDIFACT document header and footer. The enumeration of `record` events is covered later.
 
-The subsequent pipeline config leverages `core:delegate-reader` to convert the event stream into a stream `edifact:unparser` (covered furthered on) can understand:
+The subsequent pipeline config leverages `core:rewrite` to convert the event stream into a stream `edifact:unparser` (covered furthered on) can understand:
 
 ```xml
 <!-- smooks-config.xml -->
@@ -315,7 +315,7 @@ The subsequent pipeline config leverages `core:delegate-reader` to convert the e
        </core:action>
        <core:config>
            <smooks-resource-list>
-               <core:delegate-reader>
+               <core:rewrite>
                    <ftl:freemarker applyOnElement="#document" applyBefore="true">
                        <ftl:template>header.xml.ftl</ftl:template>
                    </ftl:freemarker>
@@ -331,7 +331,7 @@ The subsequent pipeline config leverages `core:delegate-reader` to convert the e
                    <ftl:freemarker applyOnElement="#document">
                        <ftl:template>footer.xml.ftl</ftl:template>
                    </ftl:freemarker>
-               </core:delegate-reader>
+               </core:rewrite>
 
                ...
            </smooks-resource-list>
@@ -341,18 +341,18 @@ The subsequent pipeline config leverages `core:delegate-reader` to convert the e
 </smooks-resource-list>
 ```
 
-`core:delegate-reader` delivers the pipeline event stream to its child visitors. Triggered FreeMarker visitors proceed to materialise their templates and have their output fed to the `edifact:unparser` for serialisation. The previous snippet has a lot to unpack therefore a brief explanation of each enclosed visitor’s role is in order.
+`core:rewrite` delivers the pipeline event stream to its child visitors. Triggered FreeMarker visitors proceed to materialise their templates and have their output fed to the `edifact:unparser` for serialisation. The previous snippet has a lot to unpack therefore a brief explanation of each enclosed visitor’s role is in order.
 
 * ##### Header Visitor
 
 ```xml
 <!-- smooks-config.xml -->
-<core:delegate-reader>
+<core:rewrite>
    <ftl:freemarker applyOnElement="#document" applyBefore="true">
       <ftl:template>header.xml.ftl</ftl:template>
    </ftl:freemarker>
    ...
-</core:delegate-reader>
+</core:rewrite>
 ```
 
 On encountering the opening root tag, this FreeMarker visitor feeds the XML header from the _header.xml.ftl_ template to the `edifact:unparser`. The content of _header.xml.ftl_, shown next, is static for illustration purposes. In the real world, one would want to generate dynamically data elements like sequence numbers.
@@ -435,7 +435,7 @@ On encountering the opening root tag, this FreeMarker visitor feeds the XML head
 
 ```xml
 <!-- smooks-config.xml -->
-<core:delegate-reader>
+<core:rewrite>
    ...
    <core:smooks filterSourceOn="record" maxNodeDepth="0">
       <core:config>
@@ -447,7 +447,7 @@ On encountering the opening root tag, this FreeMarker visitor feeds the XML head
       </core:config>
    </core:smooks>
    ...
-</core:delegate-reader>
+</core:rewrite>
 ```
 
 The pipeline within a pipeline collects the item events and appends them to the record tree (`maxNodeDepth="0"`) before pushing the record tree down to the enclosed FreeMarker visitor. As a side note, the body logic could be simplified by unnesting the FreeMarker visitor and setting the `maxNodeDepth` attribute to 0 in the `#document` pipeline. Unfortunately, such a simplification would come at the cost of reading the entire event stream into memory.
@@ -489,12 +489,12 @@ FreeMarker materialises and feeds the above segment group to the `edifact:unpars
 
 ```xml
 <!-- smooks-config.xml -->
-<core:delegate-reader>
+<core:rewrite>
    ...
    <ftl:freemarker applyOnElement="#document">
       <ftl:template>footer.xml.ftl</ftl:template>
    </ftl:freemarker>
-</core:delegate-reader>
+</core:rewrite>
 ```
 
 This FreeMarker visitor is fired on the closing root tag, following the serialisation of the header and body. The footer residing in _footer.xml.ftl_ is also fed to the `edifact:unparser`:
@@ -540,7 +540,7 @@ The final piece of the solution is the `edifact:unparser`:
        </core:action>
        <core:config>
            <smooks-resource-list>
-               <core:delegate-reader>
+               <core:rewrite>
                    <ftl:freemarker applyOnElement="#document" applyBefore="true">
                        <ftl:template>header.xml.ftl</ftl:template>
                    </ftl:freemarker>
@@ -556,7 +556,7 @@ The final piece of the solution is the `edifact:unparser`:
                    <ftl:freemarker applyOnElement="#document">
                        <ftl:template>footer.xml.ftl</ftl:template>
                    </ftl:freemarker>
-               </core:delegate-reader>
+               </core:rewrite>
 
                <edifact:unparser schemaUri="/d96a/EDIFACT-Messages.dfdl.xsd" unparseOnElement="*">
                    <edifact:messageTypes>
@@ -570,7 +570,7 @@ The final piece of the solution is the `edifact:unparser`:
 </smooks-resource-list>
 ```
 
-As per the `unparseOnElement` wildcard selector, the pipeline delivers all events generated from the `core:delegate-reader` visitors to `edifact:unparser` to be serialised into EDIFACT before the pipeline merges the serialised events with the result stream.
+As per the `unparseOnElement` wildcard selector, the pipeline delivers all events generated from the `core:rewrite` visitors to `edifact:unparser` to be serialised into EDIFACT before the pipeline merges the serialised events with the result stream.
 
 
 ### How to run?

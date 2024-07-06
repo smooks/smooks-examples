@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.smooks.examples</groupId>
         <artifactId>smooks-example-jms-router</artifactId>
-        <version>2</version>
+        <version>3-SNAPSHOT</version>
     </parent>
 
     <name>JMS Splitter-Router</name>

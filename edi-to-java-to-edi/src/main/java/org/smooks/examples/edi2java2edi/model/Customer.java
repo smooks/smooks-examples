@@ -1,8 +1,8 @@
 /*-
  * ========================LICENSE_START=================================
- * Smooks Example :: EDI-to-Java
+ * EDI-to-Java-to-EDI
  * %%
- * Copyright (C) 2020 Smooks
+ * Copyright (C) 2020 - 2024 Smooks
  * %%
  * Licensed under the terms of the Apache License Version 2.0, or
  * the GNU Lesser General Public License version 3.0 or later.
@@ -40,40 +40,48 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * =========================LICENSE_END==================================
  */
-package org.smooks.examples.edi2java;
+package org.smooks.examples.edi2java2edi.model;
 
-import com.thoughtworks.xstream.XStream;
-import org.junit.jupiter.api.Test;
-import org.smooks.io.payload.JavaResult;
-import org.xml.sax.SAXException;
+public class Customer {
 
-import java.io.IOException;
-import java.io.StringReader;
+    private String userName;
+    private String firstName;
+    private String lastName;
+    private String state;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.smooks.support.StreamUtils.readStreamAsString;
-import static org.smooks.testkit.Assertions.compareCharStreams;
+    public String getUserName() {
+        return userName;
+    }
 
-/**
- * @author <a href="mailto:tom.fennelly@gmail.com">tom.fennelly@gmail.com</a>
- */
-public class EDItoJavaTest {
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
-    @Test
-    public void test() throws IOException, SAXException {
-        String expected = readStreamAsString(getClass().getResourceAsStream("/expected.xml"), "UTF-8");
-        Main smooksMain = new Main();
+    public String getFirstName() {
+        return firstName;
+    }
 
-        JavaResult result = smooksMain.runSmooksTransform();
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
-        XStream xstream = new XStream();
-        String actual = xstream.toXML(result.getBean("order"));
+    public String getLastName() {
+        return lastName;
+    }
 
-        actual = actual.replaceFirst("<date>.*</date>", "<date/>");
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
-        boolean matchesExpected = compareCharStreams(new StringReader(expected), new StringReader(actual));
-        if (!matchesExpected) {
-            assertEquals(expected, actual, "Actual does not match expected.");
-        }
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String toString() {
+        return (lastName + ", " + firstName);
     }
 }

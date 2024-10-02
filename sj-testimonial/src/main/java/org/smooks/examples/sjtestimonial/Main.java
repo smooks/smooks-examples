@@ -47,15 +47,19 @@ import org.smooks.api.ExecutionContext;
 import org.smooks.api.SmooksException;
 import org.smooks.engine.DefaultApplicationContextBuilder;
 import org.smooks.engine.report.HtmlReportGenerator;
+import org.smooks.io.sink.JavaSink;
+import org.smooks.io.source.StreamSource;
 import org.smooks.support.StreamUtils;
-import org.smooks.io.payload.JavaResult;
 import org.xml.sax.SAXException;
 import se.sj.ipl.rollingstock.domain.RollingStockList;
 import se.sj.ipl.rollingstock.domain.Rollingstock;
 import se.sj.ipl.rollingstock.domain.Vehicle;
 
-import javax.xml.transform.stream.StreamSource;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Map;
 
@@ -76,15 +80,15 @@ public class Main {
              // Create an exec context - no profiles....
             ExecutionContext executionContext = smooks.createExecutionContext();
             // The result of this transform is a set of Java objects...
-            JavaResult result = new JavaResult();
+            JavaSink sink = new JavaSink();
 
             // Configure the execution context to generate a report...
             executionContext.getContentDeliveryRuntime().addExecutionEventListener(new HtmlReportGenerator("target/report/report.html", smooks.getApplicationContext()));
 
             // Filter the input message to the outputWriter, using the execution context...
-            smooks.filterSource(executionContext, new StreamSource(new ByteArrayInputStream(messageIn)), result);
+            smooks.filterSource(executionContext, new StreamSource<>(new ByteArrayInputStream(messageIn)), sink);
 
-            return result.getResultMap();
+            return sink.getResultMap();
         } finally {
             smooks.close();
         }
@@ -105,7 +109,7 @@ public class Main {
 		for( int i = 0; i < rollingstocks.size() ; i ++ )
 		{
 			Rollingstock rollingstock = rollingstocks.get( i );
-			System.out.println( "" );
+			System.out.println();
 			System.out.println( "RollingstockId : " + rollingstock.getRollingstockId() );
 			System.out.println( "Schedule : " + rollingstock.getSchedule() );
 			List<Vehicle> vehicles = rollingstock.getVehicles();

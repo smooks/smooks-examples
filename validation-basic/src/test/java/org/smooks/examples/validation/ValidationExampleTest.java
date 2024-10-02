@@ -44,7 +44,7 @@ package org.smooks.examples.validation;
 
 import org.junit.jupiter.api.Test;
 import org.smooks.cartridges.validation.OnFailResult;
-import org.smooks.cartridges.validation.ValidationResult;
+import org.smooks.cartridges.validation.ValidationSink;
 import org.xml.sax.SAXException;
 
 import java.io.IOException;
@@ -59,9 +59,9 @@ public class ValidationExampleTest {
 
     @Test
     public void test() throws IOException, SAXException {
-        ValidationResult results = Main.runSmooks(Main.readInputMessage());
-        List<OnFailResult> errors = results.getErrors();
-        List<OnFailResult> warnings = results.getWarnings();
+        ValidationSink sink = Main.runSmooks(Main.readInputMessage());
+        List<OnFailResult> errors = sink.getErrors();
+        List<OnFailResult> warnings = sink.getWarnings();
 
         assertEquals(3, errors.size());
         assertEquals(1, warnings.size());

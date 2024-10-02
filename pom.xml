@@ -13,7 +13,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <smooks.version>2.0.0-RC5-SNAPSHOT</smooks.version>
         <smooks.edifact.cartridge.version>2.0.0-RC4</smooks.edifact.cartridge.version>
-        <spring.version>6.1.12</spring.version>
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
     </properties>
@@ -103,9 +102,9 @@
                 <version>2.7.3</version>
             </dependency>
             <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-context</artifactId>
-                <version>${spring.version}</version>
+                <groupId>org.glassfish.jaxb</groupId>
+                <artifactId>jaxb-runtime</artifactId>
+                <version>4.0.5</version>
             </dependency>
             <dependency>
                 <groupId>org.junit.jupiter</groupId>
@@ -118,11 +117,6 @@
                 <artifactId>mockito-core</artifactId>
                 <version>5.12.0</version>
                 <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.glassfish.jaxb</groupId>
-                <artifactId>jaxb-runtime</artifactId>
-                <version>4.0.5</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -162,35 +156,35 @@
             </plugins>
         </pluginManagement>
         <plugins>
-<!--            <plugin>-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-enforcer-plugin</artifactId>-->
-<!--                <version>3.4.1</version>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <id>enforce</id>-->
-<!--                        <configuration>-->
-<!--                            <rules>-->
-<!--                                <requireReleaseDeps>-->
-<!--                                    <onlyWhenRelease>true</onlyWhenRelease>-->
-<!--                                    <message>No Snapshots Allowed!</message>-->
-<!--                                </requireReleaseDeps>-->
-<!--                                <bannedDependencies>-->
-<!--                                    <excludes>-->
-<!--                                        <exclude>org.slf4j:slf4j-api:[1,2]</exclude>-->
-<!--                                    </excludes>-->
-<!--                                </bannedDependencies>-->
-<!--                                <requireJavaVersion>-->
-<!--                                    <version>17</version>-->
-<!--                                </requireJavaVersion>-->
-<!--                            </rules>-->
-<!--                        </configuration>-->
-<!--                        <goals>-->
-<!--                            <goal>enforce</goal>-->
-<!--                        </goals>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--            </plugin>-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>3.4.1</version>
+                <executions>
+                    <execution>
+                        <id>enforce</id>
+                        <configuration>
+                            <rules>
+                                <requireReleaseDeps>
+                                    <onlyWhenRelease>true</onlyWhenRelease>
+                                    <message>No Snapshots Allowed!</message>
+                                </requireReleaseDeps>
+                                <bannedDependencies>
+                                    <excludes>
+                                        <exclude>org.slf4j:slf4j-api:[1,2]</exclude>
+                                    </excludes>
+                                </bannedDependencies>
+                                <requireJavaVersion>
+                                    <version>17</version>
+                                </requireJavaVersion>
+                            </rules>
+                        </configuration>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>license-maven-plugin</artifactId>

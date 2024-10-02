@@ -45,12 +45,11 @@ package org.smooks.examples.edifact2xml;
 import org.smooks.Smooks;
 import org.smooks.api.SmooksException;
 import org.smooks.engine.DefaultApplicationContextBuilder;
+import org.smooks.io.sink.WriterSink;
+import org.smooks.io.source.StreamSource;
 import org.smooks.support.StreamUtils;
 import org.xml.sax.SAXException;
 
-import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.StringWriter;
 
@@ -73,7 +72,7 @@ public class Main {
 
         try {
             final StringWriter writer = new StringWriter();
-            smooks.filterSource(new StreamSource(Main.class.getResourceAsStream("/PAXLST.edi")), new StreamResult(writer));
+            smooks.filterSource(new StreamSource<>(Main.class.getResourceAsStream("/PAXLST.edi")), new WriterSink<>(writer));
 
             return writer.toString();
         } finally {

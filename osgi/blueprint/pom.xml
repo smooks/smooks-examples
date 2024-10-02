@@ -16,6 +16,7 @@
 
     <properties>
         <gemini.blueprint.version>3.0.0.M01</gemini.blueprint.version>
+        <spring.version>6.1.10</spring.version>
     </properties>
 
     <dependencies>
@@ -74,6 +75,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
+            <version>${spring.version}</version>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>

@@ -46,7 +46,7 @@ import org.junit.jupiter.api.Test;
 import org.smooks.cartridges.javabean.binding.xml.XMLBinding;
 import org.smooks.examples.xmlrw.model.Order;
 import org.smooks.examples.xmlrw.model.OrderItem;
-import org.smooks.io.payload.StringSource;
+import org.smooks.io.source.StringSource;
 import org.xml.sax.SAXException;
 import org.xmlunit.builder.DiffBuilder;
 
@@ -74,17 +74,17 @@ public class XMLReadWriteTest {
 
         assertEquals(1163616328000L, order.getHeader().getDate().getTime());
         assertEquals("Joe", order.getHeader().getCustomerName());
-        assertEquals(new Long(123123), order.getHeader().getCustomerNumber());
+        assertEquals(Long.valueOf(123123), order.getHeader().getCustomerNumber());
 
         OrderItem orderItem = order.getOrderItems().get(0);
         assertEquals(8.90d, orderItem.getPrice(), 0d);
         assertEquals(111, orderItem.getProductId());
-        assertEquals(new Integer(2), orderItem.getQuantity());
+        assertEquals(Integer.valueOf(2), orderItem.getQuantity());
 
         orderItem = order.getOrderItems().get(1);
         assertEquals(5.20d, orderItem.getPrice(), 0d);
         assertEquals(222, orderItem.getProductId());
-        assertEquals(new Integer(7), orderItem.getQuantity());
+        assertEquals(Integer.valueOf(7), orderItem.getQuantity());
 
         StringWriter orderWriter = new StringWriter();
         xmlBinding.toXML(order, orderWriter);

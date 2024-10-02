@@ -48,8 +48,8 @@ import org.smooks.cartridges.javabean.binding.xml.XMLBinding;
 import org.smooks.engine.DefaultApplicationContextBuilder;
 import org.smooks.examples.xmlrwtransform.model.Order;
 import org.smooks.examples.xmlrwtransform.model.OrderItem;
+import org.smooks.io.source.StringSource;
 import org.smooks.support.StreamUtils;
-import org.smooks.io.payload.StringSource;
 import org.xml.sax.SAXException;
 
 import java.io.BufferedReader;

@@ -46,11 +46,35 @@ import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBElement;
 import jakarta.xml.bind.JAXBException;
 import org.smooks.Smooks;
-import org.smooks.edifact.binding.d03b.*;
-import org.smooks.edifact.binding.service.*;
+import org.smooks.edifact.binding.d03b.BGMBeginningOfMessage;
+import org.smooks.edifact.binding.d03b.C002DocumentMessageName;
+import org.smooks.edifact.binding.d03b.C106DocumentMessageIdentification;
+import org.smooks.edifact.binding.d03b.C507DateTimePeriod;
+import org.smooks.edifact.binding.d03b.C516MonetaryAmount;
+import org.smooks.edifact.binding.d03b.DTMDateTimePeriod;
+import org.smooks.edifact.binding.d03b.INVOIC;
+import org.smooks.edifact.binding.d03b.Interchange;
+import org.smooks.edifact.binding.d03b.MOAMonetaryAmount;
+import org.smooks.edifact.binding.d03b.Message;
+import org.smooks.edifact.binding.service.E0001SyntaxIdentifier;
+import org.smooks.edifact.binding.service.E0051ControllingAgencyCoded;
+import org.smooks.edifact.binding.service.E0065MessageType;
+import org.smooks.edifact.binding.service.E0081SectionIdentification;
+import org.smooks.edifact.binding.service.S001SyntaxIdentifier;
+import org.smooks.edifact.binding.service.S002InterchangeSender;
+import org.smooks.edifact.binding.service.S003InterchangeRecipient;
+import org.smooks.edifact.binding.service.S004DateAndTimeOfPreparation;
+import org.smooks.edifact.binding.service.S005RecipientReferencePasswordDetails;
+import org.smooks.edifact.binding.service.S009MessageIdentifier;
+import org.smooks.edifact.binding.service.UNA;
+import org.smooks.edifact.binding.service.UNBInterchangeHeader;
+import org.smooks.edifact.binding.service.UNHMessageHeader;
+import org.smooks.edifact.binding.service.UNSSectionControl;
+import org.smooks.edifact.binding.service.UNTMessageTrailer;
+import org.smooks.edifact.binding.service.UNZInterchangeTrailer;
 import org.smooks.engine.DefaultApplicationContextBuilder;
-import org.smooks.io.payload.ByteSource;
-import org.smooks.io.payload.StringResult;
+import org.smooks.io.sink.StringSink;
+import org.smooks.io.source.ByteSource;
 import org.xml.sax.SAXException;
 
 import javax.xml.namespace.QName;
@@ -130,7 +154,7 @@ public class Main {
         // Turn XML into EDIFACT
         final Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().withClassLoader(Main.class.getClassLoader()).build());
         smooks.addResourceConfigs("smooks-config.xml");
-        StringResult stringResult = new StringResult();
+        StringSink stringResult = new StringSink();
         smooks.filterSource(new ByteSource(byteArrayOutputStream.toByteArray()), stringResult);
 
         return stringResult.getResult();

@@ -47,11 +47,11 @@ import org.smooks.api.ExecutionContext;
 import org.smooks.api.SmooksException;
 import org.smooks.engine.DefaultApplicationContextBuilder;
 import org.smooks.engine.report.HtmlReportGenerator;
+import org.smooks.io.sink.JavaSink;
+import org.smooks.io.source.StreamSource;
 import org.smooks.support.StreamUtils;
-import org.smooks.io.payload.JavaResult;
 import org.xml.sax.SAXException;
 
-import javax.xml.transform.stream.StreamSource;
 import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -77,15 +77,15 @@ public class Main {
             // Create an exec context - no profiles....
             ExecutionContext executionContext = smooks.createExecutionContext();
             // The result of this transform is a set of Java objects...
-            JavaResult result = new JavaResult();
+            JavaSink javaSink = new JavaSink();
 
             // Configure the execution context to generate a report...
             executionContext.getContentDeliveryRuntime().addExecutionEventListener(new HtmlReportGenerator("target/report/report.html", executionContext.getApplicationContext()));
 
             // Filter the input message to extract, using the execution context...
-            smooks.filterSource(executionContext, new StreamSource(new ByteArrayInputStream(messageIn)), result);
+            smooks.filterSource(executionContext, new StreamSource<>(new ByteArrayInputStream(messageIn)), javaSink);
 
-            return (Map) result.getBean("order");
+            return (Map) javaSink.getBean("order");
         } finally {
             smooks.close();
         }

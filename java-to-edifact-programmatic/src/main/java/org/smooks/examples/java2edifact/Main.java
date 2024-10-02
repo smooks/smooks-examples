@@ -75,8 +75,8 @@ import org.smooks.edifact.binding.service.UNTMessageTrailer;
 import org.smooks.edifact.binding.service.UNZInterchangeTrailer;
 import org.smooks.engine.DefaultApplicationContextBuilder;
 import org.smooks.engine.resource.config.DefaultResourceConfig;
-import org.smooks.io.payload.ByteSource;
-import org.smooks.io.payload.StringResult;
+import org.smooks.io.sink.StringSink;
+import org.smooks.io.source.ByteSource;
 
 import javax.xml.namespace.QName;
 import java.io.ByteArrayOutputStream;
@@ -168,9 +168,9 @@ public class Main {
 
         Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().withClassLoader(Main.class.getClassLoader()).build());
         smooks.addResourceConfig(pipeline);
-        StringResult stringResult = new StringResult();
-        smooks.filterSource(new ByteSource(byteArrayOutputStream.toByteArray()), stringResult);
+        StringSink stringSink = new StringSink();
+        smooks.filterSource(new ByteSource(byteArrayOutputStream.toByteArray()), stringSink);
 
-        return stringResult.getResult();
+        return stringSink.getResult();
     }
 }

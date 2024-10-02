@@ -42,7 +42,7 @@
  */
 package org.smooks.examples.groovy;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.smooks.support.StreamUtils;
 import org.smooks.testkit.TextUtils;
 import org.xml.sax.SAXException;
@@ -50,7 +50,7 @@ import org.xml.sax.SAXException;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author <a href="mailto:tom.fennelly@gmail.com">tom.fennelly@gmail.com</a>
@@ -65,6 +65,6 @@ public class GroovyExampleTest {
         StringBuffer s1 = TextUtils.trimLines(new ByteArrayInputStream(expected));
         StringBuffer s2 = TextUtils.trimLines(new ByteArrayInputStream(result.getBytes()));
 
-        assertEquals("Expected:\n" + s1 + "\nActual:\n" + s2, s1.toString(), s2.toString());
+        assertEquals(s1.toString(), s2.toString(), "Expected:\n" + s1 + "\nActual:\n" + s2);
     }
 }

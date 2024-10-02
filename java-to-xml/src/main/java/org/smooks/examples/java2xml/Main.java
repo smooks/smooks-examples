@@ -48,10 +48,10 @@ import org.smooks.api.SmooksException;
 import org.smooks.engine.DefaultApplicationContextBuilder;
 import org.smooks.engine.report.HtmlReportGenerator;
 import org.smooks.examples.java2xml.model.Order;
-import org.smooks.io.payload.JavaSource;
+import org.smooks.io.sink.WriterSink;
+import org.smooks.io.source.JavaSource;
 import org.xml.sax.SAXException;
 
-import javax.xml.transform.stream.StreamResult;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -80,7 +80,7 @@ public class Main {
             executionContext.getContentDeliveryRuntime().addExecutionEventListener(new HtmlReportGenerator("target/report/report.html", executionContext.getApplicationContext()));
 
             // Filter the message to the result writer, using the execution context...
-            smooks.filterSource(executionContext, new JavaSource(inputJavaObject), new StreamResult(writer));
+            smooks.filterSource(executionContext, new JavaSource(inputJavaObject), new WriterSink<>(writer));
 
             return writer.toString();
         } finally {

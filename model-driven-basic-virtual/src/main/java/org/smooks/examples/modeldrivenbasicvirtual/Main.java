@@ -47,9 +47,9 @@ import org.smooks.api.ExecutionContext;
 import org.smooks.api.SmooksException;
 import org.smooks.engine.DefaultApplicationContextBuilder;
 import org.smooks.engine.report.HtmlReportGenerator;
+import org.smooks.io.sink.StringSink;
+import org.smooks.io.source.StringSource;
 import org.smooks.support.StreamUtils;
-import org.smooks.io.payload.StringResult;
-import org.smooks.io.payload.StringSource;
 import org.xml.sax.SAXException;
 
 import java.io.BufferedReader;
@@ -84,15 +84,15 @@ public class Main {
             htmlReportGenerator = new HtmlReportGenerator("target/report/report.html", executionContext.getApplicationContext());
             htmlReportGenerator.getReportConfiguration().setAutoCloseWriter(false);
             StringSource stringSource = new StringSource(new String(message));
-            StringResult stringResult = new StringResult();
+            StringSink stringSink = new StringSink();
 
             // Configure the execution context to generate a report...
             executionContext.getContentDeliveryRuntime().addExecutionEventListener(htmlReportGenerator);
 
             // Filter the message to the outputWriter, using the execution context...
-            smooks.filterSource(executionContext, stringSource, stringResult);
+            smooks.filterSource(executionContext, stringSource, stringSink);
 
-            return stringResult.toString();
+            return stringSink.toString();
         } finally {
             if (htmlReportGenerator != null) {
                 htmlReportGenerator.getReportConfiguration().getOutputWriter().close();

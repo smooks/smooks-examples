@@ -59,6 +59,7 @@ import org.smooks.engine.report.HtmlReportGenerator;
 import org.smooks.examples.daorouter.dao.CustomerDao;
 import org.smooks.examples.daorouter.dao.OrderDao;
 import org.smooks.examples.daorouter.dao.ProductDao;
+import org.smooks.io.source.StreamSource;
 import org.smooks.scribe.adapter.mybatis.SqlSessionRegister;
 import org.smooks.scribe.adapter.jpa.EntityManagerRegister;
 import org.smooks.scribe.register.DaoRegister;
@@ -67,7 +68,6 @@ import org.smooks.support.StreamUtils;
 import org.smooks.testkit.HsqlServer;
 import org.xml.sax.SAXException;
 
-import javax.xml.transform.stream.StreamSource;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
@@ -199,7 +199,7 @@ public class Main {
             EntityTransaction tx = em.getTransaction();
             tx.begin();
 
-            smooks.filterSource(executionContext, new StreamSource(new ByteArrayInputStream(messageInDao)));
+            smooks.filterSource(executionContext, new StreamSource<>(new ByteArrayInputStream(messageInDao)));
 
             tx.commit();
         } finally {

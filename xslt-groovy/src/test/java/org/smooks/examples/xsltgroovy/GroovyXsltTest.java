@@ -42,14 +42,14 @@
  */
 package org.smooks.examples.xsltgroovy;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.smooks.support.StreamUtils;
 import org.xml.sax.SAXException;
 import org.xmlunit.builder.DiffBuilder;
 
 import java.io.IOException;
 
-import static junit.framework.TestCase.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 /**
  * @author <a href="mailto:tom.fennelly@gmail.com">tom.fennelly@gmail.com</a>

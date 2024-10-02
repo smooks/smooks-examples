@@ -47,8 +47,8 @@ import org.smooks.api.ExecutionContext;
 import org.smooks.api.SmooksException;
 import org.smooks.engine.DefaultApplicationContextBuilder;
 import org.smooks.engine.report.HtmlReportGenerator;
+import org.smooks.io.source.ByteSource;
 import org.smooks.support.StreamUtils;
-import org.smooks.io.payload.ByteSource;
 import org.xml.sax.SAXException;
 
 import java.io.BufferedReader;

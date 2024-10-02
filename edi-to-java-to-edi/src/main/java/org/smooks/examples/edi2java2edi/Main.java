@@ -47,15 +47,13 @@ import org.smooks.api.ExecutionContext;
 import org.smooks.api.SmooksException;
 import org.smooks.engine.DefaultApplicationContextBuilder;
 import org.smooks.engine.report.HtmlReportGenerator;
-import org.smooks.io.payload.StringResult;
+import org.smooks.io.sink.StringSink;
+import org.smooks.io.source.StreamSource;
 import org.smooks.support.StreamUtils;
-import org.smooks.io.payload.JavaResult;
 import org.xml.sax.SAXException;
 
-import javax.xml.transform.stream.StreamSource;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
@@ -73,17 +71,17 @@ public class Main {
         smooks.addResourceConfigs("smooks-config.xml");
     }
 
-    protected StringResult runSmooksTransform(ExecutionContext executionContext) throws IOException, SmooksException {
+    protected StringSink runSmooksTransform(ExecutionContext executionContext) throws IOException, SmooksException {
         try {
-            StringResult stringResult = new StringResult();
+            StringSink stringSink = new StringSink();
 
             // Configure the execution context to generate a report...
             executionContext.getContentDeliveryRuntime().addExecutionEventListener(new HtmlReportGenerator("target/report/report.html", executionContext.getApplicationContext()));
 
             // Filter the input message to the outputWriter, using the execution context...
-            smooks.filterSource(executionContext, new StreamSource(new ByteArrayInputStream(messageIn)), stringResult);
+            smooks.filterSource(executionContext, new StreamSource<>(new ByteArrayInputStream(messageIn)), stringSink);
 
-            return stringResult;
+            return stringSink;
         } finally {
             smooks.close();
         }
@@ -98,10 +96,10 @@ public class Main {
 
         Main smooksMain = new Main();
         ExecutionContext executionContext = smooksMain.smooks.createExecutionContext();
-        StringResult result = smooksMain.runSmooksTransform(executionContext);
+        StringSink sink = smooksMain.runSmooksTransform(executionContext);
 
         System.out.println("\n============== EDI -> Java Object Graph -> EDI =============");
-        System.out.println(result);
+        System.out.println(sink);
         System.out.println("======================================\n");
 
         pause("And that's it!  Press 'enter' to finish...");
@@ -126,7 +124,7 @@ public class Main {
         System.out.println("\n");
     }
 
-    public StringResult runSmooksTransform() throws IOException, SAXException {
+    public StringSink runSmooksTransform() throws IOException, SAXException {
         ExecutionContext executionContext = smooks.createExecutionContext();
         return runSmooksTransform(executionContext);
     }

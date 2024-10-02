@@ -47,11 +47,11 @@ import org.smooks.api.ExecutionContext;
 import org.smooks.api.SmooksException;
 import org.smooks.cartridges.rules.RuleEvalResult;
 import org.smooks.cartridges.validation.OnFailResult;
-import org.smooks.cartridges.validation.ValidationResult;
+import org.smooks.cartridges.validation.ValidationSink;
 import org.smooks.engine.DefaultApplicationContextBuilder;
 import org.smooks.engine.report.HtmlReportGenerator;
+import org.smooks.io.source.StringSource;
 import org.smooks.support.StreamUtils;
-import org.smooks.io.payload.StringSource;
 import org.xml.sax.SAXException;
 
 import java.io.FileInputStream;
@@ -74,11 +74,11 @@ public class Main {
         System.out.println(new String(messageIn));
         System.out.println("======================================");
 
-        final ValidationResult results = Main.runSmooks(messageIn);
+        final ValidationSink sink = Main.runSmooks(messageIn);
 
         System.out.println("\n==============Validation Result=======");
         System.out.println("Errors:");
-        for (OnFailResult result : results.getErrors()) {
+        for (OnFailResult result : sink.getErrors()) {
         	RuleEvalResult rule = result.getFailRuleResult();
             System.out.println("\t" + rule.getRuleName() + ": " + result.getMessage());
             System.out.println("\tSwedish:");
@@ -86,7 +86,7 @@ public class Main {
         }
 
         System.out.println("Warnings:");
-        for (OnFailResult result : results.getWarnings()) {
+        for (OnFailResult result : sink.getWarnings()) {
             System.out.println("\t" + result.getMessage());
             System.out.println("\tSwedish:");
             System.out.println("\t" + result.getMessage(new Locale("sv", "SE")));
@@ -95,7 +95,7 @@ public class Main {
         System.out.println("======================================\n");
     }
 
-    protected static ValidationResult runSmooks(final String messageIn) throws IOException, SAXException, SmooksException {
+    protected static ValidationSink runSmooks(final String messageIn) throws IOException, SAXException, SmooksException {
         // Instantiate Smooks with the config...
         final Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().withClassLoader(Main.class.getClassLoader()).build());
         smooks.addResourceConfigs("smooks-config.xml");
@@ -103,7 +103,7 @@ public class Main {
         try {
             // Create an exec context - no profiles....
             final ExecutionContext executionContext = smooks.createExecutionContext();
-            final ValidationResult validationResult = new ValidationResult();
+            final ValidationSink validationResult = new ValidationSink();
 
             // Configure the execution context to generate a report...
             executionContext.getContentDeliveryRuntime().addExecutionEventListener(new HtmlReportGenerator("target/report/report.html", executionContext.getApplicationContext()));

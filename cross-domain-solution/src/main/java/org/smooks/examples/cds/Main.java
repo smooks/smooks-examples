@@ -44,16 +44,15 @@ package org.smooks.examples.cds;
 
 import org.smooks.Smooks;
 import org.smooks.api.ExecutionContext;
+import org.smooks.api.io.Sink;
 import org.smooks.engine.DefaultApplicationContextBuilder;
 import org.smooks.engine.report.HtmlReportGenerator;
-import org.smooks.engine.report.ReportConfiguration;
 import org.smooks.io.AbstractOutputStreamResource;
-import org.smooks.io.payload.StringResult;
+import org.smooks.io.sink.StreamSink;
+import org.smooks.io.sink.StringSink;
+import org.smooks.io.source.StreamSource;
 import org.xml.sax.SAXException;
 
-import javax.xml.transform.Result;
-import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -70,13 +69,13 @@ public class Main {
 
         System.out.println("\n============== Filtering 'i_3001a.good.ntf' ==============\n");
         try (InputStream inputStream = new FileInputStream("i_3001a.good.ntf")) {
-            filterSource(smooks, inputStream, new StreamResult(new FileOutputStream(result)));
+            filterSource(smooks, inputStream, new StreamSink<>(new FileOutputStream(result)));
         }
         System.out.println("============== Saved valid result to 'good-result.ntf' ==============\n");
 
         System.out.println("============== Filtering 'i_3001a.bad.ntf' ==============");
         try (InputStream inputStream = new FileInputStream("i_3001a.bad.ntf")) {
-            filterSource(smooks, inputStream, new StringResult());
+            filterSource(smooks, inputStream, new StringSink());
         }
         System.out.println("============== Saved invalid result to 'bad-result.xml' ==============\n");
 
@@ -103,12 +102,12 @@ public class Main {
         return smooks;
     }
 
-    protected static void filterSource(Smooks smooks, InputStream inputStream, Result result) throws IOException {
+    protected static void filterSource(Smooks smooks, InputStream inputStream, Sink sink) throws IOException {
         ExecutionContext executionContext = smooks.createExecutionContext();
         HtmlReportGenerator htmlReportGenerator = new HtmlReportGenerator("target/report/report.html", executionContext.getApplicationContext());
         htmlReportGenerator.getReportConfiguration().setAutoCloseWriter(false);
         executionContext.getContentDeliveryRuntime().addExecutionEventListener(htmlReportGenerator);
         executionContext.setContentEncoding("ISO-8859-1");
-        smooks.filterSource(executionContext, new StreamSource(inputStream), result);
+        smooks.filterSource(executionContext, new StreamSource<>(inputStream), sink);
     }
 }

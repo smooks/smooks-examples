@@ -47,10 +47,10 @@ import org.smooks.api.ExecutionContext;
 import org.smooks.api.SmooksException;
 import org.smooks.cartridges.routing.file.FileListAccessor;
 import org.smooks.engine.DefaultApplicationContextBuilder;
+import org.smooks.io.sink.StreamSink;
+import org.smooks.io.source.StreamSource;
 import org.xml.sax.SAXException;
 
-import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -75,13 +75,13 @@ public class Main {
             final ExecutionContext executionContext = smooks.createExecutionContext();
 
             //	create the source and result
-            final StreamSource source = new StreamSource(new FileInputStream("target/input-message.xml"));
-            final StreamResult result = null;
+            final StreamSource<FileInputStream> source = new StreamSource<>(new FileInputStream("target/input-message.xml"));
+            final StreamSink<?> sink = null;
 
             //executionContext.getContentDeliveryRuntime().addExecutionEventListener(new HtmlReportGenerator("target/report.html"));
 
             //	perform the transform
-            smooks.filterSource(executionContext, source, result);
+            smooks.filterSource(executionContext, source, sink);
 
             //	display the output from the transform
             System.out.println(LINE_SEP);

@@ -44,7 +44,7 @@ package org.smooks.examples.edi2java;
 
 import com.thoughtworks.xstream.XStream;
 import org.junit.jupiter.api.Test;
-import org.smooks.io.payload.JavaResult;
+import org.smooks.io.sink.JavaSink;
 import org.xml.sax.SAXException;
 
 import java.io.IOException;
@@ -64,10 +64,10 @@ public class EDItoJavaTestCase {
         String expected = readStreamAsString(getClass().getResourceAsStream("/expected.xml"), "UTF-8");
         Main smooksMain = new Main();
 
-        JavaResult result = smooksMain.runSmooksTransform();
+        JavaSink sink = smooksMain.runSmooksTransform();
 
         XStream xstream = new XStream();
-        String actual = xstream.toXML(result.getBean("order"));
+        String actual = xstream.toXML(sink.getBean("order"));
 
         actual = actual.replaceFirst("<date>.*</date>", "<date/>");
 

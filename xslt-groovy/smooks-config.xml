@@ -54,7 +54,7 @@
         </core:action>
         <core:config>
             <smooks-resource-list>
-                <core:delegate-reader>
+                <core:rewrite>
                     <!--
                         Break out the <date> field into separate "time", "day", "month" and "year" fields using Groovy.
                         This makes the complex date field value consumable by something like XSLT.
@@ -72,7 +72,7 @@
                     <resource-config selector="*">
                         <resource>/org/smooks/examples/xsltgroovy/Echo.groovy</resource>
                     </resource-config>
-                </core:delegate-reader>
+                </core:rewrite>
                 <!--
                    Transform the document (as a whole) using XSLT.  The complex date field has already been preprocessed into
                     separate fields using Groovy (see above config) - XSLT can handle it easily now :-)

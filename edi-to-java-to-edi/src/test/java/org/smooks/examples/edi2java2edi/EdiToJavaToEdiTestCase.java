@@ -43,7 +43,7 @@
 package org.smooks.examples.edi2java2edi;
 
 import org.junit.jupiter.api.Test;
-import org.smooks.io.payload.StringResult;
+import org.smooks.io.sink.StringSink;
 import org.xml.sax.SAXException;
 
 import java.io.IOException;
@@ -60,8 +60,8 @@ public class EdiToJavaToEdiTestCase {
         String expected = readStreamAsString(getClass().getResourceAsStream("/expected.edi"), "UTF-8");
         Main smooksMain = new Main();
 
-        StringResult result = smooksMain.runSmooksTransform();
-        String actual = result.getResult();
+        StringSink sink = smooksMain.runSmooksTransform();
+        String actual = sink.getResult();
 
         boolean matchesExpected = compareCharStreams(new StringReader(expected), new StringReader(actual));
         if (!matchesExpected) {

@@ -6,13 +6,13 @@
 
     <groupId>org.smooks.examples</groupId>
     <artifactId>smooks-examples</artifactId>
-    <version>3-SNAPSHOT</version>
+    <version>3</version>
     <packaging>pom</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <smooks.version>2.0.0-RC5-SNAPSHOT</smooks.version>
-        <smooks.edifact.cartridge.version>2.0.0-RC4</smooks.edifact.cartridge.version>
+        <smooks.bom.version>2.0.1</smooks.bom.version>
+        <smooks.edifact.cartridge.version>2.0.0</smooks.edifact.cartridge.version>
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
     </properties>
@@ -82,7 +82,7 @@
             <dependency>
                 <groupId>org.smooks</groupId>
                 <artifactId>smooks-bom</artifactId>
-                <version>${smooks.version}</version>
+                <version>${smooks.bom.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

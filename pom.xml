@@ -6,7 +6,7 @@
 
     <groupId>org.smooks.examples</groupId>
     <artifactId>smooks-examples</artifactId>
-    <version>3</version>
+    <version>4-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <properties>

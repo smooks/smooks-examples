@@ -98,7 +98,7 @@ schema projects.
         <dfdl:format nilKind="literalCharacter" nilValue="%SP;" useNilForDefault="no" nilValueDelimiterPolicy="none" />
       </dfdl:defineFormat>
 
-      <dfdl:format ref="nitfGeneralFormat" />
+      <dfdl:format ref="nitfc:nitfGeneralFormat" />
 
     </xs:appinfo>
   </xs:annotation>

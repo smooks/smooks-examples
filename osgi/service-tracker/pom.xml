@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.smooks.examples</groupId>
         <artifactId>smooks-examples-osgi</artifactId>
-        <version>4</version>
+        <version>5-SNAPSHOT</version>
     </parent>
 
     <name>Service-tracker</name>

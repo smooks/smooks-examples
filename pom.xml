@@ -6,12 +6,12 @@
 
     <groupId>org.smooks.examples</groupId>
     <artifactId>smooks-examples</artifactId>
-    <version>4-SNAPSHOT</version>
+    <version>4</version>
     <packaging>pom</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <smooks.bom.version>2.0.2-SNAPSHOT</smooks.bom.version>
+        <smooks.bom.version>2.1.0</smooks.bom.version>
         <smooks.edifact.cartridge.version>2.0.0</smooks.edifact.cartridge.version>
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>

@@ -49,8 +49,8 @@ import org.smooks.engine.DefaultApplicationContextBuilder;
 import org.smooks.engine.report.HtmlReportGenerator;
 import org.smooks.examples.java2java.srcmodel.Order;
 import org.smooks.examples.java2java.trgmodel.LineOrder;
-import org.smooks.io.payload.JavaResult;
-import org.smooks.io.payload.JavaSource;
+import org.smooks.io.sink.JavaSink;
+import org.smooks.io.source.JavaSource;
 import org.xml.sax.SAXException;
 
 import java.io.BufferedReader;
@@ -69,8 +69,8 @@ public class Main {
      * @return The transformed Java Object XML.
      */
     protected LineOrder runSmooksTransform(Order srcOrder) throws IOException, SAXException {
-        Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(this.getClass().getClassLoader()).build());
-        smooks.addConfigurations("smooks-config.xml");
+        Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().withClassLoader(this.getClass().getClassLoader()).build());
+        smooks.addResourceConfigs("smooks-config.xml");
 
         try {
             ExecutionContext executionContext = smooks.createExecutionContext();
@@ -78,14 +78,14 @@ public class Main {
             // Transform the source Order to the target LineOrder via a
             // JavaSource and JavaResult instance...
             JavaSource source = new JavaSource(srcOrder);
-            JavaResult result = new JavaResult();
+            JavaSink sink = new JavaSink();
 
             // Configure the execution context to generate a report...
-            executionContext.getContentDeliveryRuntime().addExecutionEventListener(new HtmlReportGenerator("target/report/report.html"));
+            executionContext.getContentDeliveryRuntime().addExecutionEventListener(new HtmlReportGenerator("target/report/report.html", executionContext.getApplicationContext()));
 
-            smooks.filterSource(executionContext, source, result);
+            smooks.filterSource(executionContext, source, sink);
 
-            return (LineOrder) result.getBean("lineOrder");
+            return (LineOrder) sink.getBean("lineOrder");
         } finally {
             smooks.close();
         }

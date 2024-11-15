@@ -16,9 +16,9 @@ create "Bean visitors"
 Main -> Smooks : ""filterSource(...)""
 Smooks -> "csv:reader": Input source
 loop CSV stream
-    Smooks <- "csv:reader": XML event
+    Smooks <- "csv:reader": SAX event
     alt path(event) == #document && event is start element
-        Smooks -> "Bean visitors": XML event
+        Smooks -> "Bean visitors": SAX event
         "Bean visitors" -> "Bean Context": Create ""customerList"" bean
     else
         "Bean visitors" -> "Bean Context": Create ""Customer"" & add to ""customerList""

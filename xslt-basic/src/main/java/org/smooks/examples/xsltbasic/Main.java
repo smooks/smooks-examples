@@ -47,11 +47,11 @@ import org.smooks.api.ExecutionContext;
 import org.smooks.api.SmooksException;
 import org.smooks.engine.DefaultApplicationContextBuilder;
 import org.smooks.engine.report.HtmlReportGenerator;
+import org.smooks.io.sink.WriterSink;
+import org.smooks.io.source.StreamSource;
 import org.smooks.support.StreamUtils;
 import org.xml.sax.SAXException;
 
-import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
 import java.io.ByteArrayInputStream;
 import java.io.CharArrayWriter;
 import java.io.FileInputStream;
@@ -68,10 +68,10 @@ public class Main {
     protected static String runSmooksTransform() throws IOException, SAXException, SmooksException {
 
         // Instantiate Smooks with the config...
-        Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(Main.class.getClassLoader()).build());
-        smooks.addConfigurations("smooks-config.xml");
+        Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().withClassLoader(Main.class.getClassLoader()).build());
+        smooks.addResourceConfigs("smooks-config.xml");
 
-        HtmlReportGenerator htmlReportGenerator = new HtmlReportGenerator("target/report/report.html");
+        HtmlReportGenerator htmlReportGenerator = new HtmlReportGenerator("target/report/report.html", smooks.getApplicationContext());
         htmlReportGenerator.getReportConfiguration().setAutoCloseWriter(false);
         try {
              // Create an exec context - no profiles....
@@ -82,7 +82,7 @@ public class Main {
             executionContext.getContentDeliveryRuntime().addExecutionEventListener(htmlReportGenerator);
 
             // Filter the input message to the outputWriter, using the execution context...
-            smooks.filterSource(executionContext, new StreamSource(new ByteArrayInputStream(messageIn)), new StreamResult(outputWriter));
+            smooks.filterSource(executionContext, new StreamSource<>(new ByteArrayInputStream(messageIn)), new WriterSink<>(outputWriter));
 
             return outputWriter.toString();
         } finally {

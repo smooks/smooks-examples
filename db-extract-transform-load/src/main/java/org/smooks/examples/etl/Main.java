@@ -48,15 +48,19 @@ import org.smooks.api.SmooksException;
 import org.smooks.cartridges.persistence.jdbc.StatementExec;
 import org.smooks.engine.DefaultApplicationContextBuilder;
 import org.smooks.engine.report.HtmlReportGenerator;
+import org.smooks.io.source.StreamSource;
 import org.smooks.support.StreamUtils;
-import org.smooks.tck.HsqlServer;
+import org.smooks.testkit.HsqlServer;
 import org.xml.sax.SAXException;
 
-import javax.xml.transform.stream.StreamSource;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -98,16 +102,16 @@ public class Main {
     }
 
     protected void runSmooksTransform() throws IOException, SAXException, SmooksException {
-    	Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(this.getClass().getClassLoader()).build());
-        smooks.addConfigurations("./smooks-configs/smooks-config.xml");
+    	Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().withClassLoader(this.getClass().getClassLoader()).build());
+        smooks.addResourceConfigs("./smooks-configs/smooks-config.xml");
 
         try {
             ExecutionContext executionContext = smooks.createExecutionContext();
 
             // Configure the execution context to generate a report...
-            executionContext.getContentDeliveryRuntime().addExecutionEventListener(new HtmlReportGenerator("target/report/report.html"));
+            executionContext.getContentDeliveryRuntime().addExecutionEventListener(new HtmlReportGenerator("target/report/report.html", executionContext.getApplicationContext()));
 
-            smooks.filterSource(executionContext, new StreamSource(new ByteArrayInputStream(messageIn)), null);
+            smooks.filterSource(executionContext, new StreamSource<>(new ByteArrayInputStream(messageIn)));
         } finally {
             smooks.close();
         }

@@ -47,8 +47,8 @@ import org.smooks.api.ExecutionContext;
 import org.smooks.api.SmooksException;
 import org.smooks.engine.DefaultApplicationContextBuilder;
 import org.smooks.engine.report.HtmlReportGenerator;
+import org.smooks.io.source.ByteSource;
 import org.smooks.support.StreamUtils;
-import org.smooks.io.payload.ByteSource;
 import org.xml.sax.SAXException;
 
 import java.io.BufferedReader;
@@ -72,13 +72,13 @@ public class Main {
 
         pause("Press 'enter' to split the Order message and route the Order Items (plus header info) to the JMS Queue...");
 
-        Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(Main.class.getClassLoader()).build());
-        smooks.addConfigurations("smooks-config.xml");
+        Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().withClassLoader(Main.class.getClassLoader()).build());
+        smooks.addResourceConfigs("smooks-config.xml");
         try {
-            ExecutionContext execContext = smooks.createExecutionContext();
+            ExecutionContext executionContext = smooks.createExecutionContext();
 
-            execContext.getContentDeliveryRuntime().addExecutionEventListener(new HtmlReportGenerator("target/report.html"));
-            smooks.filterSource(execContext, new ByteSource(messageIn), null);
+            executionContext.getContentDeliveryRuntime().addExecutionEventListener(new HtmlReportGenerator("target/report.html", executionContext.getApplicationContext()));
+            smooks.filterSource(executionContext, new ByteSource(messageIn));
         } finally {
             smooks.close();
         }

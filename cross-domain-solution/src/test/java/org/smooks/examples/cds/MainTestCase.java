@@ -43,10 +43,11 @@
 package org.smooks.examples.cds;
 
 import org.apache.commons.io.FileUtils;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.smooks.Smooks;
-import org.smooks.io.payload.ByteResult;
+import org.smooks.io.sink.ByteSink;
 import org.smooks.support.StreamUtils;
 import org.xml.sax.SAXException;
 import org.xmlunit.builder.DiffBuilder;
@@ -73,19 +74,24 @@ public class MainTestCase {
         smooks = Main.createSmooks(deadLetterOutputStream);
     }
 
+    @AfterAll
+    public static void afterAll() {
+        smooks.close();
+    }
+
 	@Test
     public void testFilterSourceGivenValidFile() throws IOException {
         File inputFile = new File("i_3001a.good.ntf");
-        ByteResult byteResult = new ByteResult();
-        Main.filterSource(smooks, Files.newInputStream(inputFile.toPath()), byteResult);
-        assertArrayEquals(FileUtils.readFileToByteArray(inputFile), byteResult.getResult());
+        ByteSink byteSink = new ByteSink();
+        Main.filterSource(smooks, Files.newInputStream(inputFile.toPath()), byteSink);
+        assertArrayEquals(FileUtils.readFileToByteArray(inputFile), byteSink.getResult());
     }
 
     @Test
     public void testFilterSourceGivenInvalidFile() throws IOException {
-        ByteResult byteResult = new ByteResult();
-        Main.filterSource(smooks, new FileInputStream("i_3001a.bad.ntf"), byteResult);
-        assertEquals(0, byteResult.getResult().length);
+        ByteSink byteSink = new ByteSink();
+        Main.filterSource(smooks, new FileInputStream("i_3001a.bad.ntf"), byteSink);
+        assertEquals(0, byteSink.getResult().length);
         assertFalse(DiffBuilder.compare(StreamUtils.readStreamAsString(Thread.currentThread().getContextClassLoader().getResourceAsStream("expected.xml"), "UTF-8"))
                 .ignoreWhitespace()
                 .withTest(new String(deadLetterOutputStream.toByteArray(), StandardCharsets.UTF_8)).build().hasDifferences());

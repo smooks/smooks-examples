@@ -1,0 +1,11 @@
+name: Reference latest Smooks artifacts
+
+on:
+  schedule:
+    - cron: '0 * * * *'
+  workflow_dispatch:
+
+jobs:
+  ref-latest:
+    uses: smooks/.github/.github/workflows/ref-latest.yml@master
+    secrets: inherit

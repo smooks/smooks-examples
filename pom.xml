@@ -6,14 +6,13 @@
 
     <groupId>org.smooks.examples</groupId>
     <artifactId>smooks-examples</artifactId>
-    <version>1.0.5</version>
+    <version>5-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <smooks.version>2.0.0-RC3</smooks.version>
-        <smooks.edifact.cartridge.version>2.0.0-RC3</smooks.edifact.cartridge.version>
-        <spring.version>6.1.2</spring.version>
+        <smooks.bom.version>2.1.0</smooks.bom.version>
+        <smooks.edifact.cartridge.version>2.0.1</smooks.edifact.cartridge.version>
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
     </properties>
@@ -43,6 +42,7 @@
         <module>dynamic-model-builder</module>
         <module>edi-to-xml</module>
         <module>edi-to-java</module>
+        <module>edi-to-java-to-edi</module>
         <module>edi-with-import-to-java</module>
         <module>edifact-to-java</module>
         <module>edifact-to-xml</module>
@@ -66,6 +66,7 @@
         <module>validation-basic</module>
         <module>xml-read-write</module>
         <module>xml-read-write-transform</module>
+        <module>xml-to-edi</module>
         <module>xml-to-java</module>
         <module>xml-to-java-virtual</module>
         <module>xml-to-edifact-override</module>
@@ -82,19 +83,19 @@
             <dependency>
                 <groupId>org.smooks</groupId>
                 <artifactId>smooks-bom</artifactId>
-                <version>${smooks.version}</version>
+                <version>${smooks.bom.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
             <dependency>
                 <groupId>org.xmlunit</groupId>
                 <artifactId>xmlunit-core</artifactId>
-                <version>2.9.1</version>
+                <version>2.10.0</version>
             </dependency>
             <dependency>
                 <groupId>org.hsqldb</groupId>
                 <artifactId>hsqldb</artifactId>
-                <version>2.7.2</version>
+                <version>2.7.4</version>
             </dependency>
             <dependency>
                 <groupId>xalan</groupId>
@@ -102,26 +103,21 @@
                 <version>2.7.3</version>
             </dependency>
             <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-context</artifactId>
-                <version>${spring.version}</version>
+                <groupId>org.glassfish.jaxb</groupId>
+                <artifactId>jaxb-runtime</artifactId>
+                <version>4.0.5</version>
             </dependency>
             <dependency>
                 <groupId>org.junit.jupiter</groupId>
                 <artifactId>junit-jupiter-engine</artifactId>
-                <version>5.10.1</version>
+                <version>5.11.3</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.mockito</groupId>
                 <artifactId>mockito-core</artifactId>
-                <version>5.8.0</version>
+                <version>5.14.2</version>
                 <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.glassfish.jaxb</groupId>
-                <artifactId>jaxb-runtime</artifactId>
-                <version>4.0.4</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -137,7 +133,7 @@
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>exec-maven-plugin</artifactId>
-                    <version>3.1.1</version>
+                    <version>3.5.0</version>
                     <executions>
                         <execution>
                             <goals>
@@ -149,7 +145,7 @@
                 <plugin>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
-                    <version>3.2.1</version>
+                    <version>3.3.5</version>
                     <executions>
                         <execution>
                             <goals>
@@ -164,7 +160,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
-                <version>3.4.1</version>
+                <version>3.5.0</version>
                 <executions>
                     <execution>
                         <id>enforce</id>
@@ -193,7 +189,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>license-maven-plugin</artifactId>
-                <version>2.3.0</version>
+                <version>2.4.0</version>
                 <configuration>
                     <verbose>false</verbose>
                     <addJavaLicenseAfterPackage>false</addJavaLicenseAfterPackage>
@@ -228,7 +224,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.2.3</version>
+                <version>3.5.2</version>
                 <configuration>
                     <trimStackTrace>false</trimStackTrace>
                 </configuration>
@@ -236,7 +232,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.12.1</version>
+                <version>3.13.0</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
@@ -245,7 +241,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
-                <version>3.1.1</version>
+                <version>3.5.0</version>
                 <configuration>
                     <executable>java</executable>
                     <arguments>
@@ -262,7 +258,7 @@
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-slf4j2-impl</artifactId>
-            <version>2.22.0</version>
+            <version>2.24.1</version>
         </dependency>
     </dependencies>
 

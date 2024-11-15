@@ -1,0 +1,22 @@
+name: Cut a release
+
+on:
+  workflow_dispatch:
+    inputs:
+      newVersion:
+        required: true
+        description: New release version no.
+        type: string
+      draftGitHubRelease:
+        required: false
+        description: Draft a GitHub release.
+        type: boolean
+        default: false
+
+jobs:
+  cut-release:
+    uses: smooks/.github/.github/workflows/release.yml@master
+    secrets: inherit
+    with:
+      newVersion: ${{ inputs.newVersion }}
+      draftGitHubRelease: ${{ inputs.draftGitHubRelease }}

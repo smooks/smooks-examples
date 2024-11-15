@@ -59,15 +59,15 @@ import org.smooks.engine.report.HtmlReportGenerator;
 import org.smooks.examples.daorouter.dao.CustomerDao;
 import org.smooks.examples.daorouter.dao.OrderDao;
 import org.smooks.examples.daorouter.dao.ProductDao;
+import org.smooks.io.source.StreamSource;
 import org.smooks.scribe.adapter.mybatis.SqlSessionRegister;
 import org.smooks.scribe.adapter.jpa.EntityManagerRegister;
 import org.smooks.scribe.register.DaoRegister;
 import org.smooks.scribe.register.MapDaoRegister;
 import org.smooks.support.StreamUtils;
-import org.smooks.tck.HsqlServer;
+import org.smooks.testkit.HsqlServer;
 import org.xml.sax.SAXException;
 
-import javax.xml.transform.stream.StreamSource;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
@@ -178,14 +178,14 @@ public class Main {
 
     protected void runSmooksTransformWithDao() throws IOException, SAXException, SmooksException {
 
-        Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(this.getClass().getClassLoader()).build());
-        smooks.addConfigurations("./smooks-configs/smooks-dao-config.xml");
+        Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().withClassLoader(this.getClass().getClassLoader()).build());
+        smooks.addResourceConfigs("./smooks-configs/smooks-dao-config.xml");
 
         try {
             ExecutionContext executionContext = smooks.createExecutionContext();
 
             // Configure the execution context to generate a report...
-            executionContext.getContentDeliveryRuntime().addExecutionEventListener(new HtmlReportGenerator("target/report/report-dao.html"));
+            executionContext.getContentDeliveryRuntime().addExecutionEventListener(new HtmlReportGenerator("target/report/report-dao.html", executionContext.getApplicationContext()));
 
             DaoRegister<Object> register =
                 MapDaoRegister.builder()
@@ -199,7 +199,7 @@ public class Main {
             EntityTransaction tx = em.getTransaction();
             tx.begin();
 
-            smooks.filterSource(executionContext, new StreamSource(new ByteArrayInputStream(messageInDao)));
+            smooks.filterSource(executionContext, new StreamSource<>(new ByteArrayInputStream(messageInDao)));
 
             tx.commit();
         } finally {
@@ -209,14 +209,14 @@ public class Main {
 
     protected void runSmooksTransformWithJpa() throws IOException, SAXException, SmooksException {
 
-        Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(this.getClass().getClassLoader()).build());
-        smooks.addConfigurations("./smooks-configs/smooks-jpa-config.xml");
+        Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().withClassLoader(this.getClass().getClassLoader()).build());
+        smooks.addResourceConfigs("./smooks-configs/smooks-jpa-config.xml");
 
         try {
             ExecutionContext executionContext = smooks.createExecutionContext();
 
             // Configure the execution context to generate a report...
-            executionContext.getContentDeliveryRuntime().addExecutionEventListener(new HtmlReportGenerator("target/report/report-jpa.html"));
+            executionContext.getContentDeliveryRuntime().addExecutionEventListener(new HtmlReportGenerator("target/report/report-jpa.html", executionContext.getApplicationContext()));
 
             PersistenceUtil.setDAORegister(executionContext, new EntityManagerRegister(em));
 
@@ -234,14 +234,14 @@ public class Main {
 
     protected void runSmooksTransformWithMyBatis() throws IOException, SAXException, SmooksException {
 
-    	Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(this.getClass().getClassLoader()).build());
-        smooks.addConfigurations("./smooks-configs/smooks-mybatis-config.xml");
+    	Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().withClassLoader(this.getClass().getClassLoader()).build());
+        smooks.addResourceConfigs("./smooks-configs/smooks-mybatis-config.xml");
 
         try {
             ExecutionContext executionContext = smooks.createExecutionContext();
 
             // Configure the execution context to generate a report...
-            executionContext.getContentDeliveryRuntime().addExecutionEventListener(new HtmlReportGenerator("target/report/report-mybatis.html"));
+            executionContext.getContentDeliveryRuntime().addExecutionEventListener(new HtmlReportGenerator("target/report/report-mybatis.html", executionContext.getApplicationContext()));
 
             PersistenceUtil.setDAORegister(executionContext, new SqlSessionRegister(sqlSession));
             smooks.filterSource(executionContext, new StreamSource(new ByteArrayInputStream(messageInMyBatis)));

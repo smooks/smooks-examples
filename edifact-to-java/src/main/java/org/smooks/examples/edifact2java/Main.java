@@ -48,13 +48,13 @@ import org.smooks.Smooks;
 import org.smooks.api.SmooksException;
 import org.smooks.edifact.binding.d03b.Interchange;
 import org.smooks.engine.DefaultApplicationContextBuilder;
-import org.smooks.io.payload.StringSource;
+import org.smooks.io.sink.WriterSink;
+import org.smooks.io.source.StreamSource;
 import org.smooks.support.StreamUtils;
 import org.xml.sax.SAXException;
 
-import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
 import java.io.IOException;
+import java.io.StringReader;
 import java.io.StringWriter;
 
 /**
@@ -67,15 +67,15 @@ public class Main {
 
     protected static Interchange runSmooksTransform() throws IOException, SAXException, SmooksException, JAXBException {
         // Configure Smooks using a Smooks config...
-        Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(Main.class.getClassLoader()).build());
-        smooks.addConfigurations("smooks-config.xml");
+        Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().withClassLoader(Main.class.getClassLoader()).build());
+        smooks.addResourceConfigs("smooks-config.xml");
 
         try {
             final StringWriter writer = new StringWriter();
-            smooks.filterSource(new StreamSource(Main.class.getResourceAsStream("/PAXLST.edi")), new StreamResult(writer));
+            smooks.filterSource(new StreamSource<>(Main.class.getResourceAsStream("/PAXLST.edi")), new WriterSink<>(writer));
 
             JAXBContext jaxbContext = JAXBContext.newInstance(Interchange.class, org.smooks.edifact.binding.service.ObjectFactory.class, org.smooks.edifact.binding.d03b.ObjectFactory.class);
-            return  (Interchange) jaxbContext.createUnmarshaller().unmarshal(new StringSource(writer.toString()));
+            return  (Interchange) jaxbContext.createUnmarshaller().unmarshal(new javax.xml.transform.stream.StreamSource(new StringReader(writer.toString())));
         } finally {
             smooks.close();
         }

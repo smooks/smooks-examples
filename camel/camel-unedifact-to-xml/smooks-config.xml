@@ -7,7 +7,7 @@
     <edifact:parser schemaUri="/d96a/EDIFACT-Messages.dfdl.xsd"/>
 
     <core:exports>
-        <core:result type="org.smooks.io.payload.StringResult"/>
+        <core:result type="org.smooks.io.sink.StringSink"/>
     </core:exports>
 
 </smooks-resource-list>

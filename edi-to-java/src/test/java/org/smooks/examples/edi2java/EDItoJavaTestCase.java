@@ -44,30 +44,30 @@ package org.smooks.examples.edi2java;
 
 import com.thoughtworks.xstream.XStream;
 import org.junit.jupiter.api.Test;
-import org.smooks.io.payload.JavaResult;
+import org.smooks.io.sink.JavaSink;
 import org.xml.sax.SAXException;
 
 import java.io.IOException;
 import java.io.StringReader;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.smooks.support.StreamUtils.compareCharStreams;
 import static org.smooks.support.StreamUtils.readStreamAsString;
+import static org.smooks.testkit.Assertions.compareCharStreams;
 
 /**
  * @author <a href="mailto:tom.fennelly@gmail.com">tom.fennelly@gmail.com</a>
  */
-public class EDItoJavaTest {
+public class EDItoJavaTestCase {
 
     @Test
     public void test() throws IOException, SAXException {
         String expected = readStreamAsString(getClass().getResourceAsStream("/expected.xml"), "UTF-8");
         Main smooksMain = new Main();
 
-        JavaResult result = smooksMain.runSmooksTransform();
+        JavaSink sink = smooksMain.runSmooksTransform();
 
         XStream xstream = new XStream();
-        String actual = xstream.toXML(result.getBean("order"));
+        String actual = xstream.toXML(sink.getBean("order"));
 
         actual = actual.replaceFirst("<date>.*</date>", "<date/>");
 

@@ -45,10 +45,10 @@ package org.smooks.examples.freemarkerhugetransform;
 import org.smooks.Smooks;
 import org.smooks.api.SmooksException;
 import org.smooks.engine.DefaultApplicationContextBuilder;
+import org.smooks.io.sink.StreamSink;
+import org.smooks.io.source.StreamSource;
 import org.xml.sax.SAXException;
 
-import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -63,10 +63,10 @@ public class Main {
     public static void main(String[] args) throws IOException, SAXException, SmooksException {
         pause("Press 'enter' to process the contents of the 'input-message.xml' file.  The result wil be output to the console...");
 
-        Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(Main.class.getClassLoader()).build());
-        smooks.addConfigurations("smooks-config.xml");
+        Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().withClassLoader(Main.class.getClassLoader()).build());
+        smooks.addResourceConfigs("smooks-config.xml");
         try {
-            smooks.filterSource(new StreamSource(new FileInputStream("input-message.xml")), new StreamResult(System.out));
+            smooks.filterSource(new StreamSource<>(new FileInputStream("input-message.xml")), new StreamSink<>(System.out));
         } finally {
             smooks.close();
         }

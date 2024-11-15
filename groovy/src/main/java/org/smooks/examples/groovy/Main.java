@@ -47,11 +47,11 @@ import org.smooks.api.ExecutionContext;
 import org.smooks.api.SmooksException;
 import org.smooks.engine.DefaultApplicationContextBuilder;
 import org.smooks.engine.report.HtmlReportGenerator;
+import org.smooks.io.sink.WriterSink;
+import org.smooks.io.source.StringSource;
 import org.smooks.support.StreamUtils;
-import org.smooks.io.payload.StringSource;
 import org.xml.sax.SAXException;
 
-import javax.xml.transform.stream.StreamResult;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.StringWriter;
@@ -66,17 +66,17 @@ public class Main {
 
     protected static String runSmooksTransform() throws IOException, SAXException, SmooksException {
 
-        Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(Main.class.getClassLoader()).build());
-        smooks.addConfigurations("smooks-config.xml");
+        Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().withClassLoader(Main.class.getClassLoader()).build());
+        smooks.addResourceConfigs("smooks-config.xml");
 
         try {
             ExecutionContext executionContext = smooks.createExecutionContext();
             StringWriter writer = new StringWriter();
 
             // Configure the execution context to generate a report...
-            executionContext.getContentDeliveryRuntime().addExecutionEventListener(new HtmlReportGenerator("target/report/report.html"));
+            executionContext.getContentDeliveryRuntime().addExecutionEventListener(new HtmlReportGenerator("target/report/report.html", executionContext.getApplicationContext()));
 
-            smooks.filterSource(executionContext, new StringSource(messageIn), new StreamResult(writer));
+            smooks.filterSource(executionContext, new StringSource(messageIn), new WriterSink<>(writer));
 
             return writer.toString();
         } finally {
@@ -86,7 +86,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException, SAXException, SmooksException {
         System.out.println("\n\n==============Message In==============");
-        System.out.println(new String(messageIn));
+        System.out.println(messageIn);
         System.out.println("======================================\n");
 
         String messageOut = Main.runSmooksTransform();

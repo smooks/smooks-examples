@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.smooks.examples</groupId>
         <artifactId>smooks-examples</artifactId>
-        <version>1.0.5</version>
+        <version>5-SNAPSHOT</version>
     </parent>
 
     <name>EDI-to-DB ETL</name>
@@ -47,7 +47,7 @@
         </dependency>
         <dependency>
             <groupId>org.smooks</groupId>
-            <artifactId>smooks-tck</artifactId>
+            <artifactId>smooks-test-kit</artifactId>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>

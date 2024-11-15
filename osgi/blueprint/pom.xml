@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.smooks.examples</groupId>
         <artifactId>smooks-examples-osgi</artifactId>
-        <version>1.0.5</version>
+        <version>5-SNAPSHOT</version>
     </parent>
 
     <name>Blueprint</name>
@@ -16,6 +16,7 @@
 
     <properties>
         <gemini.blueprint.version>3.0.0.M01</gemini.blueprint.version>
+        <spring.version>6.1.14</spring.version>
     </properties>
 
     <dependencies>
@@ -74,6 +75,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
+            <version>${spring.version}</version>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>

@@ -23,11 +23,11 @@
     <core:smooks filterSourceOn="record" maxNodeDepth="0">
         <core:config>
             <smooks-resource-list>
-                <core:delegate-reader>
+                <core:rewrite>
                     <ftl:freemarker applyOnElement="#document">
                         <ftl:template>purchaseOrder.xml.ftl</ftl:template>
                     </ftl:freemarker>
-                </core:delegate-reader>
+                </core:rewrite>
                 <resource-config selector="purchaseOrder">
                     <resource>org.smooks.examples.pipeline.CrmVisitor</resource>
                 </resource-config>
@@ -43,7 +43,7 @@
         </core:action>
         <core:config>
             <smooks-resource-list>
-                <core:delegate-reader>
+                <core:rewrite>
                     <ftl:freemarker applyOnElement="#document" applyBefore="true">
                         <ftl:template>header.xml.ftl</ftl:template>
                     </ftl:freemarker>
@@ -59,7 +59,7 @@
                     <ftl:freemarker applyOnElement="#document">
                         <ftl:template>footer.xml.ftl</ftl:template>
                     </ftl:freemarker>
-                </core:delegate-reader>
+                </core:rewrite>
 
                 <edifact:unparser schemaUri="/d96a/EDIFACT-Messages.dfdl.xsd" unparseOnNode="*">
                     <edifact:messageTypes>

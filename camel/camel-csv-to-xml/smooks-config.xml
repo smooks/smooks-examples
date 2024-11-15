@@ -7,7 +7,7 @@
     <csv:reader fields="firstname,lastname,gender,age,country" rootElementName="people" recordElementName="person" />
     
     <core:exports>
-        <core:result type="org.smooks.io.payload.StringResult"/>
+        <core:result type="org.smooks.io.sink.StringSink"/>
     </core:exports>
 
 </smooks-resource-list>

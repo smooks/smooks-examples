@@ -47,9 +47,9 @@ import org.smooks.api.ExecutionContext;
 import org.smooks.api.SmooksException;
 import org.smooks.engine.DefaultApplicationContextBuilder;
 import org.smooks.engine.report.HtmlReportGenerator;
+import org.smooks.io.sink.StringSink;
+import org.smooks.io.source.StringSource;
 import org.smooks.support.StreamUtils;
-import org.smooks.io.payload.StringResult;
-import org.smooks.io.payload.StringSource;
 import org.xml.sax.SAXException;
 
 import java.io.BufferedReader;
@@ -67,8 +67,8 @@ public class Main {
     private Smooks smooks;
 
     protected Main() throws IOException, SAXException {
-        smooks = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(this.getClass().getClassLoader()).build());
-        smooks.addConfigurations("smooks-config.xml");
+        smooks = new Smooks(new DefaultApplicationContextBuilder().withClassLoader(this.getClass().getClassLoader()).build());
+        smooks.addResourceConfigs("smooks-config.xml");
     }
 
     /**
@@ -77,23 +77,26 @@ public class Main {
      * @return The transformed request/response.
      */
     protected String runSmooksTransform(byte[] message) throws IOException {
-        HtmlReportGenerator htmlReportGenerator = new HtmlReportGenerator("target/report/report.html");
-        htmlReportGenerator.getReportConfiguration().setAutoCloseWriter(false);
+        HtmlReportGenerator htmlReportGenerator = null;
         try {
             // Create an exec context for the target profile....
             ExecutionContext executionContext = smooks.createExecutionContext();
+            htmlReportGenerator = new HtmlReportGenerator("target/report/report.html", executionContext.getApplicationContext());
+            htmlReportGenerator.getReportConfiguration().setAutoCloseWriter(false);
             StringSource stringSource = new StringSource(new String(message));
-            StringResult stringResult = new StringResult();
+            StringSink stringSink = new StringSink();
 
             // Configure the execution context to generate a report...
             executionContext.getContentDeliveryRuntime().addExecutionEventListener(htmlReportGenerator);
 
             // Filter the message to the outputWriter, using the execution context...
-            smooks.filterSource(executionContext, stringSource, stringResult);
+            smooks.filterSource(executionContext, stringSource, stringSink);
 
-            return stringResult.toString();
+            return stringSink.toString();
         } finally {
-            htmlReportGenerator.getReportConfiguration().getOutputWriter().close();
+            if (htmlReportGenerator != null) {
+                htmlReportGenerator.getReportConfiguration().getOutputWriter().close();
+            }
             smooks.close();
         }
     }

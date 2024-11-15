@@ -75,8 +75,8 @@ import org.smooks.edifact.binding.service.UNTMessageTrailer;
 import org.smooks.edifact.binding.service.UNZInterchangeTrailer;
 import org.smooks.engine.DefaultApplicationContextBuilder;
 import org.smooks.engine.resource.config.DefaultResourceConfig;
-import org.smooks.io.payload.ByteSource;
-import org.smooks.io.payload.StringResult;
+import org.smooks.io.sink.StringSink;
+import org.smooks.io.source.ByteSource;
 
 import javax.xml.namespace.QName;
 import java.io.ByteArrayOutputStream;
@@ -166,11 +166,11 @@ public class Main {
         pipeline.setParameter("action", "REPLACE");
         pipeline.setParameter("smooksResourceList", "<smooks-resource-list xmlns=\"https://www.smooks.org/xsd/smooks-2.0.xsd\">" + edifactUnparser.toXml() + "</smooks-resource-list>");
 
-        Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(Main.class.getClassLoader()).build());
-        smooks.addConfiguration(pipeline);
-        StringResult stringResult = new StringResult();
-        smooks.filterSource(new ByteSource(byteArrayOutputStream.toByteArray()), stringResult);
+        Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().withClassLoader(Main.class.getClassLoader()).build());
+        smooks.addResourceConfig(pipeline);
+        StringSink stringSink = new StringSink();
+        smooks.filterSource(new ByteSource(byteArrayOutputStream.toByteArray()), stringSink);
 
-        return stringResult.getResult();
+        return stringSink.getResult();
     }
 }

@@ -48,9 +48,9 @@ import org.smooks.api.bean.lifecycle.BeanContextLifecycleObserver;
 import org.smooks.api.bean.lifecycle.BeanLifecycle;
 import org.smooks.engine.DefaultApplicationContextBuilder;
 import org.smooks.examples.drools.model.StockTick;
+import org.smooks.io.source.StreamSource;
 import org.xml.sax.SAXException;
 
-import javax.xml.transform.stream.StreamSource;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.concurrent.BlockingQueue;
@@ -65,13 +65,13 @@ public class SmooksEventSource implements EventSource {
     private final BlockingQueue<StockTick> inQueue = new SynchronousQueue<>();
 
     public SmooksEventSource() throws IOException, SAXException {
-        smooks = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(this.getClass().getClassLoader()).build());
-        smooks.addConfigurations("./smooks-config.xml");
+        smooks = new Smooks(new DefaultApplicationContextBuilder().withClassLoader(this.getClass().getClassLoader()).build());
+        smooks.addResourceConfigs("./smooks-config.xml");
         smooks.getApplicationContext().addBeanContextLifecycleObserver(new BeanContextObserver());
     }
 
     public void processFeed(final InputStream tickerFeed) {
-        new Thread(() -> smooks.filterSource(new StreamSource(tickerFeed))).start();
+        new Thread(() -> smooks.filterSource(new StreamSource<>(tickerFeed))).start();
     }
 
     public boolean hasNext() {

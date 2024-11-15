@@ -46,10 +46,10 @@ import org.smooks.Smooks;
 import org.smooks.api.ExecutionContext;
 import org.smooks.examples.osgi.blueprint.model.Order;
 import org.smooks.examples.osgi.blueprint.model.OrderItem;
+import org.smooks.io.sink.JavaSink;
+import org.smooks.io.source.StreamSource;
 import org.smooks.support.StreamUtils;
-import org.smooks.io.payload.JavaResult;
 
-import javax.xml.transform.stream.StreamSource;
 import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -63,11 +63,11 @@ public class ExampleUtil
     public static Order performFiltering(String input, Smooks smooks)
     {
         ExecutionContext executionContext = smooks.createExecutionContext();
-        JavaResult result = new JavaResult();
-        StreamSource source = new StreamSource(new ByteArrayInputStream(readFileContents(input)));
-        smooks.filterSource(executionContext, source, result);
+        JavaSink sink = new JavaSink();
+        StreamSource<ByteArrayInputStream> source = new StreamSource<>(new ByteArrayInputStream(readFileContents(input)));
+        smooks.filterSource(executionContext, source, sink);
             
-        Order order = (Order) result.getBean("order");
+        Order order = (Order) sink.getBean("order");
         return order;
     }
     

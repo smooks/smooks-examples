@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.smooks.examples</groupId>
         <artifactId>smooks-examples</artifactId>
-        <version>1.0.5</version>
+        <version>5-SNAPSHOT</version>
     </parent>
 
     <name>YAML-to-Java</name>
@@ -42,6 +42,11 @@
         <dependency>
             <groupId>org.smooks.cartridges</groupId>
             <artifactId>smooks-javabean-cartridge</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.smooks</groupId>
+            <artifactId>smooks-test-kit</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>

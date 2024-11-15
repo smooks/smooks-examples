@@ -44,9 +44,9 @@ package org.smooks.examples.etl;
 
 import org.junit.jupiter.api.Test;
 import org.smooks.Smooks;
+import org.smooks.io.source.ReaderSource;
 import org.xml.sax.SAXException;
 
-import javax.xml.transform.stream.StreamSource;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -100,7 +100,7 @@ public class DbETLTest {
 
             try {
                 long start = System.currentTimeMillis();
-                smooks.filterSource(smooks.createExecutionContext(), new StreamSource(reader), null);
+                smooks.filterSource(smooks.createExecutionContext(), new ReaderSource<>(reader));
                 System.out.println("Took: " + (System.currentTimeMillis() - start));
             } finally {
                 reader.close();

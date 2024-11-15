@@ -47,9 +47,9 @@ import org.smooks.api.ExecutionContext;
 import org.smooks.api.SmooksException;
 import org.smooks.engine.DefaultApplicationContextBuilder;
 import org.smooks.engine.report.HtmlReportGenerator;
+import org.smooks.io.sink.JavaSink;
+import org.smooks.io.source.StringSource;
 import org.smooks.support.StreamUtils;
-import org.smooks.io.payload.JavaResult;
-import org.smooks.io.payload.StringSource;
 import org.xml.sax.SAXException;
 
 import java.io.FileInputStream;
@@ -67,19 +67,19 @@ public class Main {
     @SuppressWarnings("unchecked")
 	protected static List<Customer> runSmooksTransform() throws IOException, SAXException, SmooksException {
 
-        Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(Main.class.getClassLoader()).build());
-        smooks.addConfigurations("smooks-config.xml");
+        Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().withClassLoader(Main.class.getClassLoader()).build());
+        smooks.addResourceConfigs("smooks-config.xml");
 
         try {
             ExecutionContext executionContext = smooks.createExecutionContext();
-            JavaResult result = new JavaResult();
+            JavaSink sink = new JavaSink();
 
             // Configure the execution context to generate a report...
-            executionContext.getContentDeliveryRuntime().addExecutionEventListener(new HtmlReportGenerator("target/report/report.html"));
+            executionContext.getContentDeliveryRuntime().addExecutionEventListener(new HtmlReportGenerator("target/report/report.html", executionContext.getApplicationContext()));
 
-            smooks.filterSource(executionContext, new StringSource(messageIn), result);
+            smooks.filterSource(executionContext, new StringSource(messageIn), sink);
 
-            return (List<Customer>) result.getBean("customerList");
+            return (List<Customer>) sink.getBean("customerList");
         } finally {
             smooks.close();
         }

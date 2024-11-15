@@ -47,16 +47,15 @@ import org.smooks.api.ExecutionContext;
 import org.smooks.api.SmooksException;
 import org.smooks.engine.DefaultApplicationContextBuilder;
 import org.smooks.engine.report.HtmlReportGenerator;
+import org.smooks.io.sink.StringSink;
+import org.smooks.io.source.StreamSource;
 import org.smooks.support.StreamUtils;
-import org.smooks.io.payload.StringResult;
 import org.xml.sax.SAXException;
 
 import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.stream.StreamSource;
 import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Locale;
 
 /**
  * Simple example main class.
@@ -68,23 +67,23 @@ public class Main {
 
     protected static String runSmooksTransform() throws IOException, SAXException, SmooksException {
         // Instantiate Smooks with the config...
-        Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(Main.class.getClassLoader()).build());
-        smooks.addConfigurations("smooks-config.xml");
-        HtmlReportGenerator htmlReportGenerator = new HtmlReportGenerator("target/report/report.html");
+        Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().withClassLoader(Main.class.getClassLoader()).build());
+        smooks.addResourceConfigs("smooks-config.xml");
+        HtmlReportGenerator htmlReportGenerator = new HtmlReportGenerator("target/report/report.html", smooks.getApplicationContext());
         htmlReportGenerator.getReportConfiguration().setAutoCloseWriter(false);
         try {
             // Create an exec context - no profiles....
             ExecutionContext executionContext = smooks.createExecutionContext();
 
-            StringResult result = new StringResult();
+            StringSink sink = new StringSink();
 
             // Configure the execution context to generate a report...
             executionContext.getContentDeliveryRuntime().addExecutionEventListener(htmlReportGenerator);
 
             // Filter the input message to the outputWriter, using the execution context...
-            smooks.filterSource(executionContext, new StreamSource(new ByteArrayInputStream(messageIn)), result);
+            smooks.filterSource(executionContext, new StreamSource<>(new ByteArrayInputStream(messageIn)), sink);
 
-            return result.toString();
+            return sink.toString();
         } finally {
             htmlReportGenerator.getReportConfiguration().getOutputWriter().close();
             smooks.close();

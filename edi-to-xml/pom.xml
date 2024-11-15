@@ -8,7 +8,7 @@
     <parent>
         <groupId>org.smooks.examples</groupId>
         <artifactId>smooks-examples</artifactId>
-        <version>1.0.5</version>
+        <version>5-SNAPSHOT</version>
     </parent>
 
     <name>EDI-to-XML</name>
@@ -22,7 +22,6 @@
                 <configuration>
                     <licenseResolver>${project.baseUri}../license</licenseResolver>
                     <excludes>
-                        <exclude>test/resources/actual.xml</exclude>
                         <exclude>test/resources/expected.xml</exclude>
                     </excludes>
                 </configuration>

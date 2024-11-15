@@ -1,0 +1,19 @@
+@startuml
+participant Main
+box Smooks Framework
+participant Smooks
+participant "edi:unparser"
+participant Result
+end box
+autonumber
+
+Main -> Smooks : ""filterSource(...)""
+loop XML stream
+    Smooks -> "edi:unparser": SAX event
+    Smooks <-- "edi:unparser": Serialize to EDI
+    Smooks -> Result: Write EDI
+end
+Smooks --> Main
+Main -> Result: Read
+Result --> Main: XML
+@enduml

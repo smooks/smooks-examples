@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.smooks.examples</groupId>
         <artifactId>smooks-examples</artifactId>
-        <version>1.0.5</version>
+        <version>5-SNAPSHOT</version>
     </parent>
 
     <name>Smooks Camel Root</name>
@@ -15,7 +15,7 @@
     <packaging>pom</packaging>
 
     <properties>
-        <camel.version>3.21.1</camel.version>
+        <camel.version>4.8.1</camel.version>
     </properties>
 
     <build>
@@ -46,6 +46,11 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <dependency>
+                <groupId>jakarta.annotation</groupId>
+                <artifactId>jakarta.annotation-api</artifactId>
+                <version>3.0.0</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -75,7 +80,7 @@
         </dependency>
         <dependency>
             <groupId>org.apache.camel</groupId>
-            <artifactId>camel-test</artifactId>
+            <artifactId>camel-test-junit5</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>

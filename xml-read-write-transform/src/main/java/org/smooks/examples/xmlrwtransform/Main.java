@@ -48,8 +48,8 @@ import org.smooks.cartridges.javabean.binding.xml.XMLBinding;
 import org.smooks.engine.DefaultApplicationContextBuilder;
 import org.smooks.examples.xmlrwtransform.model.Order;
 import org.smooks.examples.xmlrwtransform.model.OrderItem;
+import org.smooks.io.source.StringSource;
 import org.smooks.support.StreamUtils;
-import org.smooks.io.payload.StringSource;
 import org.xml.sax.SAXException;
 
 import java.io.BufferedReader;
@@ -70,12 +70,12 @@ public class Main {
     public static void main(String[] args) throws IOException, SAXException, SmooksException {
 
         // Create and initilise the XMLBinding instances for v1 and v2 of the XMLs...
-        Smooks smooksXmlBindingV1 = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(Main.class.getClassLoader()).build());
-        smooksXmlBindingV1.addConfigurations("v1-binding-config.xml");
+        Smooks smooksXmlBindingV1 = new Smooks(new DefaultApplicationContextBuilder().withClassLoader(Main.class.getClassLoader()).build());
+        smooksXmlBindingV1.addResourceConfigs("v1-binding-config.xml");
         XMLBinding xmlBindingV1 = new XMLBinding(smooksXmlBindingV1);
 
-        Smooks smooksXmlBindingV2 = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(Main.class.getClassLoader()).build());
-        smooksXmlBindingV2.addConfigurations("v2-binding-config.xml");
+        Smooks smooksXmlBindingV2 = new Smooks(new DefaultApplicationContextBuilder().withClassLoader(Main.class.getClassLoader()).build());
+        smooksXmlBindingV2.addResourceConfigs("v2-binding-config.xml");
         XMLBinding xmlBindingV2 = new XMLBinding(smooksXmlBindingV2);
 
         xmlBindingV1.initialise();

@@ -47,12 +47,17 @@ import org.smooks.api.ExecutionContext;
 import org.smooks.api.SmooksException;
 import org.smooks.engine.DefaultApplicationContextBuilder;
 import org.smooks.engine.report.HtmlReportGenerator;
+import org.smooks.io.sink.WriterSink;
+import org.smooks.io.source.StreamSource;
 import org.smooks.support.StreamUtils;
 import org.xml.sax.SAXException;
 
-import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.CharArrayWriter;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 /**
  * Simple example main class.
@@ -64,8 +69,8 @@ public class Main {
     private Smooks smooks;
 
     protected Main() throws IOException, SAXException {
-        smooks = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(this.getClass().getClassLoader()).build());
-        smooks.addConfigurations("smooks-config.xml");
+        smooks = new Smooks(new DefaultApplicationContextBuilder().withClassLoader(this.getClass().getClassLoader()).build());
+        smooks.addResourceConfigs("smooks-config.xml");
     }
 
     /**
@@ -74,22 +79,25 @@ public class Main {
      * @return The transformed request/response.
      */
     protected String runSmooksTransform(byte[] message) throws IOException {
-        HtmlReportGenerator htmlReportGenerator = new HtmlReportGenerator("target/report/report.html");
-        htmlReportGenerator.getReportConfiguration().setAutoCloseWriter(false);
+        HtmlReportGenerator htmlReportGenerator = null;
         try {
             // Create an exec context for the target profile....
             ExecutionContext executionContext = smooks.createExecutionContext();
+            htmlReportGenerator = new HtmlReportGenerator("target/report/report.html", executionContext.getApplicationContext());
+            htmlReportGenerator.getReportConfiguration().setAutoCloseWriter(false);
             CharArrayWriter outputWriter = new CharArrayWriter();
 
             // Configure the execution context to generate a report...
             executionContext.getContentDeliveryRuntime().addExecutionEventListener(htmlReportGenerator);
 
             // Filter the message to the outputWriter, using the execution context...
-            smooks.filterSource(executionContext, new StreamSource(new ByteArrayInputStream(message)), new StreamResult(outputWriter));
+            smooks.filterSource(executionContext, new StreamSource<>(new ByteArrayInputStream(message)), new WriterSink<>(outputWriter));
 
             return outputWriter.toString();
         } finally {
-            htmlReportGenerator.getReportConfiguration().getOutputWriter().close();
+            if (htmlReportGenerator != null) {
+                htmlReportGenerator.getReportConfiguration().getOutputWriter().close();
+            }
             smooks.close();
         }
     }

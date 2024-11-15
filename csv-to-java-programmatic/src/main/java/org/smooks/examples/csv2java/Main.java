@@ -50,9 +50,9 @@ import org.smooks.cartridges.flatfile.Binding;
 import org.smooks.cartridges.flatfile.BindingType;
 import org.smooks.engine.DefaultApplicationContextBuilder;
 import org.smooks.engine.report.HtmlReportGenerator;
+import org.smooks.io.sink.JavaSink;
+import org.smooks.io.source.StringSource;
 import org.smooks.support.StreamUtils;
-import org.smooks.io.payload.JavaResult;
-import org.smooks.io.payload.StringSource;
 import org.xml.sax.SAXException;
 
 import java.io.FileInputStream;
@@ -69,7 +69,7 @@ public class Main {
 
     protected static List runSmooksTransform() throws IOException, SAXException, SmooksException {
 
-        Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(Main.class.getClassLoader()).build());
+        Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().withClassLoader(Main.class.getClassLoader()).build());
 
         try {
             // ****
@@ -81,12 +81,12 @@ public class Main {
 
             // Configure the execution context to generate a report...
             ExecutionContext executionContext = smooks.createExecutionContext();
-            executionContext.getContentDeliveryRuntime().addExecutionEventListener(new HtmlReportGenerator("target/report/report.html"));
+            executionContext.getContentDeliveryRuntime().addExecutionEventListener(new HtmlReportGenerator("target/report/report.html", executionContext.getApplicationContext()));
 
-            JavaResult javaResult = new JavaResult();
-            smooks.filterSource(executionContext, new StringSource(messageIn), javaResult);
+            JavaSink javaSink = new JavaSink();
+            smooks.filterSource(executionContext, new StringSource(messageIn), javaSink);
 
-            return (List) javaResult.getBean("customerList");
+            return (List) javaSink.getBean("customerList");
         } finally {
             smooks.close();
         }

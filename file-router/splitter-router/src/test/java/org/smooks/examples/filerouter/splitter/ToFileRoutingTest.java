@@ -49,9 +49,9 @@ import org.smooks.FilterSettings;
 import org.smooks.Smooks;
 import org.smooks.StreamFilterType;
 import org.smooks.api.ExecutionContext;
+import org.smooks.io.source.StreamSource;
 import org.xml.sax.SAXException;
 
-import javax.xml.transform.stream.StreamSource;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -188,7 +188,7 @@ public class ToFileRoutingTest {
                 //execCtx.setEventListener(new HtmlReportGenerator("/zap/x.html"));
                 smooks.setFilterSettings(new FilterSettings(filterType));
                 running = true;
-                smooks.filterSource(execCtx, new StreamSource(getClass().getResourceAsStream("/order-message.xml")), null);
+                smooks.filterSource(execCtx, new StreamSource<>(getClass().getResourceAsStream("/order-message.xml")), null);
             } finally {
                 smooks.close();
             }

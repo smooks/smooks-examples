@@ -46,12 +46,17 @@ import org.smooks.Smooks;
 import org.smooks.api.ExecutionContext;
 import org.smooks.engine.DefaultApplicationContextBuilder;
 import org.smooks.io.AbstractOutputStreamResource;
-import org.smooks.io.payload.StringResult;
+import org.smooks.io.sink.StringSink;
+import org.smooks.io.source.StreamSource;
 import org.smooks.support.FileUtils;
 import org.xml.sax.SAXException;
 
-import javax.xml.transform.stream.StreamSource;
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 public class Main {
 
@@ -81,17 +86,17 @@ public class Main {
         };
         abstractOutputStreamResource.setResourceName("inventoryOutputStream");
 
-        Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().setRegisterSystemResources(true).setClassLoader(Main.class.getClassLoader()).build());
-        smooks.addConfigurations("smooks-config.xml");
+        Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().withClassLoader(Main.class.getClassLoader()).build());
+        smooks.addResourceConfigs("smooks-config.xml");
 
-        StringResult stringResult = new StringResult();
+        StringSink stringSink = new StringSink();
         try {
             smooks.addVisitor(abstractOutputStreamResource, "#document");
-            smooks.filterSource(new StreamSource(inputStream), stringResult);
+            smooks.filterSource(new StreamSource<>(inputStream), stringSink);
         } finally {
             smooks.close();
         }
 
-        return stringResult.toString();
+        return stringSink.toString();
     }
 }

@@ -51,7 +51,7 @@ import java.io.InputStream;
 public class CamelSmooksFactory implements SmooksFactory {
     @Override
     public Smooks createInstance() {
-        return new Smooks(new DefaultApplicationContextBuilder().setClassLoader(getClass().getClassLoader()).build());
+        return new Smooks(new DefaultApplicationContextBuilder().withClassLoader(getClass().getClassLoader()).build());
     }
 
     @Override

@@ -44,10 +44,10 @@ package org.smooks.examples.xml2edifact;
 
 import org.smooks.Smooks;
 import org.smooks.engine.DefaultApplicationContextBuilder;
-import org.smooks.io.payload.StringResult;
+import org.smooks.io.sink.StringSink;
+import org.smooks.io.source.StreamSource;
 import org.xml.sax.SAXException;
 
-import javax.xml.transform.stream.StreamSource;
 import java.io.FileInputStream;
 import java.io.IOException;
 
@@ -58,11 +58,11 @@ public class Main {
     }
 
     protected static String run() throws IOException, SAXException {
-        final Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().setClassLoader(Main.class.getClassLoader()).build());
-        smooks.addConfigurations("smooks-config.xml");
-        StringResult stringResult = new StringResult();
-        smooks.filterSource(new StreamSource(new FileInputStream("input-message.xml"), "UTF-8"), stringResult);
+        final Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().withClassLoader(Main.class.getClassLoader()).build());
+        smooks.addResourceConfigs("smooks-config.xml");
+        StringSink stringSink = new StringSink();
+        smooks.filterSource(new StreamSource<>(new FileInputStream("input-message.xml")), stringSink);
 
-        return stringResult.getResult();
+        return stringSink.getResult();
     }
 }

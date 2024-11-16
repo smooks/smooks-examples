@@ -30,6 +30,7 @@
     </profiles>
 
     <modules>
+        <module>adapt-edifact-schema-pack</module>
         <module>camel</module>
         <module>csv-to-java</module>
         <module>csv-to-java-programmatic</module>
@@ -69,7 +70,6 @@
         <module>xml-to-edi</module>
         <module>xml-to-java</module>
         <module>xml-to-java-virtual</module>
-        <module>xml-to-edifact-override</module>
         <module>xslt-basic</module>
         <module>xslt-groovy</module>
         <module>xslt-namespaces</module>

@@ -10,8 +10,8 @@
         <version>5-SNAPSHOT</version>
     </parent>
 
-    <name>XML-to-EDIFACT-override</name>
-    <artifactId>smooks-example-xml-to-edifact-override</artifactId>
+    <name>Adapt EDIFACT Schema Pack</name>
+    <artifactId>smooks-example-adapt-edifact-schema-pack</artifactId>
 
     <build>
         <plugins>
@@ -26,7 +26,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>org.smooks.examples.xml2edifact.Main</mainClass>
+                    <mainClass>org.smooks.examples.adaptedifactschemapack.Main</mainClass>
                 </configuration>
             </plugin>
         </plugins>

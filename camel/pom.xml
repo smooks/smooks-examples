@@ -15,7 +15,7 @@
     <packaging>pom</packaging>
 
     <properties>
-        <camel.version>4.8.1</camel.version>
+        <camel.version>4.9.0</camel.version>
     </properties>
 
     <build>

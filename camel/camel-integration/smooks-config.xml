@@ -15,7 +15,7 @@
 		<jb:value property="nationality" data="event/customer/countryCode" />
 	</jb:bean>
  
-	<camel:route beanId="logEvent" routeOnElement="activity/event">
+	<camel:route beanId="logEvent">
 		<camel:to endpoint="direct:ireland" if="logEvent.nationality == 'IE'"/>
 		<camel:to endpoint="direct:greatbritain" if="logEvent.nationality == 'GB'"/>
 	</camel:route>

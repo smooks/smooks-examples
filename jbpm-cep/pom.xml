@@ -14,9 +14,9 @@
       TODO make this packing pom and make 2 submodules: example-waltz and example-manners
       (and possibly example-common too)
     -->
-    <artifactId>drools-examples-fusion</artifactId>
+    <name>jBPM CEP</name>
+    <artifactId>smooks-example-jbpm-cep</artifactId>
     <packaging>jar</packaging>
-    <name>Drools :: Examples Fusion</name>
 
     <properties>
         <project.mainClass>org.drools.benchmark.waltz.WaltzBenchmark</project.mainClass>

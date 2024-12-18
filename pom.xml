@@ -39,7 +39,6 @@
         <module>csv-variable-record</module>
         <module>dao-router</module>
         <module>db-extract-transform-load</module>
-        <module>drools-fusion</module>
         <module>dynamic-model-builder</module>
         <module>edi-to-xml</module>
         <module>edi-to-java</module>
@@ -57,6 +56,7 @@
         <module>java-to-edifact-programmatic</module>
         <module>java-to-java</module>
         <module>java-to-xml</module>
+        <module>jbpm-cep</module>
         <module>jms-router</module>
         <module>json-to-java</module>
         <module>model-driven-basic</module>

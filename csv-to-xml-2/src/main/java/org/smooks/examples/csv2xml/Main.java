@@ -48,12 +48,14 @@ import org.smooks.api.SmooksException;
 import org.smooks.engine.DefaultApplicationContextBuilder;
 import org.smooks.engine.report.HtmlReportGenerator;
 import org.smooks.io.sink.WriterSink;
-import org.smooks.io.source.ReaderSource;
+import org.smooks.io.source.StreamSource;
 import org.smooks.support.StreamUtils;
 import org.xml.sax.SAXException;
 
-import java.io.*;
-import java.nio.charset.StandardCharsets;
+import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.StringWriter;
 
 /**
  * Simple example main class.
@@ -76,7 +78,7 @@ public class Main {
 
             // Configure the execution context to generate a report...
             executionContext.getContentDeliveryRuntime().addExecutionEventListener(htmlReportGenerator);
-            smooks.filterSource(executionContext, new ReaderSource<>(new InputStreamReader(new ByteArrayInputStream(messageIn), StandardCharsets.UTF_8)), new WriterSink<>(writer));
+            smooks.filterSource(executionContext, new StreamSource<>(new ByteArrayInputStream(messageIn)), new WriterSink<>(writer));
 
             return writer.toString();
         } finally {

@@ -74,6 +74,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
@@ -224,7 +225,7 @@ public class Main {
 
             tx.begin();
 
-            smooks.filterSource(executionContext, new StreamSource(new ByteArrayInputStream(messageInJpa)));
+            smooks.filterSource(executionContext, new StreamSource<>(new ByteArrayInputStream(messageInJpa)));
 
             tx.commit();
         } finally {
@@ -244,7 +245,7 @@ public class Main {
             executionContext.getContentDeliveryRuntime().addExecutionEventListener(new HtmlReportGenerator("target/report/report-mybatis.html", executionContext.getApplicationContext()));
 
             PersistenceUtil.setDAORegister(executionContext, new SqlSessionRegister(sqlSession));
-            smooks.filterSource(executionContext, new StreamSource(new ByteArrayInputStream(messageInMyBatis)));
+            smooks.filterSource(executionContext, new StreamSource<>(new ByteArrayInputStream(messageInMyBatis)));
             sqlSession.commit();
         } finally {
         	sqlSession.close();
@@ -347,7 +348,7 @@ public class Main {
 
 		try {
 			String resource = "/mybatis/mybatis-config.xml";
-            SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(new InputStreamReader(this.getClass().getResourceAsStream(resource)));
+            SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(new InputStreamReader(this.getClass().getResourceAsStream(resource), StandardCharsets.UTF_8));
 			sqlSession =  sqlSessionFactory.openSession();
 
 		} catch (Exception e) {

@@ -48,8 +48,9 @@ import jakarta.annotation.PostConstruct;
 import org.smooks.api.ExecutionContext;
 import org.smooks.api.resource.config.xpath.SelectorPath;
 import org.smooks.api.resource.reader.SmooksXMLReader;
+import org.smooks.engine.delivery.event.VisitSequence;
 import org.smooks.engine.delivery.fragment.NodeFragment;
-import org.smooks.engine.delivery.sax.ng.bridge.Bridge;
+import org.smooks.engine.delivery.sax.ng.pointer.EventPointer;
 import org.smooks.engine.resource.config.xpath.SelectorPathFactory;
 import org.smooks.examples.edi2java2edi.model.Order;
 import org.smooks.io.DocumentInputSource;
@@ -157,10 +158,10 @@ public class BeanXMLReader implements SmooksXMLReader {
     public void parse(InputSource inputSource) {
         Document document = ((DocumentInputSource) inputSource).getDocument();
 
-        if (Bridge.isBridge(document.getFirstChild())) {
-            Bridge bridge = new Bridge(document.getFirstChild());
-            if (bridge.getVisit().equals("visitAfter")) {
-                if (new NodeFragment(bridge.getSourceValue(executionContext)).isMatch(selectorPath, executionContext)) {
+        if (EventPointer.isPointer(document.getFirstChild())) {
+            EventPointer eventPointer = new EventPointer(document.getFirstChild());
+            if (eventPointer.getVisit().equals(VisitSequence.AFTER)) {
+                if (new NodeFragment(eventPointer.dereference(executionContext)).isMatch(selectorPath, executionContext)) {
                     xStream.marshal(executionContext.getBeanContext().getBean(beanId), xStreamSaxWriter);
                 }
             }

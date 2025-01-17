@@ -16,7 +16,7 @@
 
     <properties>
         <gemini.blueprint.version>3.0.0.M01</gemini.blueprint.version>
-        <spring.version>6.2.1</spring.version>
+        <spring.version>6.2.2</spring.version>
     </properties>
 
     <dependencies>

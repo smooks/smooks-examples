@@ -6,12 +6,10 @@ updates:
       interval: daily
     open-pull-requests-limit: 10
     reviewers:
-      - tfennelly
-      - cjmamo
+      - smooks/core-committers
   - package-ecosystem: github-actions
     directory: "/"
     schedule:
       interval: daily
     reviewers:
-      - tfennelly
-      - cjmamo
+      - smooks/core-committers

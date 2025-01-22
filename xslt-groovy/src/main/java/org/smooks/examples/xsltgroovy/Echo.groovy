@@ -43,7 +43,7 @@
 package org.smooks.examples.xsltgroovy
 
 import org.smooks.api.ExecutionContext
-import org.smooks.engine.delivery.sax.ng.SimpleSerializerVisitor
+import org.smooks.engine.resource.visitor.SimpleSerializerVisitor
 import org.w3c.dom.CharacterData
 import org.w3c.dom.Element
 

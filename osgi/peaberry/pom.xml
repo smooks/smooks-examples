@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.smooks.examples</groupId>
         <artifactId>smooks-examples-osgi</artifactId>
-        <version>6-SNAPSHOT</version>
+        <version>6</version>
     </parent>
 
     <name>Peaberry</name>

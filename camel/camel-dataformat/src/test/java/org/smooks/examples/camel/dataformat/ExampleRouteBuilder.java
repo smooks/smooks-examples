@@ -43,7 +43,7 @@
 package org.smooks.examples.camel.dataformat;
 
 import org.apache.camel.builder.RouteBuilder;
-import org.smooks.cartridges.camel.dataformat.SmooksDataFormat;
+import org.apache.camel.dataformat.smooks.SmooksDataFormat;
 
 import java.io.File;
 
@@ -56,7 +56,8 @@ public class ExampleRouteBuilder extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
-        SmooksDataFormat smooksDataFormat = new SmooksDataFormat("smooks-config.xml");
+        SmooksDataFormat smooksDataFormat = new SmooksDataFormat();
+        smooksDataFormat.setSmooksConfig("smooks-config.xml");
         smooksDataFormat.setCamelContext(getContext());
         smooksDataFormat.start();
         // Starting with Camel 2.5 the path can be specified as file:.

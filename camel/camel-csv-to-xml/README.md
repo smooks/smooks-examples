@@ -1,7 +1,7 @@
 About
 =====
 
-An example illustrating the use of the [Smooks Camel Cartridge](https://github.com/smooks/smooks-camel-cartridge/). [Apache Camel](https://camel.apache.org/) is configured in `src/main/resources/META-INF/spring/camel-context.xml` to poll a directory for `input-message.csv`. Once Camel reads the CSV file, it prints the file contents and sends it to Smooks so that the CSV is translated into XML. `<csv:reader .../>` in `smooks-config.xml` ingests the CSV stream and turns it into an XML stream . `<core:result .../>` reads the XML stream into a string and exports the string as a Smooks result which then allows Camel to print the XML output from the [`log`](https://camel.apache.org/components/3.21.x/log-component.html) component.
+An example illustrating the use of the [Camel Smooks Component](https://camel.apache.org/components/next/smooks-component.html). [Apache Camel](https://camel.apache.org/) is configured in `src/main/resources/META-INF/spring/camel-context.xml` to poll a directory for `input-message.csv`. Once Camel reads the CSV file, it prints the file contents and sends it to Smooks so that the CSV is translated into XML. `<csv:reader .../>` in `smooks-config.xml` ingests the CSV stream and turns it into an XML stream . `<core:result .../>` reads the XML stream into a string and exports the string as a Smooks result which then allows Camel to print the XML output from the [`log`](https://camel.apache.org/components/next/log-component.html) component.
 
 It is worth highlighting the following code in `src/main/resources/META-INF/spring/camel-context.xml`:
 

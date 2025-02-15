@@ -87,12 +87,6 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <!-- deprecated (see https://issues.apache.org/jira/browse/CAMEL-21547) -->
-            <dependency>
-                <groupId>org.smooks.cartridges</groupId>
-                <artifactId>smooks-camel-cartridge</artifactId>
-                <version>4.0.1-SNAPSHOT</version>
-            </dependency>
             <dependency>
                 <groupId>org.xmlunit</groupId>
                 <artifactId>xmlunit-core</artifactId>

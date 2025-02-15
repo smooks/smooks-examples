@@ -1,0 +1,44 @@
+name: edi-x12-as2-camel-test
+description: Verify EDI X12 over AS2 Camel route
+actions:
+  - groovy:
+      beans:
+        script: |
+          beans {
+            connectionFactory(org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory.class) {
+              brokerURL = "tcp://localhost:61616"
+            }
+          }
+  - testcontainers:
+      compose:
+        up:
+          file: "compose.yaml"
+  - camel:
+      jbang:
+        camelVersion: 4.10.0
+        run:
+          resources:
+            - "../camel/InvalidPartnerException.java"
+            - "../camel/application.properties"
+            - "../camel/fake.camel.yaml"
+          integration:
+            name: "edi-x12-as2-camel"
+            file: "../camel/edi-x12-as2.camel.yaml"
+            systemProperties:
+              file: "application.test.properties"
+  - camel:
+      startContext: {}
+  - send:
+      endpoint: |
+        camel:as2:client/send?inBody=ediMessage&targetHostName=localhost&targetPortNumber=8081&ediMessageContentType=application%2Fedi-x12%3Bcharset%3DUS-ASCII&as2To=acme&as2From=mycorp&from=bob@example.org&requestUri=/mycorp/orders&subject=Purchase Order&as2MessageStructure=PLAIN
+      message:
+        body:
+          resource:
+            file: "payload.edi"
+  - camel:
+      jbang:
+        verify:
+          maxAttempts: 3
+          integration: "edi-x12-as2-camel"
+          logMessage: ST*997*0001~
+          delayBetweenAttempts: 5000

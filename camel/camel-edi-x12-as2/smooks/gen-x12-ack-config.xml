@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<smooks-resource-list
+        xmlns="https://www.smooks.org/xsd/smooks-2.0.xsd"
+        xmlns:edi="https://www.smooks.org/xsd/smooks/edi-2.0.xsd"
+        xmlns:camel="https://www.smooks.org/xsd/smooks/camel-1.5.xsd"
+        xmlns:ftl="https://www.smooks.org/xsd/smooks/freemarker-2.1.xsd"
+        xmlns:core="https://www.smooks.org/xsd/smooks/smooks-core-1.6.xsd">
+
+    <!-- Prevents Smooks from emitting an event stream from the 'JavaSource' -->
+    <reader>
+        <features>
+            <setOff feature="http://www.smooks.org/sax/features/generate-java-event-stream" />
+        </features>
+    </reader>
+
+    <!-- Exports the EDI result as a string instead of the default output stream since the outbound AS2 Camel
+         endpoint does not handle output streams -->
+    <core:exports>
+        <core:result type="org.smooks.io.sink.StringSink"/>
+    </core:exports>
+
+    <!-- Runs a pipeline to replace the result event stream with the EDI stream emitted from within the pipeline.
+         Prior to being replaced, the result stream in this execution consists of a single "stub" event because
+         event streaming is disabled
+    -->
+    <core:smooks filterSourceOn="#document">
+        <!-- Configures the pipeline to replace current event stream with the event stream emitted from the nested
+             <smooks-resource-list>...</smooks-resource-list>
+        -->
+        <core:action>
+            <core:inline>
+                <core:replace/>
+            </core:inline>
+        </core:action>
+        <core:config>
+            <smooks-resource-list>
+                <!-- Emits an intermediate event stream from a FreeMarker XML template. This template references the
+                     'isa', 'gs', 'st', and 'ackStatus' beans from the input `JavaSource` to materialise the
+                     acknowledgement. The template can be viewed at https://github.com/cjmamo/camel-jbang-examples/blob/edi-x12-as2/edi-x12-as2/ftl/x12-ack.xml.ftl -->
+                <core:rewrite>
+                    <!-- Materialises the FreeMarker template when visiting the root event (i.e., stub event) -->
+                    <ftl:freemarker applyOnElement="#document">
+                        <ftl:template baseDir="../ftl">x12-ack.xml.ftl</ftl:template>
+                    </ftl:freemarker>
+                </core:rewrite>
+
+                <!-- Runs a pipeline on the acknowledgement event stream in order to serialise the stream to
+                     XML and bind this XML to the bean 'x12AckAsXml' -->
+                <core:smooks filterSourceOn="#document">
+                    <core:action>
+                        <core:bindTo id="x12AckAsXml"/>
+                    </core:action>
+                </core:smooks>
+
+                <!-- Sends the 'x12AckAsXml' bean to the Camel endpoint 'direct:track' -->
+                <camel:route beanId="x12AckAsXml" routeOnElement="#document">
+                    <camel:to endpoint="direct:track"/>
+                </camel:route>
+
+                <!-- Uses the default DFDL schema to serialise the event stream to EDI. The 'unparseOnNode'
+                     attribute is set to a wildcard to serialise all emitted events while 'segmentTerminator' and
+                     'dataElementSeparator' are set to the delimiters to write out ('%NL;' means a newline) -->
+                <edi:unparser segmentTerminator="~%NL;" dataElementSeparator="*" unparseOnNode="*"/>
+            </smooks-resource-list>
+        </core:config>
+    </core:smooks>
+
+</smooks-resource-list>

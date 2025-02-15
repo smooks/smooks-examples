@@ -1,0 +1,9 @@
+services:
+  artemis:
+    image: apache/activemq-artemis:2.38.0
+    ports:
+      - "8161:8161"
+      - "61616:61616"
+      - "5672:5672"
+    environment:
+      ANONYMOUS_LOGIN: true

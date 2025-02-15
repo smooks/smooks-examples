@@ -1,0 +1,119 @@
+# camel-k: dependency=mvn:org.apache.activemq:artemis-jakarta-server:2.38.0
+# camel-k: dependency=mvn:org.apache.camel:camel-http:4.10.0
+# camel-k: dependency=mvn:org.smooks.cartridges.edi:smooks-edi-cartridge:2.1.0
+# camel-k: dependency=mvn:org.smooks.cartridges:smooks-templating-cartridge:2.1.2
+
+- routeConfiguration:
+    id: as2Error
+    onException:
+      - onException:
+          handled:
+            constant: true
+          exception:
+            - java.lang.Exception
+          steps:
+            - script:
+                groovy: |
+                  httpContext = exchangeProperties['CamelAs2.interchange']
+                  httpContext.setAttribute(org.apache.camel.component.as2.api.AS2Header.DISPOSITION_TYPE, 
+                                           org.apache.camel.component.as2.api.entity.AS2DispositionType.FAILED)
+
+- route:
+    id: receivePurchaseOrder
+    routeConfigurationId: as2Error
+    from:
+      uri: as2:server/listen
+      parameters:
+        serverPortNumber: 8081
+        requestUriPattern: /mycorp/orders
+      steps:
+        - to: jms:queue:edi
+
+- route:
+    id: ingestPurchaseOrder
+    from:
+      uri: jms:queue:edi
+      steps:
+        - to: smooks:file:../smooks/ingest-x12-config.xml
+        - to: direct:track
+        - to: direct:genAck
+
+- route:
+    id: generateFunctionalAck
+    from:
+      uri: direct:genAck
+      steps:
+        - setBody:
+            groovy: |
+              new org.smooks.io.source.JavaSource([*:headers.CamelSmooksExecutionContext.beanContext.beanMap])
+        - choice:
+            when:
+              - simple: ${headers.CamelSmooksExecutionContext.getTerminationError} == null
+                steps:
+                  - transform:
+                      groovy: body.with {beans.ackStatus = 'A'; body}
+            otherwise:
+              steps:
+                - transform:
+                    groovy: body.with {beans.ackStatus = 'R'; body}
+        - to: smooks:file:../smooks/gen-x12-ack-config.xml
+        - to:
+            uri: as2:client/send
+            parameters:
+              targetHostName: "{{partner.host.name}}"
+              targetPortNumber: 8081
+              ediMessageContentType: application/edi-x12;charset=US-ASCII
+              as2To: acme
+              as2From: mycorp
+              from: bob@example.org
+              requestUri: /acme/gateway
+              subject: Purchase Order Ack
+              as2MessageStructure: PLAIN
+              inBody: ediMessage
+
+- route:
+    id: verifyAgreement
+    from:
+      uri: direct:tpm
+      steps:
+        - toD:
+            uri: "http://{{tpm.address}}"
+            parameters:
+              sender: ${body['applicationSenderCode']}
+              receiver: ${body['applicationReceiverCode']}
+              httpMethod: GET
+        - choice:
+            when:
+              - simple: ${headers.CamelHttpResponseCode} > 299
+                steps:
+                  - throwException:
+                      exceptionType: org.apache.camel.edi.example.InvalidPartnerException
+
+- route:
+    id: createErpOrder
+    from:
+      uri: direct:erp
+      steps:
+        - choice:
+            when:
+              - simple: ${headers.CamelSmooksExecutionContext.getTerminationError} == null
+                steps:
+                  - marshal:
+                      json: {}
+                  - to:
+                      uri: "http://{{erp.address}}/purchase_orders"
+                      parameters:
+                        httpMethod: POST
+
+- route:
+    id: track
+    from:
+      uri: direct:track
+      steps:
+        - setHeader:
+            name: Content-Type
+            constant: application/xml
+        - to:
+            uri: "http://{{tracker.address}}"
+            parameters:
+              httpMethod: POST

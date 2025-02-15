@@ -1,0 +1,28 @@
+- route:
+    from:
+      uri: as2://server/listen
+      parameters:
+        serverPortNumber: 8081
+        requestUriPattern: /acme/gateway
+      steps:
+        - log: |
+           Received functional ack:
+           ${body}
+
+- route:
+    from:
+      uri: rest:get:tpm
+      steps:
+        - log: Verified agreement between ${header.receiver} and ${header.sender}
+
+- route:
+    from:
+      uri: rest:post:tracker
+      steps:
+        - log: Tracked ${body}
+
+- route:
+    from:
+      uri: rest:post:erp/purchase_orders
+      steps:
+        - log: Processed ${body}

@@ -6,7 +6,7 @@ Smooks Examples
 [![email group](https://img.shields.io/badge/group-dev-red?logo=Gmail)](https://groups.google.com/g/smooks-dev)
 [![Gitter chat](https://img.shields.io/badge/chat-on%20gitter-46bc99.svg)](https://gitter.im/smooks/smooks)
 
-Examples are essential in helping newcomers get started with Smooks. This project is a catalogue of code examples illustrating the many uses of Smooks. Most of the examples are accompanied by a README file that describes the example and instructions on how to run it. [Maven 3](https://maven.apache.org/) and JDK 17 need to be installed in order to build any of the examples. All the examples are built and run in the same way:
+Examples are essential in helping newcomers get started with Smooks. This project is a catalogue of code examples illustrating the many uses of Smooks. Most examples are accompanied by a README file that describes the example and instructions on how to run it. [Maven 3](https://maven.apache.org/) and JDK 17 need to be installed in order to build any of the examples. The majority of examples are built and run in the same way:
 
 1. Clone this repository into a new directory with `git clone https://github.com/smooks/smooks-examples.git`
 2. Change directory to `smooks-examples` and build all the examples with `mvn clean package`

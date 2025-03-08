@@ -47,6 +47,7 @@ import org.junit.jupiter.api.Test;
 import org.smooks.cartridges.javabean.dynamic.Model;
 import org.smooks.cartridges.javabean.dynamic.ModelBuilder;
 import org.smooks.model.core.SmooksModel;
+import org.smooks.support.StreamUtils;
 import org.xml.sax.SAXException;
 import org.xmlunit.builder.DiffBuilder;
 
@@ -78,6 +79,10 @@ public class BeanTest {
         StringWriter modelWriter = new StringWriter();
         model.writeModel(modelWriter);
         System.out.println(modelWriter);
+        System.out.println("!!!!!!!!!");
+
+        System.out.println(StreamUtils.readStreamAsString(getClass().getResourceAsStream(messageFile), "UTF-8"));
+
         assertFalse(DiffBuilder.compare(getClass().getResourceAsStream(messageFile)).ignoreWhitespace().withTest(modelWriter.toString()).build().hasDifferences());
     }
 }

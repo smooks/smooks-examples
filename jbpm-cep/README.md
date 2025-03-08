@@ -35,7 +35,7 @@ The Smooks configuration file is found in the root directory of the example ([`s
 ```xml
 <smooks-resource-list xmlns="https://www.smooks.org/xsd/smooks-2.0.xsd"
                       xmlns:csv="https://www.smooks.org/xsd/smooks/csv-1.7.xsd"
-                      xmlns:jb="https://www.smooks.org/xsd/smooks/javabean-1.6.xsd">
+                      xmlns:jb="https://www.smooks.org/xsd/smooks/javabean-2.0.xsd">
 
     <!--
         Split out the individual stock tick records using a <csv:reader>.  Could also use
@@ -48,7 +48,7 @@ The Smooks configuration file is found in the root directory of the example ([`s
         Bind the stock <stockTick> fields into the StockTick object instance...
     -->
     <jb:value beanId="timestamp" data="/stockTicks/stockTick/time" decoder="Long" />
-    <jb:bean beanId="stockTick" class="org.smooks.examples.drools.model.StockTick" createOnElement="/stockTicks/stockTick">
+    <jb:bean beanId="stockTick" class="org.smooks.examples.drools.model.StockTick" createOn="/stockTicks/stockTick">
         <jb:expression property="timestamp">PTIME.startMillis + timestamp</jb:expression>
         <jb:value property="symbol" data="#/symbol" />
         <jb:value property="price" data="#/price" decoder="Double">
@@ -61,7 +61,7 @@ The Smooks configuration file is found in the root directory of the example ([`s
 </smooks-resource-list>
 ```
 
-`csv:reader` configures Smooks to create a stream of SAX events from the stock tick CSV records. The `{https://www.smooks.org/xsd/smooks/javabean-1.6.xsd}value` and `{https://www.smooks.org/xsd/smooks/javabean-1.6.xsd}bean` bindings create the `StockTick` objects from the event stream. These `StockTick` objects are eventually fed to jBPM as events. Smooks will create a `StockTick` instance for each stock tick record in the CSV stream and bind the `StockTick` instance to the bean context under the bean ID of `stockTick`. It is worth emphasising that only a single instance of the `StockTick` class will live in the execution bean context at any one time.
+`csv:reader` configures Smooks to create a stream of SAX events from the stock tick CSV records. The `{https://www.smooks.org/xsd/smooks/javabean-2.0.xsd}value` and `{https://www.smooks.org/xsd/smooks/javabean-2.0.xsd}bean` bindings create the `StockTick` objects from the event stream. These `StockTick` objects are eventually fed to jBPM as events. Smooks will create a `StockTick` instance for each stock tick record in the CSV stream and bind the `StockTick` instance to the bean context under the bean ID of `stockTick`. It is worth emphasising that only a single instance of the `StockTick` class will live in the execution bean context at any one time.
 
 ### Listening to New Stock Tick Objects
 

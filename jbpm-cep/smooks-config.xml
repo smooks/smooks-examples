@@ -44,7 +44,7 @@
 
 <smooks-resource-list xmlns="https://www.smooks.org/xsd/smooks-2.0.xsd"
                       xmlns:csv="https://www.smooks.org/xsd/smooks/csv-1.7.xsd"
-                      xmlns:jb="https://www.smooks.org/xsd/smooks/javabean-1.6.xsd">
+                      xmlns:jb="https://www.smooks.org/xsd/smooks/javabean-2.0.xsd">
 
     <!--
         Split out the individual stock tick records using a <csv:reader>.  Could also use
@@ -57,7 +57,7 @@
         Bind the stock <stockTick> fields into the StockTick object instance...
     -->
     <jb:value beanId="timestamp" data="/stockTicks/stockTick/time" decoder="Long" />
-    <jb:bean beanId="stockTick" class="org.smooks.examples.drools.model.StockTick" createOnElement="/stockTicks/stockTick">
+    <jb:bean beanId="stockTick" class="org.smooks.examples.drools.model.StockTick" createOn="/stockTicks/stockTick">
         <jb:expression property="timestamp">PTIME.startMillis + timestamp</jb:expression>
         <jb:value property="symbol" data="#/symbol" />
         <jb:value property="price" data="#/price" decoder="Double">

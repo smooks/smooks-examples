@@ -43,20 +43,20 @@
   -->
 
 <smooks-resource-list xmlns="https://www.smooks.org/xsd/smooks-2.0.xsd"
-                      xmlns:jb="https://www.smooks.org/xsd/smooks/javabean-1.6.xsd"
+                      xmlns:jb="https://www.smooks.org/xsd/smooks/javabean-2.0.xsd"
                       xmlns:dmb="https://www.smooks.org/xsd/smooks/dmb-1.5.xsd">
 
     <!--
     Main Smooks model bean.
     -->
-    <jb:bean beanId="smooksModel" class="org.smooks.model.core.SmooksModel" createOnElement="#document">
+    <jb:bean beanId="smooksModel" class="org.smooks.model.core.SmooksModel" createOn="#document">
         <jb:wiring property="readers" beanIdRef="readers" />
         <jb:wiring property="beans" beanIdRef="beans" />
     </jb:bean>
-    <jb:bean beanId="readers" class="java.util.ArrayList" createOnElement="#document">
+    <jb:bean beanId="readers" class="java.util.ArrayList" createOn="#document">
         <jb:wiring beanType="org.smooks.model.core.Reader" />
     </jb:bean>
-    <jb:bean beanId="beans" class="java.util.ArrayList" createOnElement="#document">
+    <jb:bean beanId="beans" class="java.util.ArrayList" createOn="#document">
         <jb:wiring beanType="org.smooks.model.javabean.Bean" />
     </jb:bean>
 

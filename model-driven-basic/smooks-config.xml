@@ -43,7 +43,7 @@
   -->
 
 <smooks-resource-list xmlns="https://www.smooks.org/xsd/smooks-2.0.xsd"
-                      xmlns:jb="https://www.smooks.org/xsd/smooks/javabean-1.6.xsd"
+                      xmlns:jb="https://www.smooks.org/xsd/smooks/javabean-2.0.xsd"
                       xmlns:ftl="https://www.smooks.org/xsd/smooks/freemarker-2.0.xsd"
                       xmlns:core="https://www.smooks.org/xsd/smooks/smooks-core-1.6.xsd">
     <!--
@@ -54,7 +54,7 @@
     <!--
     Configure the History bean creation and population. Wires in the "warehouse" bean.
     -->
-    <jb:bean beanId="history" class="org.smooks.examples.modeldrivenbasic.model.ShippingHistory" createOnElement="history">
+    <jb:bean beanId="history" class="org.smooks.examples.modeldrivenbasic.model.ShippingHistory" createOn="history">
         <jb:wiring property="warehouse" beanIdRef="warehouse"/>
         <!-- Note the date decoder is not configured with a format.  Will therefore use the default (SOAP).  See DateDecoder class. -->
         <jb:value property="creationDate" decoder="Date" data="header/date" />
@@ -66,7 +66,7 @@
     Configure the Warehouse bean creation and population.
     Note how we create it on visiting the history. Is wired into the "history" bean.
     -->
-    <jb:bean beanId="warehouse" class="org.smooks.examples.modeldrivenbasic.model.Warehouse" createOnElement="history">
+    <jb:bean beanId="warehouse" class="org.smooks.examples.modeldrivenbasic.model.Warehouse" createOn="history">
         <jb:value property="id" decoder="Integer" data="history/@warehouse" />
         <!-- Note the "special" decoder for mapping the warehouse id. -->
         <jb:value property="name" decoder="Mapping" data="history/@warehouse">

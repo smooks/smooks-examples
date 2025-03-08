@@ -54,13 +54,12 @@ import java.util.List;
  *
  * @author <a href="mailto:tom.fennelly@gmail.com">tom.fennelly@gmail.com</a>
  */
-@DefaultNamespace(uri = "https://www.smooks.org/xsd/smooks/javabean-1.6.xsd", prefix = "jb16")
+@DefaultNamespace(uri = "https://www.smooks.org/xsd/smooks/javabean-2.0.xsd", prefix = "jb16")
 public class Bean {
 
     private String beanId;
     private String beanClass;
-    private String createOnElement;
-    private String createOnElementNS;
+    private String createOn;
     private List<Value> valueBindings;
     private List<Wiring> wireBindings;
     private List<Expression> expressionBindings;
@@ -81,20 +80,12 @@ public class Bean {
         this.beanClass = beanClass;
     }
 
-    public String getCreateOnElement() {
-        return createOnElement;
+    public String getCreateOn() {
+        return createOn;
     }
 
-    public void setCreateOnElement(String createOnElement) {
-        this.createOnElement = createOnElement;
-    }
-
-    public String getCreateOnElementNS() {
-        return createOnElementNS;
-    }
-
-    public void setCreateOnElementNS(String createOnElementNS) {
-        this.createOnElementNS = createOnElementNS;
+    public void setCreateOn(String createOn) {
+        this.createOn = createOn;
     }
 
     public List<Value> getValueBindings() {

@@ -42,7 +42,6 @@
  */
 package org.smooks.examples.edifact2java;
 
-import jakarta.xml.bind.JAXBException;
 import org.junit.jupiter.api.Test;
 import org.smooks.edifact.binding.d03b.Interchange;
 import org.xml.sax.SAXException;
@@ -54,7 +53,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class MainTestCase {
 
     @Test
-    public void testRunSmooksTransform() throws IOException, SAXException, JAXBException {
+    public void testRunSmooksTransform() throws IOException, SAXException {
         Interchange interchange = Main.runSmooksTransform();
         assertEquals("PAXLST", interchange.getFunctionGroup().get(0).getUNG().getE0038());
     }

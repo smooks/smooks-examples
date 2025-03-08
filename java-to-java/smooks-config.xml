@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <smooks-resource-list xmlns="https://www.smooks.org/xsd/smooks-2.0.xsd"
                       xmlns:core="https://www.smooks.org/xsd/smooks/smooks-core-1.6.xsd"
-                      xmlns:jb="https://www.smooks.org/xsd/smooks/javabean-1.6.xsd">
+                      xmlns:jb="https://www.smooks.org/xsd/smooks/javabean-2.0.xsd">
     
-    <jb:bean beanId="lineOrder" class="org.smooks.examples.java2java.trgmodel.LineOrder" createOnElement="org.smooks.examples.java2java.srcmodel.Order">
+    <jb:bean beanId="lineOrder" class="org.smooks.examples.java2java.trgmodel.LineOrder" createOn="org.smooks.examples.java2java.srcmodel.Order">
         <jb:wiring property="lineItems" beanIdRef="lineItems" />
         <jb:value property="customerId" data="header/customerNumber" />
         <jb:value property="customerName" data="header/customerName" />
@@ -15,12 +15,12 @@
         </jb:value>
     </jb:bean>
 
-    <jb:bean beanId="lineItems" class="org.smooks.examples.java2java.trgmodel.LineItem[]" createOnElement="orderItems">
+    <jb:bean beanId="lineItems" class="org.smooks.examples.java2java.trgmodel.LineItem[]" createOn="orderItems">
         <jb:wiring beanIdRef="lineItem" />
     </jb:bean>
 
 
-    <jb:bean beanId="lineItem" class="org.smooks.examples.java2java.trgmodel.LineItem" createOnElement="org.smooks.examples.java2java.srcmodel.OrderItem">
+    <jb:bean beanId="lineItem" class="org.smooks.examples.java2java.trgmodel.LineItem" createOn="org.smooks.examples.java2java.srcmodel.OrderItem">
         <jb:value property="productCode" data="org.smooks.examples.java2java.srcmodel.OrderItem/productId" />
         <jb:value property="unitQuantity" decoder="Integer" data="org.smooks.examples.java2java.srcmodel.OrderItem/quantity" />
         <jb:value property="unitPrice" decoder="BigDecimal" data="org.smooks.examples.java2java.srcmodel.OrderItem/price" />

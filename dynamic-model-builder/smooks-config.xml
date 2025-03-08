@@ -43,7 +43,7 @@
   -->
 
 <smooks-resource-list xmlns="https://www.smooks.org/xsd/smooks-2.0.xsd"
-                      xmlns:jb16="https://www.smooks.org/xsd/smooks/javabean-1.6.xsd"
+                      xmlns:jb16="https://www.smooks.org/xsd/smooks/javabean-2.0.xsd"
                       xmlns:csv17="https://www.smooks.org/xsd/smooks/csv-1.7.xsd">
 
     <csv17:reader fields="name,address,age" rootElementName="people" recordElementName="person" indent="true"/>
@@ -51,7 +51,7 @@
     <!--
     Create an "example.beans.Order" bean instance ...
     -->
-    <jb16:bean beanId="order" class="Order" createOnElement="order">
+    <jb16:bean beanId="order" class="Order" createOn="order">
         <jb16:wiring property="header" beanIdRef="header" />
         <jb16:wiring property="orderItems" beanIdRef="orderItems" />
     </jb16:bean>
@@ -59,14 +59,14 @@
     <!--
     Create an ArrayList bean instance ...
     -->
-    <jb16:bean beanId="orderItems" class="java.util.ArrayList" createOnElement="order" createOnElementNS="http://boohoo">
+    <jb16:bean beanId="orderItems" class="java.util.ArrayList" createOn="order" createOnNS="http://boohoo">
         <jb16:wiring beanIdRef="orderItem" />
     </jb16:bean>
 
     <!--
     Create an ArrayList bean instance ...
     -->
-    <jb16:bean beanId="orderItems" class="java.util.ArrayList" createOnElement="order">
+    <jb16:bean beanId="orderItems" class="java.util.ArrayList" createOn="order">
         <jb16:wiring beanIdRef="orderItem" />
     </jb16:bean>
 

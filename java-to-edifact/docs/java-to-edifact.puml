@@ -1,9 +1,28 @@
 @startuml
+participant Main
+box Smooks Framework
+participant Smooks
+participant "jb:jaxb-marshaller"
+participant Pipeline
+participant "edifact:unparser"
+participant StringSink
+end box
 autonumber
 
-Main -> Main : Construct org.smooks.edifact.binding.d03b.Interchange
-Main -> "JAXB Provider": org.smooks.edifact.binding.d03b.Interchange
-Main <-- "JAXB Provider": XML
-Main -> Smooks: XML
-Main <-- Smooks: EDIFACT
+Main -> Main : Construct ""org.smooks.edifact.binding.d03b.Interchange""
+Main -> Smooks: ""org.smooks.edifact.binding.d03b.Interchange""
+Smooks -> "jb:jaxb-marshaller": Input source
+loop ""org.smooks.edifact.binding.d03b.Interchange"" stream
+    Smooks <- "jb:jaxb-marshaller": Event
+    Smooks -> Pipeline: Event
+    activate Pipeline
+    loop ""/Interchange"" stream
+        Pipeline -> "edifact:unparser": Event
+        StringSink <- "edifact:unparser": Serialise to EDIFACT
+    end
+    deactivate Pipeline
+end
+Smooks --> Main
+Main -> StringSink: Read
+StringSink --> Main: EDIFACT
 @enduml

@@ -5,7 +5,7 @@ participant Smooks
 participant "csv:reader"
 collections "Bean visitors"
 participant "Bean Context"
-participant Result
+participant JavaSink
 end box
 autonumber
 
@@ -16,17 +16,17 @@ create "Bean visitors"
 Main -> Smooks : ""filterSource(...)""
 Smooks -> "csv:reader": Input source
 loop CSV stream
-    Smooks <- "csv:reader": SAX event
-    alt path(event) == #document && event is start element
-        Smooks -> "Bean visitors": SAX event
+    Smooks <- "csv:reader": Event
+    alt path(event) == #document && isStartEvent(event)
+        Smooks -> "Bean visitors": Event
         "Bean visitors" -> "Bean Context": Create ""customerList"" bean
     else
         "Bean visitors" -> "Bean Context": Create ""Customer"" & add to ""customerList""
     end
 end
 Smooks --> Main
-Main -> Result: Get ""customerList""
-Result -> "Bean Context": Get ""customerList""
-"Bean Context" --> Result: ""customerList""
-Result --> Main: ""customerList""
+Main -> JavaSink: Get ""customerList""
+JavaSink -> "Bean Context": Get ""customerList""
+"Bean Context" --> JavaSink: ""customerList""
+JavaSink --> Main: ""customerList""
 @enduml

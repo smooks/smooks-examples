@@ -42,7 +42,7 @@
 -->
 <#assign numChildElemenst = (bean.valueBindings?size + bean.wireBindings?size + bean.expressionBindings?size) > 
 <#if (numChildElemenst > 0)>
-    <${nsp}:bean <@writeAttribs attribs="beanId,beanClass@class,createOnElement"/>>
+    <${nsp}:bean <@writeAttribs attribs="beanId,beanClass@class,createOn"/>>
     <#list bean.valueBindings as valueBinding>
     <#assign numDecodeParams = (valueBinding.decodeParams?size) >
     <#if (numDecodeParams > 0)>
@@ -56,12 +56,12 @@
     </#if>
     </#list>
     <#list bean.wireBindings as wireBinding>
-        <${nsp}:wiring <@writeAttribs bean=wireBinding attribs="property,setterMethod,beanIdRef,wireOnElement"/> />
+        <${nsp}:wiring <@writeAttribs bean=wireBinding attribs="property,setterMethod,beanIdRef,wireOn"/> />
     </#list>
     <#list bean.expressionBindings as expressionBinding>
-        <${nsp}:expression <@writeAttribs bean=expressionBinding attribs="property,setterMethod,execOnElement,initVal"/> />
+        <${nsp}:expression <@writeAttribs bean=expressionBinding attribs="property,setterMethod,executeOn,initVal"/> />
     </#list>
     </${nsp}:bean>
 <#else>
-    <${nsp}:bean <@writeAttribs attribs="beanId,beanClass@class,createOnElement"/> />
+    <${nsp}:bean <@writeAttribs attribs="beanId,beanClass@class,createOn"/> />
 </#if>

@@ -42,20 +42,16 @@
  */
 package org.smooks.examples.edifact2java;
 
-import jakarta.xml.bind.JAXBContext;
-import jakarta.xml.bind.JAXBException;
 import org.smooks.Smooks;
 import org.smooks.api.SmooksException;
 import org.smooks.edifact.binding.d03b.Interchange;
 import org.smooks.engine.DefaultApplicationContextBuilder;
-import org.smooks.io.sink.WriterSink;
+import org.smooks.io.sink.JavaSink;
 import org.smooks.io.source.StreamSource;
 import org.smooks.support.StreamUtils;
 import org.xml.sax.SAXException;
 
 import java.io.IOException;
-import java.io.StringReader;
-import java.io.StringWriter;
 
 /**
  * Main class that uses a Smooks XML configuration to configure the UN/EDIFACT
@@ -65,23 +61,22 @@ import java.io.StringWriter;
  */
 public class Main {
 
-    protected static Interchange runSmooksTransform() throws IOException, SAXException, SmooksException, JAXBException {
+    protected static Interchange runSmooksTransform() throws IOException, SAXException, SmooksException {
         // Configure Smooks using a Smooks config...
-        Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().withClassLoader(Main.class.getClassLoader()).build());
+        final Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().withClassLoader(Main.class.getClassLoader()).build());
         smooks.addResourceConfigs("smooks-config.xml");
 
         try {
-            final StringWriter writer = new StringWriter();
-            smooks.filterSource(new StreamSource<>(Main.class.getResourceAsStream("/PAXLST.edi")), new WriterSink<>(writer));
+            final JavaSink javaSink = new JavaSink();
+            smooks.filterSource(new StreamSource<>(Main.class.getResourceAsStream("/PAXLST.edi")), javaSink);
 
-            JAXBContext jaxbContext = JAXBContext.newInstance(Interchange.class, org.smooks.edifact.binding.service.ObjectFactory.class, org.smooks.edifact.binding.d03b.ObjectFactory.class);
-            return  (Interchange) jaxbContext.createUnmarshaller().unmarshal(new javax.xml.transform.stream.StreamSource(new StringReader(writer.toString())));
+            return  (Interchange) javaSink.getBean("interchange");
         } finally {
             smooks.close();
         }
     }
 
-    public static void main(String[] args) throws IOException, SAXException, SmooksException, JAXBException {
+    public static void main(String[] args) throws IOException, SAXException, SmooksException {
         System.out.println("\n\n==============Message In==============");
         System.out.println(readInputMessage());
         System.out.println("======================================\n");

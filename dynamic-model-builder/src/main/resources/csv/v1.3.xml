@@ -43,12 +43,12 @@
   -->
 
 <smooks-resource-list xmlns="https://www.smooks.org/xsd/smooks-2.0.xsd"
-                      xmlns:jb="https://www.smooks.org/xsd/smooks/javabean-1.6.xsd"
+                      xmlns:jb="https://www.smooks.org/xsd/smooks/javabean-2.0.xsd"
                       xmlns:dmb="https://www.smooks.org/xsd/smooks/dmb-1.5.xsd">
 
     <!-- Binding configs (unmarshal)... -->
 
-    <jb:bean beanId="csvReader" class="org.smooks.model.csv.CSVReader" createOnElement="reader">
+    <jb:bean beanId="csvReader" class="org.smooks.model.csv.CSVReader" createOn="reader">
         <jb:value property="fields" data="reader/@fields" />
         <jb:value property="separator" data="reader/@separator" />
         <jb:value property="quote" data="reader/@quote" />
@@ -63,15 +63,15 @@
         <jb:wiring property="listBinding" beanIdRef="listBinding" />
         <jb:wiring property="mapBinding" beanIdRef="mapBinding" />
     </jb:bean>
-    <jb:bean beanId="singleBinding" class="org.smooks.model.csv.SingleBinding" createOnElement="reader/singleBinding">
+    <jb:bean beanId="singleBinding" class="org.smooks.model.csv.SingleBinding" createOn="reader/singleBinding">
         <jb:value property="beanId" data="reader/singleBinding/@beanId" />
         <jb:value property="beanClass" data="reader/singleBinding/@class" />
     </jb:bean>
-    <jb:bean beanId="listBinding" class="org.smooks.model.csv.ListBinding" createOnElement="reader/listBinding">
+    <jb:bean beanId="listBinding" class="org.smooks.model.csv.ListBinding" createOn="reader/listBinding">
         <jb:value property="beanId" data="reader/listBinding/@beanId" />
         <jb:value property="beanClass" data="reader/listBinding/@class" />
     </jb:bean>
-    <jb:bean beanId="mapBinding" class="org.smooks.model.csv.MapBinding" createOnElement="reader/mapBinding">
+    <jb:bean beanId="mapBinding" class="org.smooks.model.csv.MapBinding" createOn="reader/mapBinding">
         <jb:value property="beanId" data="reader/mapBinding/@beanId" />
         <jb:value property="beanClass" data="reader/mapBinding/@class" />
         <jb:value property="keyField" data="reader/mapBinding/@keyField" />

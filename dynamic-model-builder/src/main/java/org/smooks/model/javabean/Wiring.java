@@ -50,8 +50,7 @@ package org.smooks.model.javabean;
 public class Wiring extends Binding {
 
     private String beanIdRef;
-    private String wireOnElement;
-    private String wireOnElementNS;
+    private String wireOn;
 
     public String getBeanIdRef() {
         return beanIdRef;
@@ -61,19 +60,11 @@ public class Wiring extends Binding {
         this.beanIdRef = beanIdRef;
     }
 
-    public String getWireOnElement() {
-        return wireOnElement;
+    public String getWireOn() {
+        return wireOn;
     }
 
-    public void setWireOnElement(String wireOnElement) {
-        this.wireOnElement = wireOnElement;
-    }
-
-    public String getWireOnElementNS() {
-        return wireOnElementNS;
-    }
-
-    public void setWireOnElementNS(String wireOnElementNS) {
-        this.wireOnElementNS = wireOnElementNS;
+    public void setWireOn(String wireOn) {
+        this.wireOn = wireOn;
     }
 }

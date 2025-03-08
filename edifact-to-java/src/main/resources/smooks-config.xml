@@ -43,7 +43,8 @@
   -->
 
 <smooks-resource-list xmlns="https://www.smooks.org/xsd/smooks-2.0.xsd"
-                      xmlns:edifact="https://www.smooks.org/xsd/smooks/edifact-2.0.xsd">
+                      xmlns:edifact="https://www.smooks.org/xsd/smooks/edifact-2.0.xsd"
+                      xmlns:jb="https://www.smooks.org/xsd/smooks/javabean-2.0.xsd">
 
     <!--
       Configure the EDI reader to parse the UN/EDIFACT d03b message set.
@@ -54,5 +55,12 @@
             <edifact:messageType>PAXLST</edifact:messageType>
         </edifact:messageTypes>
     </edifact:parser>
+
+    <jb:jaxb-unmarshaller beanId="interchange" class="org.smooks.edifact.binding.d03b.Interchange" createOn="/Interchange">
+        <jb:objectFactories>
+            <jb:objectFactory>org.smooks.edifact.binding.service.ObjectFactory</jb:objectFactory>
+            <jb:objectFactory>org.smooks.edifact.binding.d03b.ObjectFactory</jb:objectFactory>
+        </jb:objectFactories>
+    </jb:jaxb-unmarshaller>
 
 </smooks-resource-list>

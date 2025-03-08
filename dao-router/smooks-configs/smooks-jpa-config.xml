@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <smooks-resource-list
 	xmlns="https://www.smooks.org/xsd/smooks-2.0.xsd"
-	xmlns:jb="https://www.smooks.org/xsd/smooks/javabean-1.6.xsd"
+	xmlns:jb="https://www.smooks.org/xsd/smooks/javabean-2.0.xsd"
 	xmlns:dao="https://www.smooks.org/xsd/smooks/persistence-2.0.xsd">
 
 	<!--
 		This is the normal Javabean binding. Notice that we have a wiring on customer. The
 	    Customer entity will not be created but looked up by a locator.
 	 -->
-    <jb:bean beanId="order" class="org.smooks.examples.daorouter.jpa.entity.Order" createOnElement="order">
+    <jb:bean beanId="order" class="org.smooks.examples.daorouter.jpa.entity.Order" createOn="order">
         <jb:value property="ordernumber"   data="ordernumber" decoder="Integer" />
         <jb:value property="orderDate"     data="date"        decoder="Date">
             <jb:decodeParam name="format">yyyy-MM-dd HH:mm:ss</jb:decodeParam>
@@ -37,7 +37,7 @@
 		This is the normal Javabean binding. Notice that we have a wiring on product. The
 	    Product entity will not be created but looked up by a locator.
 	 -->
-    <jb:bean beanId="orderLine" class="org.smooks.examples.daorouter.jpa.entity.OrderLine" createOnElement="order-item">
+    <jb:bean beanId="orderLine" class="org.smooks.examples.daorouter.jpa.entity.OrderLine" createOn="order-item">
 		<jb:value property="quantity" data="quantity" decoder="Integer"/>
 		<jb:wiring property="order" beanIdRef="order"/>
 		<jb:wiring property="product" beanIdRef="product"/>

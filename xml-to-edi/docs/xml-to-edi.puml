@@ -3,17 +3,17 @@ participant Main
 box Smooks Framework
 participant Smooks
 participant "edi:unparser"
-participant Result
+participant StringSink
 end box
 autonumber
 
 Main -> Smooks : ""filterSource(...)""
 loop XML stream
-    Smooks -> "edi:unparser": SAX event
-    Smooks <-- "edi:unparser": Serialize to EDI
-    Smooks -> Result: Write EDI
+    Smooks -> "edi:unparser": Event
+    Smooks <-- "edi:unparser": Serialise to EDI
+    Smooks -> StringSink: Write EDI
 end
 Smooks --> Main
-Main -> Result: Read
-Result --> Main: XML
+Main -> StringSink: Read
+StringSink --> Main: XML
 @enduml

@@ -44,15 +44,15 @@
 
 <smooks-resource-list 
 	xmlns="https://www.smooks.org/xsd/smooks-2.0.xsd"
-	xmlns:jb="https://www.smooks.org/xsd/smooks/javabean-1.6.xsd"
+	xmlns:jb="https://www.smooks.org/xsd/smooks/javabean-2.0.xsd"
 	xmlns:camel="https://www.smooks.org/xsd/smooks/camel-1.5.xsd"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="https://www.smooks.org/xsd/smooks-2.0.xsd https://www.smooks.org/xsd/smooks-2.0.xsd
-		https://www.smooks.org/xsd/smooks/javabean-1.6.xsd https://www.smooks.org/xsd/smooks/javabean-1.6.xsd
+		https://www.smooks.org/xsd/smooks/javabean-2.0.xsd https://www.smooks.org/xsd/smooks/javabean-2.0.xsd
 		https://www.smooks.org/xsd/smooks/camel-1.5.xsd https://www.smooks.org/xsd/smooks/camel-1.5.xsd">
  
 	<!-- Create a new ActivityLogEvent for each log entry... -->
-	<jb:bean beanId="logEvent" class="org.smooks.examples.camel.integration.LogEvent" createOnElement="activity/event">
+	<jb:bean beanId="logEvent" class="org.smooks.examples.camel.integration.LogEvent" createOn="activity/event">
 		<jb:value property="transactionId" data="event/@txId" />
 		<jb:value property="customerId" data="event/customer/@customerId" />
 		<jb:value property="nationality" data="event/customer/countryCode" />

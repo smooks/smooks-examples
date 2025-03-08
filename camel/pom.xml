@@ -15,7 +15,7 @@
     <packaging>pom</packaging>
 
     <properties>
-        <camel.version>4.10.0</camel.version>
+        <camel.version>4.11.0-SNAPSHOT</camel.version>
     </properties>
 
     <build>
@@ -84,4 +84,18 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <repositories>
+        <repository>
+            <id>apache.snapshots</id>
+            <url>https://repository.apache.org/snapshots/</url>
+            <name>Apache Snapshot Repo</name>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+        </repository>
+    </repositories>
 </project>

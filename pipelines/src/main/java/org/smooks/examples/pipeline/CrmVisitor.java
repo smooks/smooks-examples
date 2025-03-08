@@ -49,6 +49,7 @@ import org.asynchttpclient.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.smooks.api.ExecutionContext;
+import org.smooks.api.SmooksException;
 import org.smooks.api.resource.visitor.sax.ng.AfterVisitor;
 import org.smooks.support.XmlUtils;
 import org.w3c.dom.Element;
@@ -87,7 +88,11 @@ public class CrmVisitor implements AfterVisitor {
     }
 
     @PreDestroy
-    public void preDestroy() throws IOException {
-        asyncHttpClient.close();
+    public void preDestroy() {
+        try {
+            asyncHttpClient.close();
+        } catch (IOException e) {
+            throw new SmooksException(e);
+        }
     }
 }

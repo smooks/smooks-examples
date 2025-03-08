@@ -42,7 +42,6 @@
  */
 package org.smooks.examples.java2edifact;
 
-import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBElement;
 import jakarta.xml.bind.JAXBException;
 import org.smooks.Smooks;
@@ -74,11 +73,10 @@ import org.smooks.edifact.binding.service.UNTMessageTrailer;
 import org.smooks.edifact.binding.service.UNZInterchangeTrailer;
 import org.smooks.engine.DefaultApplicationContextBuilder;
 import org.smooks.io.sink.StringSink;
-import org.smooks.io.source.ByteSource;
+import org.smooks.io.source.JavaSource;
 import org.xml.sax.SAXException;
 
 import javax.xml.namespace.QName;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
 
@@ -88,7 +86,7 @@ public class Main {
         System.out.println("\n" + run());
     }
 
-    protected static String run() throws JAXBException, IOException, SAXException {
+    protected static String run() throws IOException, SAXException {
         // Build Java model        
         Interchange interchange = new Interchange().
                 withUNA(new UNA().
@@ -146,17 +144,10 @@ public class Main {
                         withE0036(new BigDecimal(1)).
                         withE0020("17"));
 
-        // Turn Java model into XML       
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        JAXBContext jaxbContext = JAXBContext.newInstance(Interchange.class, org.smooks.edifact.binding.service.ObjectFactory.class, org.smooks.edifact.binding.d03b.ObjectFactory.class);
-        jaxbContext.createMarshaller().marshal(interchange, byteArrayOutputStream);
+        final Smooks smooks = new Smooks("smooks-config.xml");
+        StringSink stringSink = new StringSink();
+        smooks.filterSource(new JavaSource(interchange), stringSink);
 
-        // Turn XML into EDIFACT
-        final Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().withClassLoader(Main.class.getClassLoader()).build());
-        smooks.addResourceConfigs("smooks-config.xml");
-        StringSink stringResult = new StringSink();
-        smooks.filterSource(new ByteSource(byteArrayOutputStream.toByteArray()), stringResult);
-
-        return stringResult.getResult();
+        return stringSink.getResult();
     }
 }

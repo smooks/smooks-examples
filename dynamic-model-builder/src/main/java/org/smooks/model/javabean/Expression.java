@@ -49,24 +49,15 @@ package org.smooks.model.javabean;
  */
 public class Expression extends Binding {
 
-    private String execOnElement;
-    private String execOnElementNS;
+    private String executeOn;
     private String initVal;
 
-    public String getExecOnElement() {
-        return execOnElement;
+    public String getExecuteOn() {
+        return executeOn;
     }
 
-    public void setExecOnElement(String execOnElement) {
-        this.execOnElement = execOnElement;
-    }
-
-    public String getExecOnElementNS() {
-        return execOnElementNS;
-    }
-
-    public void setExecOnElementNS(String execOnElementNS) {
-        this.execOnElementNS = execOnElementNS;
+    public void setExecuteOn(String executeOn) {
+        this.executeOn = executeOn;
     }
 
     public String getInitVal() {

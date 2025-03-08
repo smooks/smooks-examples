@@ -2,7 +2,7 @@
 <smooks-resource-list xmlns="https://www.smooks.org/xsd/smooks-2.0.xsd"
                       xmlns:rules="https://www.smooks.org/xsd/smooks/rules-1.1.xsd"
                       xmlns:validation="https://www.smooks.org/xsd/smooks/validation-2.0.xsd"
-                      xmlns:jb="https://www.smooks.org/xsd/smooks/javabean-1.6.xsd">
+                      xmlns:jb="https://www.smooks.org/xsd/smooks/javabean-2.0.xsd">
 
     <params>
         <!-- Generate a ValidationException if we get more than 5 validation failures... -->
@@ -20,10 +20,10 @@
     </rules:ruleBases>
 
     <!-- Capture some order-item data into the bean context - required by the business rule validations... -->
-    <jb:bean beanId="orderDetails" class="java.util.HashMap" createOnElement="header">
+    <jb:bean beanId="orderDetails" class="java.util.HashMap" createOn="header">
         <jb:value data="header/*"/>
     </jb:bean>
-    <jb:bean beanId="orderItem" class="java.util.HashMap" createOnElement="order-item">
+    <jb:bean beanId="orderItem" class="java.util.HashMap" createOn="order-item">
         <jb:value data="order-item/*"/>
     </jb:bean>
 

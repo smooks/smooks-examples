@@ -4,7 +4,17 @@ autonumber
 Main -> Filesystem: Read PAXLST.edi
 Filesystem --> Main: PAXLST.edi
 Main -> Smooks: EDIFACT
-Smooks --> Main: XML
-Main -> "JAXB Provider": XML
-Main <-- "JAXB Provider": org.smooks.edifact.binding.d03b.Interchange
+Smooks -> "edifact:parser": Input source
+loop EDI stream
+    Smooks <- "edifact:parser": Event
+    alt path(event) == /Interchange && isEndEvent(event)
+        Smooks -> "jb:jaxb-unmarshaller": Event
+        "jb:jaxb-unmarshaller" -> "Bean Context": Create ""org.smooks.edifact.binding.d03b.Interchange"" bean
+    end
+end
+Smooks --> Main
+Main -> JavaSink: Get ""interchange""
+JavaSink -> "Bean Context": Get ""interchange""
+"Bean Context" --> JavaSink: ""interchange""
+JavaSink --> Main: ""interchange"""
 @enduml

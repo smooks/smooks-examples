@@ -1,18 +1,18 @@
 <?xml version="1.0"?>
 <smooks-resource-list xmlns="https://www.smooks.org/xsd/smooks-2.0.xsd"
                       xmlns:core="https://www.smooks.org/xsd/smooks/smooks-core-1.6.xsd"
-                      xmlns:jb="https://www.smooks.org/xsd/smooks/javabean-1.6.xsd">
+                      xmlns:jb="https://www.smooks.org/xsd/smooks/javabean-2.0.xsd">
 
     <core:namespaces>
         <core:namespace prefix="ord" uri="http://acme.com/v2/order" />
     </core:namespaces>
 
-    <jb:bean beanId="order" class="org.smooks.examples.xmlrwtransform.model.Order" createOnElement="/ord:orderV2">
+    <jb:bean beanId="order" class="org.smooks.examples.xmlrwtransform.model.Order" createOn="/ord:orderV2">
         <jb:wiring property="header" beanIdRef="header"/>
         <jb:wiring property="orderItems" beanIdRef="orderItems"/>
     </jb:bean>
 
-    <jb:bean beanId="header" class="org.smooks.examples.xmlrwtransform.model.Header" createOnElement="/ord:orderV2">
+    <jb:bean beanId="header" class="org.smooks.examples.xmlrwtransform.model.Header" createOn="/ord:orderV2">
         <jb:value property="date" decoder="Date" data="#/@date">
             <jb:decodeParam name="format">dd-MM-yyyy</jb:decodeParam>
             <jb:decodeParam name="locale">en_IE</jb:decodeParam>
@@ -21,11 +21,11 @@
         <jb:value property="customerName" data="#/ord:customer-details/ord:name"/>
     </jb:bean>
 
-    <jb:bean beanId="orderItems" class="java.util.ArrayList" createOnElement="/ord:orderV2/ord:items">
+    <jb:bean beanId="orderItems" class="java.util.ArrayList" createOn="/ord:orderV2/ord:items">
         <jb:wiring beanIdRef="orderItem"/>
     </jb:bean>
 
-    <jb:bean beanId="orderItem" class="org.smooks.examples.xmlrwtransform.model.OrderItem" createOnElement="/ord:orderV2/ord:items/ord:item">
+    <jb:bean beanId="orderItem" class="org.smooks.examples.xmlrwtransform.model.OrderItem" createOn="/ord:orderV2/ord:items/ord:item">
         <jb:value property="productId" data="#/ord:prodcode"/>
         <jb:value property="quantity" data="#/ord:quantity"/>
         <jb:value property="price" data="#/ord:price" />

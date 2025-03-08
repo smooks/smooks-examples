@@ -4,7 +4,7 @@ box Smooks Framework
 participant Smooks
 participant "dfdl:parser"
 participant "dfdl:unparser"
-participant Result
+participant Sink
 end box
 actor "Security team" order 1
 autonumber
@@ -12,12 +12,12 @@ autonumber
 Main -> Smooks : ""filterSource(...)""
 Smooks -> "dfdl:parser": Input source
 loop NITF stream
-    Smooks <- "dfdl:parser": SAX event
+    Smooks <- "dfdl:parser": Event
     alt path(event) == (""/NITF"" || descendant) && path(event) == ""//*[not(self::InvalidData)]""
-        Smooks -> "dfdl:unparser": SAX event
-        "dfdl:unparser" --> Smooks: Serialize to NITF
-        Smooks -> Result: Write NITF
-        Result -> Filesytem
+        Smooks -> "dfdl:unparser": Event
+        "dfdl:unparser" --> Smooks: Serialise to NITF
+        Smooks -> Sink: Write NITF
+        Sink -> Filesytem
     end
     alt path(event) == (""/NITF/InvalidData"" || descendant)
         Smooks -> "Dead letter channel": Write event as XML

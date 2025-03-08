@@ -8,49 +8,49 @@ participant Pipeline
 participant "edi:unparser"
 participant BeanXMLReader
 participant "Bean Context"
-participant Result
+participant StringSink
 end box
 autonumber
 
 Main -> Smooks : ""filterSource(...)""
 Smooks -> "edi:parser": Input source
 loop EDI stream
-    Smooks <- "edi:parser": SAX event
+    Smooks <- "edi:parser": Event
     alt path(event) == Order
-        Smooks -> "Bean visitors": SAX event
+        Smooks -> "Bean visitors": Event
         "Bean visitors" -> "Bean Context": Create ""org.smooks.examples.edi2java2edi.model.Order"" bean
         note right: ""order""
         "Bean visitors" -> "Bean Context": Create ""java.util.ArrayList""
         note right: ""orderItemList""
-        Smooks -> Pipeline: SAX event
+        Smooks -> Pipeline: Event
         activate Pipeline
         Pipeline -> BeanXMLReader: Input source
-        alt event is end element
+        alt isEndEvent(event)
             BeanXMLReader -> "Bean Context": Get ""Order"" bean
             BeanXMLReader <-- "Bean Context": ""Order""
             BeanXMLReader -> XStream: ""marshal(...)""
             loop ""Order"" stream
-                Pipeline <- XStream: SAX event
-                Pipeline -> "edi:unparser": SAX event
-                Result <- "edi:unparser": Serialize to EDI
+                Pipeline <- XStream: Event
+                Pipeline -> "edi:unparser": Event
+                StringSink <- "edi:unparser": Serialise to EDI
             end
         end
         deactivate Pipeline
     end
     alt path(event) == Order/header
-        Smooks -> "Bean visitors": SAX event
+        Smooks -> "Bean visitors": Event
         "Bean visitors" -> "Bean Context": Create ""org.smooks.examples.edi2java2edi.model.Header"" bean
         note right: ""header""
         "Bean visitors" -> "Bean Context": Bind events
     end
     alt path(event) == customer-details
-        Smooks -> "Bean visitors": SAX event
+        Smooks -> "Bean visitors": Event
         "Bean visitors" -> "Bean Context": Create ""org.smooks.examples.edi2java2edi.model.Customer"" bean
         note right: ""customer""
         "Bean visitors" -> "Bean Context": Bind events
     end
     alt path(event) == order-item
-        Smooks -> "Bean visitors": SAX event
+        Smooks -> "Bean visitors": Event
         "Bean visitors" -> "Bean Context": Create ""org.smooks.examples.edi2java2edi.model.OrderItem"" bean
         note right: ""orderItem""
         "Bean visitors" -> "Bean Context": Add ""orderItem"" to ""orderItemList"" array
@@ -58,6 +58,6 @@ loop EDI stream
     end
 end
 Smooks --> Main
-Main -> Result: Read
-Result --> Main: EDI
+Main -> StringSink: Read
+StringSink --> Main: EDI
 @enduml

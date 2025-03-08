@@ -43,26 +43,26 @@
   -->
 
 <smooks-resource-list xmlns="https://www.smooks.org/xsd/smooks-2.0.xsd"
-                      xmlns:jb="https://www.smooks.org/xsd/smooks/javabean-1.6.xsd"
+                      xmlns:jb="https://www.smooks.org/xsd/smooks/javabean-2.0.xsd"
                       xmlns:dmb="https://www.smooks.org/xsd/smooks/dmb-1.5.xsd">
 
     <!-- Binding configs (unmarshal)... -->
 
-    <jb:bean beanId="javaBean" class="org.smooks.model.javabean.Bean" createOnElement="bean">
+    <jb:bean beanId="javaBean" class="org.smooks.model.javabean.Bean" createOn="bean">
         <jb:value property="beanId" data="bean/@beanId" />
         <jb:value property="beanClass" data="bean/@class" />
-        <jb:value property="createOnElement" data="bean/@createOnElement" />
-        <jb:value property="createOnElementNS" data="bean/@createOnElementNS" />
+        <jb:value property="createOn" data="bean/@createOn" />
+        <jb:value property="createOnNS" data="bean/@createOnNS" />
 
         <jb:wiring property="valueBindings" beanIdRef="valueBindings" />
         <jb:wiring property="expressionBindings" beanIdRef="expressionBindings" />
         <jb:wiring property="wireBindings" beanIdRef="wireBindings" />
     </jb:bean>
 
-    <jb:bean beanId="valueBindings" class="java.util.ArrayList" createOnElement="bean">
+    <jb:bean beanId="valueBindings" class="java.util.ArrayList" createOn="bean">
         <jb:wiring beanIdRef="valueBinding" />
     </jb:bean>
-    <jb:bean beanId="valueBinding" class="org.smooks.model.javabean.Value" createOnElement="bean/value">
+    <jb:bean beanId="valueBinding" class="org.smooks.model.javabean.Value" createOn="bean/value">
         <jb:value property="property" data="bean/value/@property" />
         <jb:value property="setterMethod" data="bean/value/@setterMethod" />
         <jb:value property="data" data="bean/value/@data" />
@@ -71,34 +71,32 @@
         <jb:value property="defaultVal" data="bean/value/@default" />        
         <jb:wiring property="decodeParams" beanIdRef="decodeParams" />
     </jb:bean>
-    <jb:bean beanId="decodeParams" class="java.util.ArrayList" createOnElement="bean/value">
+    <jb:bean beanId="decodeParams" class="java.util.ArrayList" createOn="bean/value">
         <jb:wiring beanIdRef="decodeParam" />
     </jb:bean>
-    <jb:bean beanId="decodeParam" class="org.smooks.model.javabean.DecodeParam" createOnElement="bean/value/decodeParam">
+    <jb:bean beanId="decodeParam" class="org.smooks.model.javabean.DecodeParam" createOn="bean/value/decodeParam">
         <jb:value property="name" data="decodeParam/@name" />
         <jb:value property="value" data="decodeParam" />
     </jb:bean>
 
-    <jb:bean beanId="expressionBindings" class="java.util.ArrayList" createOnElement="bean">
+    <jb:bean beanId="expressionBindings" class="java.util.ArrayList" createOn="bean">
         <jb:wiring beanIdRef="expressionBinding" />
     </jb:bean>
-    <jb:bean beanId="expressionBinding" class="org.smooks.model.javabean.Expression" createOnElement="bean/expression">
+    <jb:bean beanId="expressionBinding" class="org.smooks.model.javabean.Expression" createOn="bean/expression">
         <jb:value property="property" data="bean/expression/@property" />
         <jb:value property="setterMethod" data="bean/expression/@setterMethod" />
-        <jb:value property="execOnElement" data="bean/expression/@execOnElement" />
-        <jb:value property="execOnElementNS" data="bean/expression/@execOnElementNS" />
+        <jb:value property="executeOn" data="bean/expression/@executeOn" />
         <jb:value property="initVal" data="bean/expression/@initVal" />
     </jb:bean>
 
-    <jb:bean beanId="wireBindings" class="java.util.ArrayList" createOnElement="bean">
+    <jb:bean beanId="wireBindings" class="java.util.ArrayList" createOn="bean">
         <jb:wiring beanIdRef="wireBinding" />
     </jb:bean>
-    <jb:bean beanId="wireBinding" class="org.smooks.model.javabean.Wiring" createOnElement="bean/wiring">
+    <jb:bean beanId="wireBinding" class="org.smooks.model.javabean.Wiring" createOn="bean/wiring">
         <jb:value property="property" data="bean/wiring/@property" />
         <jb:value property="setterMethod" data="bean/wiring/@setterMethod" />
         <jb:value property="beanIdRef" data="bean/wiring/@beanIdRef" />
-        <jb:value property="wireOnElement" data="bean/wiring/@wireOnElement" />
-        <jb:value property="wireOnElementNS" data="bean/wiring/@wireOnElementNS" />
+        <jb:value property="wireOn" data="bean/wiring/@wireOn" />
     </jb:bean>
 
     <!-- Writers (marshal)... -->

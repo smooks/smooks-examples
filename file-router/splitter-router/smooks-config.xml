@@ -1,19 +1,19 @@
 <?xml version="1.0"?>
 <smooks-resource-list xmlns="https://www.smooks.org/xsd/smooks-2.0.xsd"
                       xmlns:core="https://www.smooks.org/xsd/smooks/smooks-core-1.6.xsd"
-                      xmlns:jb="https://www.smooks.org/xsd/smooks/javabean-1.6.xsd"
+                      xmlns:jb="https://www.smooks.org/xsd/smooks/javabean-2.0.xsd"
                       xmlns:file="https://www.smooks.org/xsd/smooks/file-routing-2.0.xsd"
                       xmlns:ftl="https://www.smooks.org/xsd/smooks/freemarker-2.0.xsd">
 
     <!-- Extract and decode data from the message.  Used in the freemarker template (below).
          Note that we could also use a NodeModel here... -->
-    <jb:bean beanId="order" class="java.util.Hashtable" createOnElement="order">
+    <jb:bean beanId="order" class="java.util.Hashtable" createOn="order">
         <jb:value property="orderId" decoder="Integer" data="order/@id"/>
         <jb:value property="customerNumber" decoder="Long" data="header/customer/@number"/>
         <jb:value property="customerName" data="header/customer"/>
         <jb:wiring property="orderItem" beanIdRef="orderItem"/>
     </jb:bean>
-    <jb:bean beanId="orderItem" class="java.util.Hashtable" createOnElement="order-item">
+    <jb:bean beanId="orderItem" class="java.util.Hashtable" createOn="order-item">
         <jb:value property="itemId" decoder="Integer" data="order-item/@id"/>
         <jb:value property="productId" decoder="Long" data="order-item/product"/>
         <jb:value property="quantity" decoder="Integer" data="order-item/quantity"/>

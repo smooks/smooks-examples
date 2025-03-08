@@ -45,7 +45,7 @@
 <smooks-resource-list
 	 xmlns="https://www.smooks.org/xsd/smooks-2.0.xsd"
 	 xmlns:yalm="https://www.smooks.org/xsd/smooks/yaml-1.5.xsd"
-	 xmlns:jb="https://www.smooks.org/xsd/smooks/javabean-1.6.xsd">
+	 xmlns:jb="https://www.smooks.org/xsd/smooks/javabean-2.0.xsd">
 
     <!--
     Configure the YALM Reader to read the message stream into a stream of SAX events.
@@ -88,7 +88,7 @@
     Target the to be created ArrayList instance under the beanId "orderItems" via the ${orderItems} bean binding.
     As soon as this list is created it will be set on this bean instance.
     -->
-    <jb:bean class="org.smooks.examples.yaml2java.model.Order" beanId="order" createOnElement="order">
+    <jb:bean class="org.smooks.examples.yaml2java.model.Order" beanId="order" createOn="order">
     	<jb:wiring property="header" beanIdRef="header"/>
     	<jb:wiring property="orderItems" beanIdRef="orderItems"/>
 
@@ -103,7 +103,7 @@
     Target the to be created Customer instance under the beanId "customer" via the ${customer} bean binding.
     As soon as this bean is created it will be set on this bean instance.
     -->
-    <jb:bean class="org.smooks.examples.yaml2java.model.Header" beanId="header" createOnElement="order">
+    <jb:bean class="org.smooks.examples.yaml2java.model.Header" beanId="header" createOn="order">
     	<jb:wiring property="customer" beanIdRef="customer"/>
     	<jb:wiring property="billingAddress" beanIdRef="billingAddress"/>
     	<jb:wiring property="shippingAddress" beanIdRef="shippingAddress"/>
@@ -126,7 +126,7 @@
 	This bean is set on the on the previous declared Header bean as soon as it is created, because
     it is target by that bean via a bean binding.
     -->
-    <jb:bean class="org.smooks.examples.yaml2java.model.Customer" beanId="customer" createOnElement="customer">
+    <jb:bean class="org.smooks.examples.yaml2java.model.Customer" beanId="customer" createOn="customer">
     	<jb:value property="userName" data="customer/user-name" />
     	<jb:value property="firstName" data="customer/first-name" />
     	<jb:value property="lastName" data="customer/last-name"/>
@@ -138,7 +138,7 @@
 	This bean is set on the on the previous declared Header bean as soon as it is created, because
     it is target by that bean via a bean binding.
     -->
-    <jb:bean class="org.smooks.examples.yaml2java.model.Address" beanId="billingAddress" createOnElement="billing-address">
+    <jb:bean class="org.smooks.examples.yaml2java.model.Address" beanId="billingAddress" createOn="billing-address">
     	<jb:value property="street" data="billing-address/street" />
     	<jb:value property="city" data="billing-address/city" />
     	<jb:value property="zipcode" data="billing-address/zip-code"/>
@@ -150,7 +150,7 @@
 	This bean is set on the on the previous declared Header bean as soon as it is created, because
     it is target by that bean via a bean binding.
     -->
-    <jb:bean class="org.smooks.examples.yaml2java.model.Address" beanId="shippingAddress" createOnElement="shipping-address">
+    <jb:bean class="org.smooks.examples.yaml2java.model.Address" beanId="shippingAddress" createOn="shipping-address">
     	<jb:value property="street" data="shipping-address/street" />
     	<jb:value property="city" data="shipping-address/city" />
     	<jb:value property="zipcode" data="shipping-address/zip-code"/>
@@ -163,7 +163,7 @@
 	Target the to be created OrderItem beans under the beanId "orderItem" via the ${orderItem} bean binding.
     As soon as these beans are created they will be added to this list.
 	 -->
-	<jb:bean class="java.util.ArrayList" beanId="orderItems" createOnElement="order">
+	<jb:bean class="java.util.ArrayList" beanId="orderItems" createOn="order">
     	<jb:wiring beanIdRef="orderItem"/>
     </jb:bean>
 
@@ -172,7 +172,7 @@
     This bean is add to the on the previous declared ArrayList as soon as it is created, because
     it is target by that ArrayList via a bean binding.
     -->
-    <jb:bean class="org.smooks.examples.yaml2java.model.OrderItem" beanId="orderItem" createOnElement="order-item/element">
+    <jb:bean class="org.smooks.examples.yaml2java.model.OrderItem" beanId="orderItem" createOn="order-item/element">
     	<jb:value property="quantity" data="order-item/element/quantity" decoder="Integer"/>
         <jb:value property="productId" data="order-item/element/product-id" />
         <jb:value property="price" data="order-item/element/price" decoder="BigDecimal" />

@@ -3,17 +3,17 @@ participant Main
 box Smooks Framework
 participant Smooks
 participant "csv:reader"
-participant Result
+participant WriterSink
 end box
 autonumber
 
 Main -> Smooks : ""filterSource(...)""
 Smooks -> "csv:reader": Input source
 loop CSV stream
-    Smooks <- "csv:reader": SAX event
-    Smooks -> Result: Write event as XML
+    Smooks <- "csv:reader": Event
+    Smooks -> WriterSink: Write event as XML
 end
 Smooks --> Main
-Main -> Result: Read
-Result --> Main: XML
+Main -> WriterSink: Read
+WriterSink --> Main: XML
 @enduml

@@ -45,7 +45,7 @@
 <smooks-resource-list
 	 xmlns="https://www.smooks.org/xsd/smooks-2.0.xsd"
 	 xmlns:json="https://www.smooks.org/xsd/smooks/json-1.3.xsd"
-	 xmlns:jb="https://www.smooks.org/xsd/smooks/javabean-1.6.xsd">
+	 xmlns:jb="https://www.smooks.org/xsd/smooks/javabean-2.0.xsd">
 
     <!--
     Configure the JSON Reader to read the message stream into a stream of SAX events.
@@ -77,7 +77,7 @@
     Target the to be created ArrayList instance under the beanId "orderItems" via the ${orderItems} bean binding.
     As soon as this list is created it will be set on this bean instance.
     -->
-    <jb:bean class="org.smooks.examples.json2java.model.Order" beanId="order" createOnElement="order">
+    <jb:bean class="org.smooks.examples.json2java.model.Order" beanId="order" createOn="order">
     	<jb:wiring property="header" beanIdRef="header"/>
     	<jb:wiring property="orderItems" beanIdRef="orderItems"/>
     </jb:bean>
@@ -90,7 +90,7 @@
     Target the to be created Customer instance under the beanId "customer" via the ${customer} bean binding.
     As soon as this bean is created it will be set on this bean instance.
     -->
-    <jb:bean class="org.smooks.examples.json2java.model.Header" beanId="header" createOnElement="${order}/header">
+    <jb:bean class="org.smooks.examples.json2java.model.Header" beanId="header" createOn="${order}/header">
     	<jb:wiring property="customer" beanIdRef="customer"/>
 
     	<jb:value property="orderId" data="#/order-id" />
@@ -111,7 +111,7 @@
 	This bean is set on the on the previous declared Header bean as soon as it is created, because
     it is target by that bean via a bean binding.
     -->
-    <jb:bean class="org.smooks.examples.json2java.model.Customer" beanId="customer" createOnElement="customer-details">
+    <jb:bean class="org.smooks.examples.json2java.model.Customer" beanId="customer" createOn="customer-details">
     	<jb:value property="userName" data="#/username" />
     	<jb:value property="firstName" data="#/firstname" />
     	<jb:value property="lastName" data="#/lastname"/>
@@ -125,7 +125,7 @@
 	Target the to be created OrderItem beans under the beanId "orderItem" via the ${orderItem} bean binding.
     As soon as these beans are created they will be added to this list.
 	 -->
-	<jb:bean class="java.util.ArrayList" beanId="orderItems" createOnElement="order">
+	<jb:bean class="java.util.ArrayList" beanId="orderItems" createOn="order">
     	<jb:wiring beanIdRef="orderItem"/>
     </jb:bean>
 
@@ -134,7 +134,7 @@
     This bean is add to the on the previous declared ArrayList as soon as it is created, because
     it is target by that ArrayList via a bean binding.
     -->
-    <jb:bean class="org.smooks.examples.json2java.model.OrderItem" beanId="orderItem" createOnElement="order-item/element">
+    <jb:bean class="org.smooks.examples.json2java.model.OrderItem" beanId="orderItem" createOn="order-item/element">
     	<jb:value property="quantity" data="#/quantity" decoder="Integer"/>
         <jb:value property="productId" data="#/product-id" />
         <jb:value property="price" data="#/price" decoder="BigDecimal" />

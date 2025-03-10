@@ -16,5 +16,5 @@ Smooks --> Main
 Main -> JavaSink: Get ""interchange""
 JavaSink -> "Bean Context": Get ""interchange""
 "Bean Context" --> JavaSink: ""interchange""
-JavaSink --> Main: ""interchange"""
+JavaSink --> Main: ""interchange""
 @enduml

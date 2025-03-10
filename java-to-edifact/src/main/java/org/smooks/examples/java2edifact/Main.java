@@ -144,7 +144,8 @@ public class Main {
                         withE0036(new BigDecimal(1)).
                         withE0020("17"));
 
-        final Smooks smooks = new Smooks("smooks-config.xml");
+        final Smooks smooks = new Smooks(new DefaultApplicationContextBuilder().withClassLoader(Main.class.getClassLoader()).build());
+        smooks.addResourceConfigs("smooks-config.xml");
         StringSink stringSink = new StringSink();
         smooks.filterSource(new JavaSource(interchange), stringSink);
 

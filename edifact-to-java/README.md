@@ -1,9 +1,9 @@
 About
 =====
 
-Illustrates a way for binding EDIFACT to POJOs, without mapping. This project reads an EDIFACT document from the filesystem and feeds it to Smooks to obtain the EDIFACT's XML representation. The returned XML is then bound to a `org.smooks.edifact.binding.d03b.Interchange` POJO with [JAXB](https://javaee.github.io/jaxb-v2/). 
+Illustrates automatic mapping of an EDIFACT document to Java objects. This project reads an EDIFACT document from the filesystem and feeds it to Smooks with `edifact:parser`. The ingested events are then bound to a instance of the [JAXB](https://javaee.github.io/jaxb-v2/) class `org.smooks.edifact.binding.d03b.Interchange` thanks to the `jb:jaxb-unmarshaller` visitor which is available from the [JavaBean cartridge](https://www.smooks.org/documentation/#javabeans). `jb:jaxb-unmarshaller` saves the `org.smooks.edifact.binding.d03b.Interchange` instance to the bean context so that it can be retrieved later on from the `JavaSink`.
 
-To map EDIFACT to POJOs, instead of just binding, the [JavaBean cartridge](https://www.smooks.org/documentation/#javabeans) is recommended instead of JAXB. Visit the [edi-to-java project](../edi-to-java/README.md) to view an example that maps as well as binds the EDI. Note that Smooks in `edi-to-java` is configured to read plain EDI but the configuration can be easily modified to use `edifact:parser` instead of `edi:parser`.
+To control the mapping between EDIFACT to Java objects, as opposed to automatic mapping, other JavaBean cartridge visitors are recommended like `jb:bean` or `jb:value`. Visit the [edi-to-java project](../edi-to-java/README.md) to view an example that defines the EDI mapping. Note that the `edi-to-java` example configures to read plain EDI but this configuration can be easily customised to use `edifact:parser` instead of `edi:parser`.
 
 ### How to run?
 

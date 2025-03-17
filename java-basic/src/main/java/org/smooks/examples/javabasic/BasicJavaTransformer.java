@@ -43,30 +43,45 @@
 package org.smooks.examples.javabasic;
 
 import org.smooks.api.ExecutionContext;
-import org.smooks.api.resource.visitor.dom.DOMElementVisitor;
-import org.smooks.support.DomUtils;
+import org.smooks.api.SmooksException;
+import org.smooks.api.resource.visitor.sax.ng.AfterVisitor;
+import org.smooks.api.resource.visitor.sax.ng.BeforeVisitor;
+import org.smooks.engine.delivery.fragment.NodeFragment;
+import org.smooks.io.FragmentWriter;
+import org.smooks.io.Stream;
 import org.w3c.dom.Element;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.IOException;
 
 /**
  * Basic transformer that simply renames an element.
  * 
  * @author <a href="mailto:tom.fennelly@gmail.com">tom.fennelly@gmail.com</a>
  */
-public class BasicJavaTransformer implements DOMElementVisitor {
+public class BasicJavaTransformer implements BeforeVisitor, AfterVisitor {
 
     @Inject
     @Named("newName")
     private String newElementName;
 
     public void visitBefore(Element element, ExecutionContext executionContext) {
-        // Not doing anything on this visit - wait untill after visiting the elements child content...
+        try {
+            // Rename the target start event - keeping child elements - not keeping attributes
+            new FragmentWriter(executionContext, new NodeFragment(element)).park();
+            Stream.out(executionContext).write(String.format("<%s>", newElementName));
+        } catch (IOException e) {
+            throw new SmooksException(e);
         }
+    }
 
     public void visitAfter(Element element, ExecutionContext executionContext) {
-        // Just rename the target element - keeping child elements - not keeping attributes.
-        DomUtils.renameElement(element, newElementName, true, false);
+        // Rename the target end event
+        try {
+            Stream.out(executionContext).write(String.format("</%s>", newElementName));
+        } catch (IOException e) {
+            throw new SmooksException(e);
+        }
     }
 }

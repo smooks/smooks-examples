@@ -62,7 +62,8 @@
             parameters:
               targetHostName: "{{partner.host.name}}"
               targetPortNumber: 8081
-              ediMessageContentType: application/edi-x12;charset=US-ASCII
+              ediMessageContentType: application/edi-x12
+              ediMessageCharset: charset=US-ASCII
               as2To: acme
               as2From: mycorp
               from: bob@example.org

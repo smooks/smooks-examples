@@ -30,7 +30,7 @@ actions:
       startContext: {}
   - send:
       endpoint: |
-        camel:as2:client/send?inBody=ediMessage&targetHostName=localhost&targetPortNumber=8081&ediMessageContentType=application%2Fedi-x12%3Bcharset%3DUS-ASCII&as2To=acme&as2From=mycorp&from=bob@example.org&requestUri=/mycorp/orders&subject=Purchase Order&as2MessageStructure=PLAIN
+        camel:as2:client/send?inBody=ediMessage&targetHostName=localhost&targetPortNumber=8081&ediMessageContentType=application%2Fedi-x12&ediMessageCharset=US-ASCII&as2To=acme&as2From=mycorp&from=bob@example.org&requestUri=/mycorp/orders&subject=Purchase Order&as2MessageStructure=PLAIN
       message:
         body:
           resource:
